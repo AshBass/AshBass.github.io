@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>AshBass</title>
+    <title>机器学习笔记（1） · AshBass</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,14 +251,23 @@
 </head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Crimson&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">机器学习笔记（1）</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Crimson's blog</a>
 </header>
@@ -279,7 +288,7 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
@@ -288,8 +297,8 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Crimson's blog
-            <!-- 文章页  -->
+            机器学习笔记（1）
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -297,172 +306,128 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                Just a Chinese coder
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/03/27</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main index-page">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>最近在看机器学习的视频。由于内容有点多，怕记不住，所以用这个博客来记录下自己学习的过程。顺便在写博客的时候复习一下。</p>
+<p>我看的机器学习课程地址 ：<a href="https://www.coursera.org/learn/machine-learning/home/welcome" target="_blank" rel="noopener">https://www.coursera.org/learn/machine-learning/home/welcome</a></p>
+<p>我的笔记知识、图片都是来自于这个课程的。</p>
+<p>—– 以下所有内容为个人理解。可能表述并不准确。—–</p>
+<p>机器学习分为两种。第一种是监督学习，第二种是无监督学习。</p>
+<p>1.监督学习。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。</p>
+<p>2.无监督学习。就是我们给计算机我们并不知道解答的数据，让计算机去分析这些数据并得出结论。通常用于数据分类。</p>
+<p>—– 我们举个监督学习的例子 —–</p>
+<img src="/2018/03/27/机器学习笔记（1）/costFunction.png" title="代价函数">
+<p>上面这张图是代价函数的图。我们这里先引入“代价函数”这个概念，接下来我会慢慢一步一步说。</p>
+<p>函数图上的点，是一些数据。我们现在举个例子。假设现在我们要计算机去预测一个房子的价格，x代表房子的平方数，y代表房子的价格。现在我们把这些数据给了计算机，计算机把这些数据分布到图上，形成了上面的那些点。</p>
+<p>我们上面说了，监督学习是给计算机一些我们已知解答的数据来求输入输出的关系。也就是说，我们希望给了这些数据之后，我们再给计算机一个房子的平方数x，计算机可以给出它预测的一个房价的价格y。</p>
+<p>但问题来了，房子的价格和房子的平方数有关系，但不一定同样大小的房子就是同样的价格，可能还有其它因素影响着房价（例如附近是否交通发达）。计算机是怎么得出结论呢 ？</p>
+<p>这里很明显，计算机只能通过已有的数据计算出一个与现实相近的解答。而这，就是数学的线性回归问题。线性回归的定义各位同学可以百度以下。不懂线性回归的同学可以理解为：计算机要总结出一个公式。这个公式在图上画一条线，每个点离这条线的距离的总和h，是所有情况中最小的。</p>
+<p>图中的那条蓝色的线，就是这个例子里面，计算机得出来的最终的公式所画出来的图。</p>
+<p>我们设定公式为 h(x) = θ1x + θ0 为计算机最终得出来的线性方程。</p>
+<p>为什么假设的公式是 h(x) = θ1x + θ0 ？我也不知道 = = 或许这就是科学家厉害的地方，不知道怎么总结出来的……</p>
+<p>（这里注意了，1和0是θ的下标。上面的公式你可以看成 h(x) = ax + b。之所以用θ，是因为图中用了θ）。</p>
+<p>我们需要计算机计算出θ1和θ0两个未知参数。</p>
+<p>既然h(x)为计算机的结果，那么与真是结果的差就是 h(x)-y 。那么每个差值加起来就是 (h(x0) - y0 ) + (h(x1) - y1 ) + … + (h(xn) - yn)。由于相减时会有负数的存在，为了不影响负数对加法的运算，我们将用每个差值的平方相加。这样并不会影响结论。</p>
+<p>于是我们得出以下的公式。其中m为样本的数量。至于为什么有 1/2m，这或许是科学家和我的差距吧……</p>
+<img src="/2018/03/27/机器学习笔记（1）/costFunction-1.png" title="代价函数-1">
+<p>这个公式，就是我们所说的代价函数。我们要用这个公式去求θ1和θ0两个数的最优解。</p>
+<p>这个公式要怎么解呢 ？ 这里我们先引入一个算法，叫梯度下降。</p>
+<p>我们先假设 θ0 = 0 。那么 h(x) = θ1x 。这是一个很简单的一元函数。我们先用这个例子讲解以下梯度下降。</p>
+<p>现在我们有三组数据 (1,1) (2,2) (3,3) 。</p>
+<p>设如果 θ1 = 1 ，得出下面的图 ：</p>
+<img src="/2018/03/27/机器学习笔记（1）/costFunction-2.png" title="代价函数-2">
+<p>设如果 θ1 = 0.5 ，得出下面的图 ：</p>
+<img src="/2018/03/27/机器学习笔记（1）/costFunction-3.png" title="代价函数-3">
+<p>我们不断假设θ1的值，然后不断输入 x=1 , x=2 , x=3 后，通过代价函数，得出J(θ1)与输入值的关系图为 ：</p>
+<img src="/2018/03/27/机器学习笔记（1）/costFunction-4.png" title="代价函数-4">
+<p>我们上面说过，我们的目的就是要这个代价函数J(θ1)最小，求出参数θ1的数值。这个例子里面，当J(θ1)最小值时，θ1=1。1就是我们这个例子里面，最优解。</p>
+<p>我们把θ0假设成0得出上面的结论。现在我们把θ0也考虑。不断假设θ1和θ0的数值，可以得出一个三维图 ：</p>
+<img src="/2018/03/27/机器学习笔记（1）/costFunction-5.png" title="代价函数-5">
+<p>这个三维图的最低点，就是代价函数J(θ0,θ1)的最小值。那么，在那个点对应的θ0、θ1值就是最优解。</p>
+<p>那么这个不断假设值的过程我们是怎么进行的呢 ？</p>
+<p>科学家定义了下一次θj（j是θ的下标。例如j=1就是θ1 ）要假设的值的公式（别问我为什么是这个公式了……科学家真心太厉害了）</p>
+<img src="/2018/03/27/机器学习笔记（1）/gradientDescent.png" title="梯度下降">
+<p>在这里，α是个纯数字，表示学习速率，这个等等讲。先讲解一下这个公式的意思。</p>
+<p>这个公式意思就是：下一次要预测的θj的值，是当前θj的值减去J(θ0,θ1)的偏导数与纯数字α的乘积。（偏导数是什么，各位同学去百度一下就知道了）</p>
+<p>计算机就是用这个公式推导出下一个要假设的θj值。但要注意一点，要等所有的θj的值要用旧值计算之后，才一起导入到新的一轮计算中去。下图左边是正确示范，右边是错误示范。</p>
+<img src="/2018/03/27/机器学习笔记（1）/gradientDescent-1.png" title="梯度下降-1">
+<p>关于α这个值，为什么叫学习速率呢 ？</p>
+<p>我们再次假设一下θ0 = 0的情况。那么θ1每次的变换公式就如下。</p>
+<img src="/2018/03/27/机器学习笔记（1）/gradientDescent-2.png" title="梯度下降-2">
+<p>因为这是个一元函数，所以求偏导数变成了求导数的情况。如果换回多元函数，那么写法还是原来求偏导数的公式。如果你了解偏导数的定义，那么你就会知道为什么这里可以写成导数形式了。百度一下，并不难理解。</p>
+<p>还记得我们上面那个例子吗？不断输入 x=1 , x=2 , x=3 后，通过代价函数，得出J(θ1)与输入值的关系图。现在我们假设上面有一点，作这一点与这个函数图的切线。这个切线的斜率，就是函数在该点上的导数。图如下：</p>
+<img src="/2018/03/27/机器学习笔记（1）/gradientDescent-3.png" title="梯度下降-3">
+<p>那么如果这个α越小，每次我们的斜率的变化值就越小。那么如果这个α越大，每次我们的斜率的变化值就越大。每次计算出的下一个θ1值的变化就会如下图：</p>
+<img src="/2018/03/27/机器学习笔记（1）/gradientDescent-4.png" title="梯度下降-4">
+<p>这里我们可以看的出，α越小，要到达的终点所需要的计算的次数就越多，计算时间越长。但要注意了，α不能大于一定的阀值。如果α太大，就像图表示的一样，不断来回上升，永远到达不了终点。</p>
+<p>讲到这里，你应该能理解为什么α叫学习速率。α是个很重要的参数，每次计算后应该适当调整α数值，以便用最少的计算次数，最短的时间到达终点。</p>
+<img src="/2018/03/27/机器学习笔记（1）/gradientDescent-5.png" title="梯度下降-5">
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/27/2018开始/" title= 2018开始 >
+                    <div class="prevTitle">2018开始</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
     
+    <!--PC版-->
+
+    <!--PC版-->
+
+
     
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/27/机器学习笔记（1）/" >
-                
-                    <span>机器学习笔记（1）</span>
-            </a>
-            <div class="abstract-content">
-                最近在看机器学习的视频。由于内容有点多，怕记不住，所以用这个博客来记录下自己学习的过程。顺便在写博客的时候复习一下。
-我看的机器学习课程地址 ：https://www.coursera.org/learn/machine-learning/home/welcome
-我的笔记知识、图片都是来自于这个课程的。
-—– 以下所有内容为个人理解。可能表述并不准确。—–
-机器学习分为两种。第一种是监督学习，第二种是无监督学习。
-1.监督学习。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。
-2.无监督学习。就是我们给计算机我们并不知道解答的数据，让计算机去分析这些...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/27</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/27/2018开始/" >
-                
-                    <span>2018开始</span>
-            </a>
-            <div class="abstract-content">
-                本人2016年毕业。是一个很普通的iOS程序员，真心不是什么大神。
-从2015年12月开始实习到现在，做了两年的iOS。这两年有成长，但没有说已经到达大神的地步。
-呆过两家公司。很可怕的是，我可以没有什么可以展示的app。听起来是不是难以置信……
-第一家公司做了一个app，公司也只做一个app。但搞到最后，那个app居然没有上架。原因是那个app是只对某些专业人士使用，公司策略并不打算上架app store。
-第二家公司做物联网的，主要业务是做后台服务。什么数据管理啊之类的。业务对象是硬件的经销商或者是厂商。而我们移动开发的分两部分。第一部分，是写根据我们公司协议的sdk，用来控制设备的...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/27</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/16/hello-world/" >
-                
-                    <span>Hello World</span>
-            </a>
-            <div class="abstract-content">
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/16</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" src= /avatar/cat.jpg >
-    <div class="profile-name">Crimson Ho</div>
-    
-    <div class="profile-signature">
-        一条咸鱼
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto:AshBass@163.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/AshBass" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-            
-                
-            
-                
-            
-        </div>
-    
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -526,6 +491,24 @@ More...
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -655,6 +638,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
