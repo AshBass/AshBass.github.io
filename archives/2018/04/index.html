@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>机器学习笔记-1-代价函数 · 离久</title>
+    <title>离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,23 +251,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >离久的小站</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">机器学习笔记-1-代价函数</a>
-            </div>
-    </div>
     
     <a class="home-link" href=/>离久的小站</a>
 </header>
@@ -281,142 +270,99 @@
 
 
 
-height:50vh;
-
 >
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            机器学习笔记-1-代价函数
-            <!-- 404 -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <!-- 文章页标签  -->
-            
-                <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-            
-            <div class="post-intro-meta">
-                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/03/30</span>
-                
-                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                    <span class="iconfont-archer">&#xe602;</span>
-                    <span id="busuanzi_value_page_pv"></span>
-                </span>
-                
-                <span class="shareWrapper">
-                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                    <span class="shareText">Share</span>
-                    <ul class="shareList">
-                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                            <div class="share-qrcode"></div>
-                        </li>
-                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                    </ul>
-                </span>
-            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <img src="/2018/03/30/机器学习笔记-1-代价函数/costFunction.png" title="代价函数">
-<p>上面这张图是代价函数的图。我们这里先引入“代价函数”这个概念，接下来我会慢慢一步一步说。</p>
-<p>函数图上的点，是一些数据。我们现在举个例子。假设现在我们要计算机去预测一个房子的价格，x代表房子的平方数，y代表房子的价格。现在我们把这些数据给了计算机，计算机把这些数据分布到图上，形成了上面的那些点。</p>
-<p>我们上面说了，监督学习是给计算机一些我们已知解答的数据来求输入输出的关系。也就是说，我们希望给了这些数据之后，我们再给计算机一个房子的平方数x，计算机可以给出它预测的一个房价的价格y。</p>
-<p>但问题来了，房子的价格和房子的平方数有关系，但不一定同样大小的房子就是同样的价格，可能还有其它因素影响着房价（例如附近是否交通发达）。计算机是怎么得出结论呢 ？</p>
-<p>这里很明显，计算机只能通过已有的数据计算出一个与现实相近的解答。而这，就是数学的线性回归问题。线性回归的定义各位同学可以百度以下。不懂线性回归的同学可以理解为：计算机要总结出一个公式。这个公式在图上画一条线，每个点离这条线的距离的总和h，是所有情况中最小的。</p>
-<p>图中的那条蓝色的线，就是这个例子里面，计算机得出来的最终的公式所画出来的图。</p>
-<p>我们设定公式为 h(x) = θ1x + θ0 为计算机最终得出来的线性方程。</p>
-<p>为什么假设的公式是 h(x) = θ1x + θ0 ？我也不知道 = = 或许这就是科学家厉害的地方，不知道怎么总结出来的……</p>
-<p>（这里注意了，1和0是θ的下标。上面的公式你可以看成 h(x) = ax + b。之所以用θ，是因为图中用了θ）。</p>
-<p>我们需要计算机计算出θ1和θ0两个未知参数。</p>
-<p>既然h(x)为计算机的结果，那么与真是结果的差就是 h(x)-y 。那么每个差值加起来就是 (h(x0) - y0 ) + (h(x1) - y1 ) + … + (h(xn) - yn)。由于相减时会有负数的存在，为了不影响负数对加法的运算，我们将用每个差值的平方相加。这样并不会影响结论。</p>
-<p>于是我们得出以下的公式。其中m为样本的数量。至于为什么有 1/2m，这或许是科学家和我的差距吧……</p>
-<img src="/2018/03/30/机器学习笔记-1-代价函数/costFunction-1.png" title="代价函数-1">
-<p>这个公式，就是我们所说的代价函数。我们要用这个公式去求θ1和θ0两个数的最优解。</p>
-<p>这个公式要怎么解呢 ？ 这里我们先引入一个算法，叫梯度下降。</p>
-<p>我们先假设 θ0 = 0 。那么 h(x) = θ1x 。这是一个很简单的一元函数。我们先用这个例子讲解以下梯度下降。</p>
-<p>现在我们有三组数据 (1,1) (2,2) (3,3) 。</p>
-<p>设如果 θ1 = 1 ，得出下面的图 ：</p>
-<img src="/2018/03/30/机器学习笔记-1-代价函数/costFunction-2.png" title="代价函数-2">
-<p>设如果 θ1 = 0.5 ，得出下面的图 ：</p>
-<img src="/2018/03/30/机器学习笔记-1-代价函数/costFunction-3.png" title="代价函数-3">
-<p>我们不断假设θ1的值，然后不断输入 x=1 , x=2 , x=3 后，通过代价函数，得出J(θ1)与输入值的关系图为 ：</p>
-<img src="/2018/03/30/机器学习笔记-1-代价函数/costFunction-4.png" title="代价函数-4">
-<p>我们上面说过，我们的目的就是要这个代价函数J(θ1)最小，求出参数θ1的数值。这个例子里面，当J(θ1)最小值时，θ1=1。1就是我们这个例子里面，最优解。</p>
-<p>我们把θ0假设成0得出上面的结论。现在我们把θ0也考虑。不断假设θ1和θ0的数值，可以得出一个三维图 ：</p>
-<img src="/2018/03/30/机器学习笔记-1-代价函数/costFunction-5.png" title="代价函数-5">
-<p>这个三维图的最低点，就是代价函数J(θ0,θ1)的最小值。那么，在那个点对应的θ0、θ1值就是最优解。</p>
-<p>如果用二维图像去表达上面的三位图，如下图：</p>
-<img src="/2018/03/30/机器学习笔记-1-代价函数/costFunction-6.png" title="代价函数-6">
-<p>每一个圈代表的J(θ)值相等，越靠近圈的中心，J(θ)值越小。所以就可以得到改点所对应的θ0与θ1。</p>
-<p>那么这个不断假设值的过程我们是怎么进行的呢 ？</p>
-<p>我们下一章会讲到这个代价函数的其中一种求解法 —— 梯度下降。</p>
-
-    </article>
-    <!-- 前后页  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/01/机器学习笔记-2-梯度下降/" title= 机器学习笔记-2-梯度下降 >
-                    <div class="nextTitle">机器学习笔记-2-梯度下降</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/28/机器学习开始/" title= 机器学习开始 >
-                    <div class="prevTitle">机器学习开始</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
+            <main class="main index-page">
     
     
-    <!--PC版-->
-
-    <!--PC版-->
-
-
     
-    <!-- 评论 -->
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >
+                
+                    <span>机器学习笔记-3-关于梯度下降的计算</span>
+            </a>
+            <div class="abstract-content">
+                上一章我们讲了关于梯度下降的一些概念。这一章主要讲一些在计算梯度下降时所要注意的一些情况。
+—– 关于特征缩放 —–
+我们还是举房价的例子。这里我们的样本中有两个参数，一个是房子的大小，一个是房子里卧室的数量。
+
+上图左边是用原始数据画出来的图，每一个圈代表着J(θ)的值。若忘记的同学，可以回去代价函数那一章看看。
+我们很容易看出，用原始数据画出来的图不够直观，可能会带给计算上很多障碍。于是我们可以缩放一下样本的两个参数。这样的话就可以得出上图的右边部分。
+这里你可能会问，这样缩放数据，会不会影响结果。确实，缩放数据之后，每一次计算出来的J(θ)值会不一样，但我们需要的是在梯度下降迭代过...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/04</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/01/机器学习笔记-2-梯度下降/" >
+                
+                    <span>机器学习笔记-2-梯度下降</span>
+            </a>
+            <div class="abstract-content">
+                承接上回代价函数的概念，这章我们讲它的其中一种解法 —— 梯度下降。
+科学家定义了下一次θj（j是θ的下标。例如j=1就是θ1 ）要假设的值的公式（别问我为什么是这个公式了……科学家真心太厉害了）
+
+在这里，α是个纯数字，表示学习速率，这个等等讲。先讲解一下这个公式的意思。
+这个公式意思就是：下一次要预测的θj的值，是当前θj的值减去J(θ0,θ1)的偏导数与纯数字α的乘积。（偏导数是什么，各位同学去百度一下就知道了）
+计算机就是用这个公式推导出下一个要假设的θj值。但要注意一点，要等所有的θj的值要用旧值计算之后，才一起导入到新的一轮计算中去。下图左边是正确示范，右边是错误示范。
+
+关...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    <!-- paginator  -->
+    
 </main>
             <!-- profile -->
             
@@ -482,24 +428,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -683,8 +611,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

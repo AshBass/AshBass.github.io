@@ -299,6 +299,101 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >
+                
+                    <span>机器学习笔记-3-关于梯度下降的计算</span>
+            </a>
+            <div class="abstract-content">
+                上一章我们讲了关于梯度下降的一些概念。这一章主要讲一些在计算梯度下降时所要注意的一些情况。
+—– 关于特征缩放 —–
+我们还是举房价的例子。这里我们的样本中有两个参数，一个是房子的大小，一个是房子里卧室的数量。
+
+上图左边是用原始数据画出来的图，每一个圈代表着J(θ)的值。若忘记的同学，可以回去代价函数那一章看看。
+我们很容易看出，用原始数据画出来的图不够直观，可能会带给计算上很多障碍。于是我们可以缩放一下样本的两个参数。这样的话就可以得出上图的右边部分。
+这里你可能会问，这样缩放数据，会不会影响结果。确实，缩放数据之后，每一次计算出来的J(θ)值会不一样，但我们需要的是在梯度下降迭代过...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/04</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/01/机器学习笔记-2-梯度下降/" >
+                
+                    <span>机器学习笔记-2-梯度下降</span>
+            </a>
+            <div class="abstract-content">
+                承接上回代价函数的概念，这章我们讲它的其中一种解法 —— 梯度下降。
+科学家定义了下一次θj（j是θ的下标。例如j=1就是θ1 ）要假设的值的公式（别问我为什么是这个公式了……科学家真心太厉害了）
+
+在这里，α是个纯数字，表示学习速率，这个等等讲。先讲解一下这个公式的意思。
+这个公式意思就是：下一次要预测的θj的值，是当前θj的值减去J(θ0,θ1)的偏导数与纯数字α的乘积。（偏导数是什么，各位同学去百度一下就知道了）
+计算机就是用这个公式推导出下一个要假设的θj值。但要注意一点，要等所有的θj的值要用旧值计算之后，才一起导入到新的一轮计算中去。下图左边是正确示范，右边是错误示范。
+
+关...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/30/机器学习笔记-1-代价函数/" >
+                
+                    <span>机器学习笔记-1-代价函数</span>
+            </a>
+            <div class="abstract-content">
+                
+上面这张图是代价函数的图。我们这里先引入“代价函数”这个概念，接下来我会慢慢一步一步说。
+函数图上的点，是一些数据。我们现在举个例子。假设现在我们要计算机去预测一个房子的价格，x代表房子的平方数，y代表房子的价格。现在我们把这些数据给了计算机，计算机把这些数据分布到图上，形成了上面的那些点。
+我们上面说了，监督学习是给计算机一些我们已知解答的数据来求输入输出的关系。也就是说，我们希望给了这些数据之后，我们再给计算机一个房子的平方数x，计算机可以给出它预测的一个房价的价格y。
+但问题来了，房子的价格和房子的平方数有关系，但不一定同样大小的房子就是同样的价格，可能还有其它因素影响着房价（例...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/03/28/机器学习开始/" >
                 
                     <span>机器学习开始</span>
@@ -455,7 +550,24 @@
     
     
     
-    <div class="total-archive"> Total : 5 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 6 </div>
     
     <div class="post-archive">
     
@@ -467,12 +579,17 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/31</span><a class="archive-post-title" href= "/2018/03/31/机器学习笔记-2-梯度下降/" >机器学习笔记(2)-梯度下降</a>
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >机器学习笔记-3-关于梯度下降的计算</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/机器学习笔记-1-代价函数/" >机器学习笔记(1)-代价函数</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/机器学习笔记-2-梯度下降/" >机器学习笔记-2-梯度下降</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/机器学习笔记-1-代价函数/" >机器学习笔记-1-代价函数</a>
         </li>
     
     
