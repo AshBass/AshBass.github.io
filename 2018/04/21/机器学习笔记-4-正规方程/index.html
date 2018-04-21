@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>机器学习笔记-3-关于梯度下降的计算 · 离久</title>
+    <title>机器学习笔记-4-正规函数 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >离久的小站</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">机器学习笔记-3-关于梯度下降的计算</a>
+                <a href="#" class="post-name">机器学习笔记-4-正规函数</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            机器学习笔记-3-关于梯度下降的计算
+            机器学习笔记-4-正规函数
             <!-- 404 -->
             
         </h1>
@@ -321,7 +321,7 @@ height:50vh;
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/04/04</span>
+                <span class="post-intro-time">2018/04/21</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -350,36 +350,35 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>上一章我们讲了关于梯度下降的一些概念。这一章主要讲一些在计算梯度下降时所要注意的一些情况。</p>
-<p>—– 关于特征缩放 —–</p>
-<p>我们还是举房价的例子。这里我们的样本中有两个参数，一个是房子的大小，一个是房子里卧室的数量。</p>
-<img src="/2018/04/04/机器学习笔记-3-关于梯度下降的计算/FeatureScaling.png" title="特征缩放">
-<p>上图左边是用原始数据画出来的图，每一个圈代表着J(θ)的值。若忘记的同学，可以回去代价函数那一章看看。</p>
-<p>我们很容易看出，用原始数据画出来的图不够直观，可能会带给计算上很多障碍。于是我们可以缩放一下样本的两个参数。这样的话就可以得出上图的右边部分。</p>
-<p>这里你可能会问，这样缩放数据，会不会影响结果。确实，缩放数据之后，每一次计算出来的J(θ)值会不一样，但我们需要的是在梯度下降迭代过程中判断每一步的J(θ)值与上一步的比较。只要每一步的公式相同，我们最后得出的J(θ)最小值时所对应的θ是一样的。</p>
-<p>事实上，我们尽量让我们的参数在-1和1之间的数值是比较容易计算的。</p>
-<p>—– 关于多元回归方程 —–</p>
-<p>现在我们假设房价只与房子的面积有关。</p>
-<img src="/2018/04/04/机器学习笔记-3-关于梯度下降的计算/FeaturesAndPolynomialRegression.png" title="特征与多元回归方程">
-<p>我们根据数据在图上描出各个点，很明显，之前的直线型的回归方程已经不能满足我们的需求，我们需要一条弧线。</p>
-<p>然而一个一元二次的函数可能会像上图蓝色的线一样，到了最高峰就会降下来。然而现实中房价并不会越大价格越低。于是，我们将公式改为绿色线所代表的一元三次方程。这样的话就满足我们的现实情况。如果改为三次方程后，计算数值大的话，我们可以适当缩放参数。</p>
+        <p>在这一章，我们会涉及到矩阵的知识，但由于比较浅，百度一下矩阵运算即可。</p>
+<p>除了梯度下降方法以外，我们还有一个方法 —— 正规方程。</p>
+<img src="/2018/04/21/机器学习笔记-4-正规方程/NormalEquation.png" title="正规方程">
+<p>由于文本格式问题，我将上面的方程写成下面这种形式：</p>
+<p>θ = ((X’<em>X)^-1)</em>X’*y</p>
+<p>其中，X、y均为矩阵。X’为X的转置矩阵。</p>
+<img src="/2018/04/21/机器学习笔记-4-正规方程/NormalEquation1.png" title="正规方程1">
+<p>还是举房价的例子，这里我们有四个样本组。我们假设房价只与面积(x1)、房间数(x2)、楼层(x3)、房龄有关(x4)。</p>
+<p>在这里我们建立一个矩阵。每一行代表的是一个样本的参数。</p>
+<p>那么，图中的x0是什么呢 ？</p>
+<p>还记得我们第一章说的代价函数 h(x) = θ1x + θ0 吗。在第一章的例子中，我们每一个样本只有一个参数x，但其实我们还有一个 x0，我们可以可以把θ0 看作 θ0 * x0 ，x0 = 1 。同理我们这章的例子对于每个样本也假设了一个x0 = 1。</p>
+<p>那么我们就可以得出我们的样本参数X，还有我们每一个样本结果的矩阵y。</p>
+<p>使用正规方程 θ = ((X’<em>X)^-1)</em>X’*y，可以直接得出我们最终想要的结果θ，不需要多次迭代梯度下降。</p>
+<p>看上去，正规方程比梯度下降的运算过程简单很多。下面我举一下两个算法的特点。</p>
+<p>梯度下降：<br>    1.需要选择学习速率α<br>    2.需要多次迭代运算<br>    3.运算时间为O(kn^2)</p>
+<p>正规方程：<br>    1.直接公式求解<br>    2.运算时间为O(n^3),需要运算 X*X’</p>
+<p>通过上面两个比较可以得出，梯度下降适合运算样本数量较大的情况，而正规方程则相反。</p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/21/机器学习笔记-4-正规方程/" title= 机器学习笔记-4-正规函数 >
-                    <div class="nextTitle">机器学习笔记-4-正规函数</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/04/01/机器学习笔记-2-梯度下降/" title= 机器学习笔记-2-梯度下降 >
-                    <div class="prevTitle">机器学习笔记-2-梯度下降</div>
+                <a href= "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" title= 机器学习笔记-3-关于梯度下降的计算 >
+                    <div class="prevTitle">机器学习笔记-3-关于梯度下降的计算</div>
                 </a>
             
         </li>
