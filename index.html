@@ -314,6 +314,40 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/27/机器学习笔记-5-逻辑回归/" >
+                
+                    <span>机器学习笔记-5-逻辑回归</span>
+            </a>
+            <div class="abstract-content">
+                关于逻辑回归，用于估计某种事物的可能性，例如一个肿瘤是良性还是恶性。
+前面我们讲的线性回归，是否可以用在我们这个例子里面呢？答案是否定的。因为我们只有两个结果，是或者否。也就是说，我们的数学模型所预测的数值必须在一个区间内。 
+
+
+
+上图是我们所要图以及他所对应的方程。我们通常叫这种方程为逻辑方程
+如果以判断一个肿瘤是否为良性为例子的话，我们假设y为良性肿瘤的可能性。y=1代表是，y=0代表否。这里由于我们只有两个输出（是和否），我们假设：大于等于0.5，我们认为是；小于等于0.5，我们认为否。
+选0.5为判断阈值，是通常的做法。但我们可以根据具体的实际情况来调整这个阈值。
+要注意，这里...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/27</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/26/创建CocoaPods私有库/" >
                 
                     <span>创建CocoaPods私有库</span>
@@ -487,8 +521,8 @@ height:50vh;
 我的笔记知识、图片都是来自于这个课程的。
 —– 以下所有内容为个人理解。可能表述并不准确。—–
 机器学习分为两种。第一种是监督学习，第二种是无监督学习。
-1.监督学习。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。
-2.无监督学习。就是我们给计算机我们并不知道解答的数据，让计算机去分析这些...
+1.监督学习。通常监督学习分为“回归”和“分类”。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。
+回归是指我们通过给出的一些数据，预测结...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -533,30 +567,6 @@ height:50vh;
         <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
     
 </div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/16/hello-world/" >
-                
-                    <span>Hello World</span>
-            </a>
-            <div class="abstract-content">
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/16</span>
-                </div>
-                <!-- tags  -->
                 
             </div>
         </article>
@@ -819,6 +829,11 @@ More...
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2018/04/27/机器学习笔记-5-逻辑回归/" >机器学习笔记-5-逻辑回归</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
         </li>
     
@@ -850,11 +865,6 @@ More...
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/2018开始/" >2018开始</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/hello-world/" >Hello World</a>
         </li>
     
     </div>

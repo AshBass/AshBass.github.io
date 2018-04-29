@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>机器学习开始 · 离久</title>
+    <title>机器学习笔记-5-逻辑回归 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >离久的小站</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">机器学习开始</a>
+                <a href="#" class="post-name">机器学习笔记-5-逻辑回归</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            机器学习开始
+            机器学习笔记-5-逻辑回归
             <!-- 404 -->
             
         </h1>
@@ -321,7 +321,7 @@ height:50vh;
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/03/28</span>
+                <span class="post-intro-time">2018/04/27</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -350,35 +350,68 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>最近在看机器学习的视频。由于内容有点多，怕记不住，所以用这个博客来记录下自己学习的过程。顺便在写博客的时候复习一下。</p>
-<p>我看的机器学习课程地址 ：<a href="https://www.coursera.org/learn/machine-learning/home/welcome" target="_blank" rel="noopener">https://www.coursera.org/learn/machine-learning/home/welcome</a></p>
-<p>我的笔记知识、图片都是来自于这个课程的。</p>
-<p>—– 以下所有内容为个人理解。可能表述并不准确。—–</p>
-<p>机器学习分为两种。第一种是监督学习，第二种是无监督学习。</p>
-<p>1.监督学习。通常监督学习分为“回归”和“分类”。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。</p>
-<p>回归是指我们通过给出的一些数据，预测结果。例如我们给出一个房子的大小，预测它的价格。</p>
-<p>监督学习的分类，是指我们通过给出一些数据，去判断一个事情的是否。例如我们可以通过分类判断一个肿瘤是否是良性或恶性肿瘤；垃圾邮件分类等等。这些分类都是做“是否”的分类。</p>
-<p>2.无监督学习。就是我们给计算机我们并不知道解答的数据，让计算机去分析这些数据并得出结论。通常用于数据分类。</p>
-<p>我们日常中所看见的新闻的分类，就是无监督学习的应用。</p>
-<p>—– 华丽的分割线 —–</p>
-<p>之后我会根据我所看的课程，根据我的理解写出博客。如果写的不对，还请大神指出，谢谢。</p>
+        <p>关于逻辑回归，用于估计某种事物的可能性，例如一个肿瘤是良性还是恶性。</p>
+<p>前面我们讲的线性回归，是否可以用在我们这个例子里面呢？答案是否定的。因为我们只有两个结果，是或者否。也就是说，我们的数学模型所预测的数值必须在一个区间内。 </p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归.png" title="逻辑回归">
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归1.png" title="逻辑回归1">
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归2.png" title="逻辑回归2">
+<p>上图是我们所要图以及他所对应的方程。我们通常叫这种方程为逻辑方程</p>
+<p>如果以判断一个肿瘤是否为良性为例子的话，我们假设y为良性肿瘤的可能性。y=1代表是，y=0代表否。这里由于我们只有两个输出（是和否），我们假设：大于等于0.5，我们认为是；小于等于0.5，我们认为否。</p>
+<p>选0.5为判断阈值，是通常的做法。但我们可以根据具体的实际情况来调整这个阈值。</p>
+<p>要注意，这里我们预测的是可能性，而不是概率。两者在数学上层面是不一样的。</p>
+<p>也就是说，如果一个肿瘤是良性的可能性 y = 0.7，那么恶性的可能性为 1 - 0.7 = 30% 。</p>
+<blockquote><p>关于逻辑回归的决策边界。</p>
+</blockquote>
+<p>假设我们的样本里有两个参数 x1 和 x2 ，那么我们可以得出关于两个参数的互相的关系图：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归3.png" title="逻辑回归3">
+<p>这里我们的数据都只是假设，并不是真实数据。真实情况下是不会刚好两边数据都那么整各占一边的。</p>
+<p>我们可以看出，符合 y=1 和 y=0 的数据在这个关系图上的分布点大致分为两边。我们可以根据一条线来分开这两边的数据。那么这条线我们称之为决策边界</p>
+<p>对于这种非闭合型的决策边界，我们称之为线性决策边界。对于闭合型的决策边界，我们称之为非线性决策边界。如下图：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归4.png" title="逻辑回归4">
+<p>决策边界不是训练集的属性，而是假设本身及其参数的属性。我们不是用训练集来定义决策边界的，而是由特征变量θ决定。</p>
+<blockquote><p>关于逻辑回归的代价函数。</p>
+</blockquote>
+<p>还记得我们线性回归的代价函数吗？如下图：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归5.png" title="逻辑回归5">
+<p>如果我们把我们的一开始定下的方程带入会出现什么效果呢？如下图：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归6.png" title="逻辑回归6">
+<p>我们可以看见，画出来的图形并不是一个圆滑的弧线，而是波浪型的。这会导致我们做梯度下降运算时，会误以为其中一个弧的最低点是最优解，而实际上我们的最优解在中间那个弧的最低点。</p>
+<p>所以，如果我们把线性回归的代价函数应用到逻辑回归中，这显然是不合适的。</p>
+<p>那么，逻辑回归的代价函数是什么呢？</p>
+<p>我们需要一个函数，能让我们使用梯度下降等算法找到全局的最小值，所以确定h(x)和y的关系如下图：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归7.png" title="逻辑回归7">
+<p>我们根据y值的不同确定不同的h(x)，它们的图形分别是：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归8.png" title="逻辑回归8">
+<p>我们把这个关系式代入代价函数中：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归9.png" title="逻辑回归9">
+<p>这个代价函数的解，我们依旧用梯度下降方法去解：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归10.png" title="逻辑回归10">
+<p>看上去这个是不是和线性回归的公式一样？其实不是的，因为现在我们的代价函数不一样了，导致我们偏导数后的公式也不一样：</p>
+<img src="/2018/04/27/机器学习笔记-5-逻辑回归/逻辑回归11.png" title="逻辑回归11">
+<p>这就是关于逻辑回归的代价函数及其梯度下降解法。</p>
+<p>在通常情况下，我们还有许多算法来解这个代价函数。而且还不需要选择学习速率，比梯度下降更快。这些解法包括：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">共轭梯度 (Conjugate Gradient)</span><br><span class="line">局部优化法(Broyden fletcher goldfarb shann,BFGS)</span><br><span class="line">有限内存局部优化法(LBFGS)</span><br></pre></td></tr></table></figure>
+<blockquote><p>关于逻辑回归的多输出。</p>
+</blockquote>
+<p>上面我们讲的例子是只有两个输出，是和否。如果我们需要多个输出，例如天气：晴天、多云、雷暴，我们应该怎么选择做呢？</p>
+<p>这种问题我们称之为一对多的关系。其实做法很简单，就是将每个结果独立分析，然后再组合一起。</p>
+<p>假如我们需要得到下图的结果：</p>
+
+<p>我们先把每个问题独立，将每个结果独立求解出来。例如我们先归类晴天，再归类多云，最后归类雷暴。如下图：</p>
+
+<p>这就是我们解决一对多问题的方法。</p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/03/30/机器学习笔记-1-代价函数/" title= 机器学习笔记-1-代价函数 >
-                    <div class="nextTitle">机器学习笔记-1-代价函数</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/26/2018开始/" title= 2018开始 >
-                    <div class="prevTitle">2018开始</div>
+                <a href= "/2018/04/26/创建CocoaPods私有库/" title= 创建CocoaPods私有库 >
+                    <div class="prevTitle">创建CocoaPods私有库</div>
                 </a>
             
         </li>
