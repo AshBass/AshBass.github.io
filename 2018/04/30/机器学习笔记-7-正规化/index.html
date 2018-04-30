@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>离久</title>
+    <title>机器学习笔记-7-正规化 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,12 +251,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >离久的小站</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">机器学习笔记-7-正规化</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>离久的小站</a>
 </header>
@@ -270,267 +281,116 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            机器学习笔记-7-正规化
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/04/30</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-7-正规化/" >
-                
-                    <span>机器学习笔记-7-正规化</span>
-            </a>
-            <div class="abstract-content">
-                我们还是以上一章节的图作为例子。
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>我们还是以上一章节的图作为例子。</p>
+<img src="/2018/04/30/机器学习笔记-7-正规化/正规化.png" title="正规化">
+<p>左侧图一是一个符合我们要求的函数，而右侧图二则是一个过度拟合的函数。</p>
+<p>使用正规化来解决过度拟合，我们需要加上惩罚项。使得我们的高阶项变得足够小，让函数得出的值更加接近我们所需要的函数。</p>
+<img src="/2018/04/30/机器学习笔记-7-正规化/正规化2.png" title="正规化2">
+<p>我们需要尽量减少代价函数的均方误差。我们在后面加上03和04与1000的乘积。那么我们在对这个函数最小化值时，03和04就会需要变得足够小。这样就达成我们的目的了。</p>
+<p>那么，抛开我们这个例子。我们的训练集的样本有那么多特征变量，可能有100个或者更多，我们应该如何知道哪写特征变量需要“惩罚”呢？</p>
+<p>我们不需要一个一个去度量更改每个0参数。我们只需要更改代价函数就可以完成正规化。</p>
+<p>举个线性回归的例子：</p>
+<img src="/2018/04/30/机器学习笔记-7-正规化/正规化3.png" title="正规化3">
+<p>红线部分是我们增加的正规化项。注意了，这里我们的正规化项下标是从1开始的。因为我们默认对00不做惩罚（因为x0默认是1，这是一个常数项）。</p>
+<p>λ是我们在这个正则化中需要控制的参数，它会影响两者之间的平衡。要注意了，这里的λ取值不能太大。λ越大，我们对每个0参数的惩罚就越强。最后可能导致01=0，02=0，03=0……导致函数最后永远只等于一个常数。这样就远离了我们的目的。</p>
 
-左侧图一是一个符合我们要求的函数，而右侧图二则是一个过度拟合的函数。
-使用正规化来解决过度拟合，我们需要加上惩罚项。使得我们的高阶项变得足够小，让函数得出的值更加接近我们所需要的函数。
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/30/机器学习笔记-6-过度拟合/" title= 机器学习笔记-6-过度拟合 >
+                    <div class="prevTitle">机器学习笔记-6-过度拟合</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
 
-我们需要尽量减少代价函数的均方误差。我们在后面加上03和04与1000的乘积。那么我们在对这个函数最小化值时，03和04就会需要变得足够小。这样就达成我们的目的了。
-那么，抛开我们这个例子。我们的训练集的样本有那么多特征变量，可能有100个或者更多，我们应该如何知道哪写特征变量需要“惩罚”呢？
-我们不需要一个一个去度量更改每个0参数。我们只需要更改代价函数就可以完成正...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
+<!-- City版安装代码已完成 -->
     
     
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-6-过度拟合/" >
-                
-                    <span>机器学习笔记-6-过度拟合</span>
-            </a>
-            <div class="abstract-content">
-                这章我们还是举回预测房价的例子。假设我们有几个样本，我们需要通过这些样本去拟定一个数学公式：
+    <!--PC版-->
 
-图一是一个一元一次方程，很显然，它并不是很适合于我们的房价例子中。对于新的样本值加入后，它会出现明显的偏差。
-图二是一个一元二次方程，这是我们前几个章节讲到过的，它基本满足于我们的预测房价例子。
-图三是个高阶项的方程。这里我们只是举例为最高为4次方。它通过了我们样本里面的每一个点。
-那么图三的方程既然能通过每一个点，那么它不是应该是最好的数学模型选择吗？
-答案显然是不。我们可以看到，图三蜿蜒曲折，虽然能通过样本中的每一个点，然而对于未来未知的新样本，它的趋势很显然是不能满足的。
-对图一这种偏差...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/27/机器学习笔记-5-逻辑回归/" >
-                
-                    <span>机器学习笔记-5-逻辑回归</span>
-            </a>
-            <div class="abstract-content">
-                关于逻辑回归，用于估计某种事物的可能性，例如一个肿瘤是良性还是恶性。
-前面我们讲的线性回归，是否可以用在我们这个例子里面呢？答案是否定的。因为我们只有两个结果，是或者否。也就是说，我们的数学模型所预测的数值必须在一个区间内。 
+    <!--PC版-->
 
 
-
-上图是我们所要图以及他所对应的方程。我们通常叫这种方程为逻辑方程
-如果以判断一个肿瘤是否为良性为例子的话，我们假设y为良性肿瘤的可能性。y=1代表是，y=0代表否。这里由于我们只有两个输出（是和否），我们假设：大于等于0.5，我们认为是；小于等于0.5，我们认为否。
-选0.5为判断阈值，是通常的做法。但我们可以根据具体的实际情况来调整这个阈值。
-要注意，这里...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/27</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/26/创建CocoaPods私有库/" >
-                
-                    <span>创建CocoaPods私有库</span>
-            </a>
-            <div class="abstract-content">
-                在网上看过不少关于创建私有库的博客，但大多都是互相抄袭，而且坑非常的多。最近因公司要求，要做一个公司的Pod仓库，所以有了一点点心得。
-例子中用到git命令行，如果有小白不知道git命令行怎么使用，请先百度git的使用。
-以下我会用github的为例子进行讲解。由于github的私人仓库要付费，这里我选择public。如果你是coding、码云等，你可以选择private，毕竟是私有库嘛。
-首先我们先在自己的github上创建一个我们的Pod仓库。仓库名字为MyPod。
-
-接下来我们在终端执行：
-1pod repo add MyPod https://github.com/AshBass...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/21/机器学习笔记-4-正规方程/" >
-                
-                    <span>机器学习笔记-4-正规函数</span>
-            </a>
-            <div class="abstract-content">
-                在这一章，我们会涉及到矩阵的知识，但由于比较浅，百度一下矩阵运算即可。
-除了梯度下降方法以外，我们还有一个方法 —— 正规方程。
-
-由于文本格式问题，我将上面的方程写成下面这种形式：
-θ = ((X’X)^-1)X’*y
-其中，X、y均为矩阵。X’为X的转置矩阵。
-
-还是举房价的例子，这里我们有四个样本组。我们假设房价只与面积(x1)、房间数(x2)、楼层(x3)、房龄有关(x4)。
-在这里我们建立一个矩阵。每一行代表的是一个样本的参数。
-那么，图中的x0是什么呢 ？
-还记得我们第一章说的代价函数 h(x) = θ1x + θ0 吗。在第一章的例子中，我们每一个样本只有一个参数x，但其实...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/21</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >
-                
-                    <span>机器学习笔记-3-关于梯度下降的计算</span>
-            </a>
-            <div class="abstract-content">
-                上一章我们讲了关于梯度下降的一些概念。这一章主要讲一些在计算梯度下降时所要注意的一些情况。
-—– 关于特征缩放 —–
-我们还是举房价的例子。这里我们的样本中有两个参数，一个是房子的大小，一个是房子里卧室的数量。
-
-上图左边是用原始数据画出来的图，每一个圈代表着J(θ)的值。若忘记的同学，可以回去代价函数那一章看看。
-我们很容易看出，用原始数据画出来的图不够直观，可能会带给计算上很多障碍。于是我们可以缩放一下样本的两个参数。这样的话就可以得出上图的右边部分。
-这里你可能会问，这样缩放数据，会不会影响结果。确实，缩放数据之后，每一次计算出来的J(θ)值会不一样，但我们需要的是在梯度下降迭代过...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/04</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/机器学习笔记-2-梯度下降/" >
-                
-                    <span>机器学习笔记-2-梯度下降</span>
-            </a>
-            <div class="abstract-content">
-                承接上回代价函数的概念，这章我们讲它的其中一种解法 —— 梯度下降。
-科学家定义了下一次θj（j是θ的下标。例如j=1就是θ1 ）要假设的值的公式（别问我为什么是这个公式了……科学家真心太厉害了）
-
-在这里，α是个纯数字，表示学习速率，这个等等讲。先讲解一下这个公式的意思。
-这个公式意思就是：下一次要预测的θj的值，是当前θj的值减去J(θ0,θ1)的偏导数与纯数字α的乘积。（偏导数是什么，各位同学去百度一下就知道了）
-计算机就是用这个公式推导出下一个要假设的θj值。但要注意一点，要等所有的θj的值要用旧值计算之后，才一起导入到新的一轮计算中去。下图左边是正确示范，右边是错误示范。
-
-关...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -596,6 +456,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -883,6 +761,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
