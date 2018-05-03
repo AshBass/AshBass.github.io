@@ -299,19 +299,24 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-7-正规化/" >
+            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-8-正规化的运算/" >
                 
-                    <span>机器学习笔记-7-正规化</span>
+                    <span>机器学习笔记-8-正规化的运算</span>
             </a>
             <div class="abstract-content">
-                我们还是以上一章节的图作为例子。
+                这是正规化后线性回归的代价函数：
 
-左侧图一是一个符合我们要求的函数，而右侧图二则是一个过度拟合的函数。
-使用正规化来解决过度拟合，我们需要加上惩罚项。使得我们的高阶项变得足够小，让函数得出的值更加接近我们所需要的函数。
+这是我们之前说的梯度下降公式：
 
-我们需要尽量减少代价函数的均方误差。我们在后面加上03和04与1000的乘积。那么我们在对这个函数最小化值时，03和04就会需要变得足够小。这样就达成我们的目的了。
-那么，抛开我们这个例子。我们的训练集的样本有那么多特征变量，可能有100个或者更多，我们应该如何知道哪写特征变量需要“惩罚”呢？
-我们不需要一个一个去度量更改每个0参数。我们只需要更改代价函数就可以完成正...
+还记得我们这个梯度下降的公式的由来吗？其实就是代价函数J(θ)对θ的偏导数。那么我们只要把正规项也纳入偏导数的范围就好了，所以我们可以得出：
+
+我们将公式简化之后可以得到：
+
+十分有趣的是，这里(1−α*λ/m)通常会是一个刚好比1小的数，例如0.98、0.99。而后半部分是我们正常情况下的梯度下降公式。
+注意，这里θ0还是照常梯度下降。因为我们上一节说了，我们通常会设一个特征变量x0=1，所以θ0*x0是一个常数项，不需要特殊处理。
+对于正规方程，我们也推导出正规化后的正规方程：
+
+正规化的正规方程和原来的使用限制一...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -332,7 +337,40 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-6-过度拟合/" >
+            <a class="abstract-title" href = "/2018/04/29/机器学习笔记-7-正规化/" >
+                
+                    <span>机器学习笔记-7-正规化</span>
+            </a>
+            <div class="abstract-content">
+                我们还是以上一章节的图作为例子。
+
+左侧图一是一个符合我们要求的函数，而右侧图二则是一个过度拟合的函数。
+使用正规化来解决过度拟合，我们需要加上惩罚项。使得我们的高阶项变得足够小，让函数得出的值更加接近我们所需要的函数。
+
+我们需要尽量减少代价函数的均方误差。我们在后面加上03和04与1000的乘积。那么我们在对这个函数最小化值时，03和04就会需要变得足够小。这样就达成我们的目的了。
+那么，抛开我们这个例子。我们的训练集的样本有那么多特征变量，可能有100个或者更多，我们应该如何知道哪写特征变量需要“惩罚”呢？
+我们不需要一个一个去度量更改每个0参数。我们只需要更改代价函数就可以完成正...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/29</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/28/机器学习笔记-6-过度拟合/" >
                 
                     <span>机器学习笔记-6-过度拟合</span>
             </a>
@@ -349,7 +387,7 @@
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/30</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/28</span>
                 </div>
                 <!-- tags  -->
                 
@@ -745,45 +783,7 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 10 </div>
+    <div class="total-archive"> Total : 12 </div>
     
     <div class="post-archive">
     
@@ -795,12 +795,22 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-7-正规化/" >机器学习笔记-7-正规化</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/劳动节日常杂谈/" >劳动节日常杂谈</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-6-过度拟合/" >机器学习笔记-6-过度拟合</a>
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-8-正规化的运算/" >机器学习笔记-8-正规化的运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2018/04/29/机器学习笔记-7-正规化/" >机器学习笔记-7-正规化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2018/04/28/机器学习笔记-6-过度拟合/" >机器学习笔记-6-过度拟合</a>
         </li>
     
     

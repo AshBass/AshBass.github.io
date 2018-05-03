@@ -314,19 +314,57 @@ height:50vh;
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-7-正规化/" >
+            <a class="abstract-title" href = "/2018/05/01/劳动节日常杂谈/" >
                 
-                    <span>机器学习笔记-7-正规化</span>
+                    <span>劳动节日常杂谈</span>
             </a>
             <div class="abstract-content">
-                我们还是以上一章节的图作为例子。
+                其实最近心态有点崩，有点迷茫。
+并不是工作上有什么压力。对于公司这种业务迭代，我在技术上还是游刃有余（虽说上一手交接的代码结构有点乱）。
+我上一家公司的一个同事，去了恒大集团工作，工资翻倍，拿到了一个让我渴望的薪资。虽说是深圳不是广州。
+也不是说我嫉妒他，看不得别人好。毕竟我们俩很熟，他好我也开心。只不过我在反省自己，是不是真的有什么不足呢？
+2018年已经过去1/3了，我的机器学习课程也大体上完成1/3。
 
-左侧图一是一个符合我们要求的函数，而右侧图二则是一个过度拟合的函数。
-使用正规化来解决过度拟合，我们需要加上惩罚项。使得我们的高阶项变得足够小，让函数得出的值更加接近我们所需要的函数。
+有人说我学机器学习没有用。其实我也觉得没有什么用，就是兴趣爱好，你说我要用它来找工作，我估计我会饿死。
+最近人工智能那么火，一大堆人去搞，不管是毕业的也好未毕业的也好。我自问不是一...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/01</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-8-正规化的运算/" >
+                
+                    <span>机器学习笔记-8-正规化的运算</span>
+            </a>
+            <div class="abstract-content">
+                这是正规化后线性回归的代价函数：
 
-我们需要尽量减少代价函数的均方误差。我们在后面加上03和04与1000的乘积。那么我们在对这个函数最小化值时，03和04就会需要变得足够小。这样就达成我们的目的了。
-那么，抛开我们这个例子。我们的训练集的样本有那么多特征变量，可能有100个或者更多，我们应该如何知道哪写特征变量需要“惩罚”呢？
-我们不需要一个一个去度量更改每个0参数。我们只需要更改代价函数就可以完成正...
+这是我们之前说的梯度下降公式：
+
+还记得我们这个梯度下降的公式的由来吗？其实就是代价函数J(θ)对θ的偏导数。那么我们只要把正规项也纳入偏导数的范围就好了，所以我们可以得出：
+
+我们将公式简化之后可以得到：
+
+十分有趣的是，这里(1−α*λ/m)通常会是一个刚好比1小的数，例如0.98、0.99。而后半部分是我们正常情况下的梯度下降公式。
+注意，这里θ0还是照常梯度下降。因为我们上一节说了，我们通常会设一个特征变量x0=1，所以θ0*x0是一个常数项，不需要特殊处理。
+对于正规方程，我们也推导出正规化后的正规方程：
+
+正规化的正规方程和原来的使用限制一...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -347,7 +385,40 @@ height:50vh;
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/30/机器学习笔记-6-过度拟合/" >
+            <a class="abstract-title" href = "/2018/04/29/机器学习笔记-7-正规化/" >
+                
+                    <span>机器学习笔记-7-正规化</span>
+            </a>
+            <div class="abstract-content">
+                我们还是以上一章节的图作为例子。
+
+左侧图一是一个符合我们要求的函数，而右侧图二则是一个过度拟合的函数。
+使用正规化来解决过度拟合，我们需要加上惩罚项。使得我们的高阶项变得足够小，让函数得出的值更加接近我们所需要的函数。
+
+我们需要尽量减少代价函数的均方误差。我们在后面加上03和04与1000的乘积。那么我们在对这个函数最小化值时，03和04就会需要变得足够小。这样就达成我们的目的了。
+那么，抛开我们这个例子。我们的训练集的样本有那么多特征变量，可能有100个或者更多，我们应该如何知道哪写特征变量需要“惩罚”呢？
+我们不需要一个一个去度量更改每个0参数。我们只需要更改代价函数就可以完成正...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/29</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/28/机器学习笔记-6-过度拟合/" >
                 
                     <span>机器学习笔记-6-过度拟合</span>
             </a>
@@ -364,7 +435,7 @@ height:50vh;
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/30</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/28</span>
                 </div>
                 <!-- tags  -->
                 
@@ -574,70 +645,11 @@ height:50vh;
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/28/机器学习开始/" >
-                
-                    <span>机器学习开始</span>
-            </a>
-            <div class="abstract-content">
-                最近在看机器学习的视频。由于内容有点多，怕记不住，所以用这个博客来记录下自己学习的过程。顺便在写博客的时候复习一下。
-我看的机器学习课程地址 ：https://www.coursera.org/learn/machine-learning/home/welcome
-我的笔记知识、图片都是来自于这个课程的。
-—– 以下所有内容为个人理解。可能表述并不准确。—–
-机器学习分为两种。第一种是监督学习，第二种是无监督学习。
-1.监督学习。通常监督学习分为“回归”和“分类”。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。
-回归是指我们通过给出的一些数据，预测结...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/2018开始/" >
-                
-                    <span>2018开始</span>
-            </a>
-            <div class="abstract-content">
-                本人2016年毕业。不在大厂，也不在中厂，现在在一个国企里面搬砖。是一个很普通的iOS程序员，真心不是什么大神。
-从2015年12月开始实习到现在，做了两年的iOS。这两年有成长，但没有说已经到达大神的地步。
-呆过两家公司。由于许多原因，我没有什么可以展示的app。听起来是不是难以置信……
-之前没有写博客和demo的习惯，但后来发现不写点博客和demo，有时候自己会忘记很多已经学到的东西（可能人已经老了吧…）
-打算2018年，多学学点东西。iOS方面多写点技术博客，在其它方面也涉及一下，增加自己的见识。
-我给我自己2018定下的目标是：    1.了解机器学习，只是个人兴趣，并不是为了找...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
+    </nav>
     
 </main>
             <!-- profile -->
@@ -891,45 +903,7 @@ height:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 10 </div>
+    <div class="total-archive"> Total : 12 </div>
     
     <div class="post-archive">
     
@@ -941,12 +915,22 @@ height:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-7-正规化/" >机器学习笔记-7-正规化</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/劳动节日常杂谈/" >劳动节日常杂谈</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-6-过度拟合/" >机器学习笔记-6-过度拟合</a>
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-8-正规化的运算/" >机器学习笔记-8-正规化的运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2018/04/29/机器学习笔记-7-正规化/" >机器学习笔记-7-正规化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2018/04/28/机器学习笔记-6-过度拟合/" >机器学习笔记-6-过度拟合</a>
         </li>
     
     
