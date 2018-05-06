@@ -299,6 +299,81 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/06/机器学习笔记-10-神经网络的使用/" >
+                
+                    <span>机器学习笔记-10-神经网络的使用</span>
+            </a>
+            <div class="abstract-content">
+                我们知道了神经网络模型的概念，那么我们该怎么应用呢？
+在计算机运算当中，我们常用的与、或、非、异或运算都可以用神经网络表示。
+我们知道，逻辑回归的s型函数中，x越大，y就越接近1。相反，x越小，y越接近0。
+对此，我们可以调整权重θ，达到我们的目的。
+与运算：
+或运算：
+非运算：
+异或运算：
+通过异或运算我们可以知道，神经网络就是可以通过许多个简单的函数，来计算一个复杂的结果。
+在日常生活中，我们使用神经网络去进行一对多的识别，我们会有许多个输出层。
+
+在上面的例子中，我们把输出层的结果组合成一个矩阵h，我们通过获得矩阵中对应的数字得到识别的结果。
+
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/06/机器学习笔记-9-神经网络模型/" >
+                
+                    <span>机器学习笔记-9-神经网络模型</span>
+            </a>
+            <div class="abstract-content">
+                在生物学上，我们人类的神经网络是通过神经元来传递信息的：
+
+我们用人类神经网络作为参考，让计算机模仿我们的神经网络的原理来传递信息。
+举个逻辑回归的例子：
+
+这里每个参数都和我们之前讲的逻辑回归概念一样。对于θ，在这个模型理念里面我们称之为“权重”。而h(x)我们称之为激励函数。
+黄色圈代表一个神经元。在这里，我们称之为一个有s型函数或者逻辑函数作为激励函数的人工神经元。
+神经网络就是由不同的神经元组合在一起：
+
+左边的蓝色圈那部分，我们称之为输入层。右边橙色圈Layer3，我们称之为输出层。
+而在输入层与输出层之间的，我们称之为隐藏层。即图中橙色圈Layer2。
+！！！注意了，在输入层...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/01/劳动节日常杂谈/" >
                 
                     <span>劳动节日常杂谈</span>
@@ -567,69 +642,6 @@
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/机器学习笔记-2-梯度下降/" >
-                
-                    <span>机器学习笔记-2-梯度下降</span>
-            </a>
-            <div class="abstract-content">
-                承接上回代价函数的概念，这章我们讲它的其中一种解法 —— 梯度下降。
-科学家定义了下一次θj（j是θ的下标。例如j=1就是θ1 ）要假设的值的公式（别问我为什么是这个公式了……科学家真心太厉害了）
-
-在这里，α是个纯数字，表示学习速率，这个等等讲。先讲解一下这个公式的意思。
-这个公式意思就是：下一次要预测的θj的值，是当前θj的值减去J(θ0,θ1)的偏导数与纯数字α的乘积。（偏导数是什么，各位同学去百度一下就知道了）
-计算机就是用这个公式推导出下一个要假设的θj值。但要注意一点，要等所有的θj的值要用旧值计算之后，才一起导入到新的一轮计算中去。下图左边是正确示范，右边是错误示范。
-
-关...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/机器学习笔记-1-代价函数/" >
-                
-                    <span>机器学习笔记-1-代价函数</span>
-            </a>
-            <div class="abstract-content">
-                
-上面这张图是代价函数的图。我们这里先引入“代价函数”这个概念，接下来我会慢慢一步一步说。
-函数图上的点，是一些数据。我们现在举个例子。假设现在我们要计算机去预测一个房子的价格，x代表房子的平方数，y代表房子的价格。现在我们把这些数据给了计算机，计算机把这些数据分布到图上，形成了上面的那些点。
-我们上面说了，监督学习是给计算机一些我们已知解答的数据来求输入输出的关系。也就是说，我们希望给了这些数据之后，我们再给计算机一个房子的平方数x，计算机可以给出它预测的一个房价的价格y。
-但问题来了，房子的价格和房子的平方数有关系，但不一定同样大小的房子就是同样的价格，可能还有其它因素影响着房价（例...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
@@ -820,7 +832,35 @@
     
     
     
-    <div class="total-archive"> Total : 12 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 14 </div>
     
     <div class="post-archive">
     
@@ -829,6 +869,16 @@
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-10-神经网络的使用/" >机器学习笔记-10-神经网络的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-9-神经网络模型/" >机器学习笔记-9-神经网络模型</a>
+        </li>
     
     
         <li class="archive-post-item">
