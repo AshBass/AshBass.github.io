@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>离久</title>
+    <title>尝试LLVM · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,14 +251,23 @@
 </head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >离久的小站</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">尝试LLVM</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>离久的小站</a>
 </header>
@@ -279,7 +288,7 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
@@ -288,8 +297,8 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            离久的小站
-            <!-- 文章页  -->
+            尝试LLVM
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -297,153 +306,95 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                搬砖的iOS码农
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/05/30</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/30/尝试LLVM/" >
-                
-                    <span>尝试LLVM</span>
-            </a>
-            <div class="abstract-content">
-                ##LLVM 简介 
- Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。
- LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。
- Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/26/创建CocoaPods私有库/" >
-                
-                    <span>创建CocoaPods私有库</span>
-            </a>
-            <div class="abstract-content">
-                在网上看过不少关于创建私有库的博客，但大多都是互相抄袭，而且坑非常的多。最近因公司要求，要做一个公司的Pod仓库，所以有了一点点心得。
-例子中用到git命令行，如果有小白不知道git命令行怎么使用，请先百度git的使用。
-以下我会用github的为例子进行讲解。由于github的私人仓库要付费，这里我选择public。如果你是coding、码云等，你可以选择private，毕竟是私有库嘛。
-首先我们先在自己的github上创建一个我们的Pod仓库。仓库名字为MyPod。
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>##LLVM 简介 </p>
+<p> Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。</p>
+<p> LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。</p>
+<p> Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注出来。LLVM 核心库提供一个优化器，对流行的 CPU 做代码生成支持。lld 是 Clang / LLVM 的内置链接器，clang 必须调用链接器来产生可执行文件。</p>
+<p>##如何下载 LLVM</p>
+<p>首先创建 LLVM 的源码路径及编译路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line">sudo mkdir llvm</span><br><span class="line">sudo chown `whoami` llvm    // 将 llvm 目录的所有者指定为当前用户</span><br><span class="line">cd llvm</span><br><span class="line">export LLVM_HOME=`pwd`      // 设置当前目录(/opt/llvm)为 LLVM_HOME 目录</span><br></pre></td></tr></table></figure></p>
+<p>我们以一个 opt 文件夹为仓库，里面创建一个 llvm 的源代码仓库文件夹.</p>
+<p>下载 LLVM release_60版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone -b release_60 git@github.com:llvm-mirror/llvm.git llvm</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/clang.git llvm/tools/clang</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/clang-tools-extra.git llvm/tools/clang/tools/extra</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/compiler-rt.git llvm/projects/compiler-rt</span><br></pre></td></tr></table></figure>
+<p>生成 XCode 工程（此处要用到 cmake ，请先安装 cmake ）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir llvm_build; cd llvm_build</span><br><span class="line">cmake -G Xcode ../llvm -DCMAKE_BUILD_TYPE:STRING=MinSizeRel</span><br></pre></td></tr></table></figure></p>
+<p>打开 LLVM 工程 ，选择 Automatically Create Schemes（自动创建Schemes）<br><img src="/2018/05/30/尝试LLVM/LLVM.png" title="LLVM"></p>
+<p>然后编译 Clang 和 libClang（可以随时终止编译，再次点击编译会从上次停止的地方继续进行）<br><img src="/2018/05/30/尝试LLVM/LLVM2.png" title="LLVM2"><br><img src="/2018/05/30/尝试LLVM/LLVM3.png" title="LLVM3"></p>
+<p>这样一来……<br>现在开始了你的1个小时编译之旅 ，你看看你的 Mac 是不是在咆哮 ，激不激动 ，兴不兴奋 ～<br><img src="/2018/05/30/尝试LLVM/金馆长指.png" title="金馆长指"></p>
+<p>编译后，我们可以得到<br><img src="/2018/05/30/尝试LLVM/LLVM4.png" title="LLVM4"><br><img src="/2018/05/30/尝试LLVM/LLVM5.png" title="LLVM5"></p>
 
-接下来我们在终端执行：
-1pod repo add MyPod https://github.com/AshBass...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/26/创建CocoaPods私有库/" title= 创建CocoaPods私有库 >
+                    <div class="prevTitle">创建CocoaPods私有库</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
     
-</div>
-                
-            </div>
-        </article>
+    <!--PC版-->
+
+    <!--PC版-->
+
+
     
-    <!-- paginator  -->
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" src= /avatar/cat.jpg >
-    <div class="profile-name">离久</div>
-    
-    <div class="profile-signature">
-        一条咸鱼
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto:AshBass@163.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/AshBass" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-            
-                
-            
-                
-            
-        </div>
-    
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -510,6 +461,24 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -621,6 +590,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

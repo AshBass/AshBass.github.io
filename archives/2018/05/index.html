@@ -299,137 +299,26 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/27/5月的总结/" >
+            <a class="abstract-title" href = "/2018/05/30/尝试LLVM/" >
                 
-                    <span>5月的总结</span>
+                    <span>尝试LLVM</span>
             </a>
             <div class="abstract-content">
-                这个月要应付公司的需求，学习的时间被压缩了点。但在空余时间总结了一些关于 iOS 的小技巧。有空分享出来。
-关于机器学习的分享，我需要暂停了一段时间。这里有几个原因：
-1.时间问题。
-2.由于数学问题，我在理解上开始有点吃力。
-3.之前的分享，其实并不是我看到的全部内容。包括课程中其实有提到 Octave 的使用、矩阵的运算。这些我都没有分享出来。但后来发现，后面的课程需要用到，如果我直接分享出来，感觉后面的内容会让人觉得有点跳跃。所以我打算之后不定时补上之前的知识。
-今后这两天打算把一些关于 iOS 总结的东西分享出来，希望有用。
-
+                ##LLVM 简介 
+ Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。
+ LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。
+ Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/27</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/30</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/06/机器学习笔记-10-神经网络的使用/" >
-                
-                    <span>机器学习笔记-10-神经网络的使用</span>
-            </a>
-            <div class="abstract-content">
-                我们知道了神经网络模型的概念，那么我们该怎么应用呢？
-在计算机运算当中，我们常用的与、或、非、异或运算都可以用神经网络表示。
-我们知道，逻辑回归的s型函数中，x越大，y就越接近1。相反，x越小，y越接近0。
-对此，我们可以调整权重θ，达到我们的目的。
-与运算：
-或运算：
-非运算：
-异或运算：
-通过异或运算我们可以知道，神经网络就是可以通过许多个简单的函数，来计算一个复杂的结果。
-在日常生活中，我们使用神经网络去进行一对多的识别，我们会有许多个输出层。
-
-在上面的例子中，我们把输出层的结果组合成一个矩阵h，我们通过获得矩阵中对应的数字得到识别的结果。
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/06/机器学习笔记-9-神经网络模型/" >
-                
-                    <span>机器学习笔记-9-神经网络模型</span>
-            </a>
-            <div class="abstract-content">
-                在生物学上，我们人类的神经网络是通过神经元来传递信息的：
-
-我们用人类神经网络作为参考，让计算机模仿我们的神经网络的原理来传递信息。
-举个逻辑回归的例子：
-
-这里每个参数都和我们之前讲的逻辑回归概念一样。对于θ，在这个模型理念里面我们称之为“权重”。而h(x)我们称之为激励函数。
-黄色圈代表一个神经元。在这里，我们称之为一个有s型函数或者逻辑函数作为激励函数的人工神经元。
-神经网络就是由不同的神经元组合在一起：
-
-左边的蓝色圈那部分，我们称之为输入层。右边橙色圈Layer3，我们称之为输出层。
-而在输入层与输出层之间的，我们称之为隐藏层。即图中橙色圈Layer2。
-！！！注意了，在输入层...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/06</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/01/劳动节日常杂谈/" >
-                
-                    <span>劳动节日常杂谈</span>
-            </a>
-            <div class="abstract-content">
-                其实最近心态有点崩，有点迷茫。
-并不是工作上有什么压力。对于公司这种业务迭代，我在技术上还是游刃有余（虽说上一手交接的代码结构有点乱）。
-我上一家公司的一个同事，去了恒大集团工作，工资翻倍，拿到了一个让我渴望的薪资。虽说是深圳不是广州。
-也不是说我嫉妒他，看不得别人好。毕竟我们俩很熟，他好我也开心。只不过我在反省自己，是不是真的有什么不足呢？
-2018年已经过去1/3了，我的机器学习课程也大体上完成1/3。
-
-有人说我学机器学习没有用。其实我也觉得没有什么用，就是兴趣爱好，你说我要用它来找工作，我估计我会饿死。
-最近人工智能那么火，一大堆人去搞，不管是毕业的也好未毕业的也好。我自问不是一...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
     
 </div>
                 
@@ -535,154 +424,7 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 15 </div>
+    <div class="total-archive"> Total : 2 </div>
     
     <div class="post-archive">
     
@@ -694,42 +436,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/5月的总结/" >5月的总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-10-神经网络的使用/" >机器学习笔记-10-神经网络的使用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-9-神经网络模型/" >机器学习笔记-9-神经网络模型</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/劳动节日常杂谈/" >劳动节日常杂谈</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-8-正规化的运算/" >机器学习笔记-8-正规化的运算</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2018/04/29/机器学习笔记-7-正规化/" >机器学习笔记-7-正规化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2018/04/28/机器学习笔记-6-过度拟合/" >机器学习笔记-6-过度拟合</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2018/04/27/机器学习笔记-5-逻辑回归/" >机器学习笔记-5-逻辑回归</a>
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/尝试LLVM/" >尝试LLVM</a>
         </li>
     
     
@@ -737,46 +444,12 @@
             <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
         </li>
     
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/机器学习笔记-4-正规方程/" >机器学习笔记-4-正规函数</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >机器学习笔记-3-关于梯度下降的计算</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/机器学习笔记-2-梯度下降/" >机器学习笔记-2-梯度下降</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/机器学习笔记-1-代价函数/" >机器学习笔记-1-代价函数</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/机器学习开始/" >机器学习开始</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/2018开始/" >2018开始</a>
-        </li>
-    
     </div>
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="杂谈"><span class="iconfont-archer">&#xe606;</span>杂谈</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -811,11 +484,7 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
-    
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
-        <span class="sidebar-category-name" data-categories="笔记"><span class="iconfont-archer">&#xe60a;</span>笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
