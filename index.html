@@ -314,15 +314,51 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/04/创建XCode插件/" >
+                
+                    <span>创建XCode插件</span>
+            </a>
+            <div class="abstract-content">
+                前提
+创建一个 XCode 插件，首先先要安装 LLVM 。可以参考上一篇文章 《尝试LLVM》。
+正文
+首先修改源代码目录 /opt/llvm/llvm/tools/clang/tools 下的 CMakeLists.txt 文件。
+
+在 CMakeLists.txt 的最后面添加上一行。
+
+在 tools 目录下添加 MyPlugin 文件夹，文件夹里面新增两个文件 CMakeLists.txt 和 MyPlugin.cpp
+
+CMakeLists.txt 文件内容如下：
+1234567891011121314add_llvm_loadable_module(MyPlugin MyP...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/04</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/30/尝试LLVM/" >
                 
                     <span>尝试LLVM</span>
             </a>
             <div class="abstract-content">
-                ##LLVM 简介 
+                LLVM 简介 
  Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。
  LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。
- Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注...
+ Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注出来...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -539,7 +575,16 @@ height:50vh;
     
     
     
-    <div class="total-archive"> Total : 2 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 3 </div>
     
     <div class="post-archive">
     
@@ -548,6 +593,11 @@ height:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2018/06/04/创建XCode插件/" >创建XCode插件</a>
+        </li>
     
     
         <li class="archive-post-item">

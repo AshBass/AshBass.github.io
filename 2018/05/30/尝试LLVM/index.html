@@ -350,11 +350,11 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>##LLVM 简介 </p>
+        <p>LLVM 简介 </p>
 <p> Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。</p>
 <p> LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。</p>
 <p> Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注出来。LLVM 核心库提供一个优化器，对流行的 CPU 做代码生成支持。lld 是 Clang / LLVM 的内置链接器，clang 必须调用链接器来产生可执行文件。</p>
-<p>##如何下载 LLVM</p>
+<p>如何下载 LLVM</p>
 <p>首先创建 LLVM 的源码路径及编译路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line">sudo mkdir llvm</span><br><span class="line">sudo chown `whoami` llvm    // 将 llvm 目录的所有者指定为当前用户</span><br><span class="line">cd llvm</span><br><span class="line">export LLVM_HOME=`pwd`      // 设置当前目录(/opt/llvm)为 LLVM_HOME 目录</span><br></pre></td></tr></table></figure></p>
 <p>我们以一个 opt 文件夹为仓库，里面创建一个 llvm 的源代码仓库文件夹.</p>
 <p>下载 LLVM release_60版本</p>
@@ -369,6 +369,11 @@ height:50vh;
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/06/04/创建XCode插件/" title= 创建XCode插件 >
+                    <div class="nextTitle">创建XCode插件</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -508,7 +513,16 @@ top:50vh;
     
     
     
-    <div class="total-archive"> Total : 2 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 3 </div>
     
     <div class="post-archive">
     
@@ -517,6 +531,11 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2018/06/04/创建XCode插件/" >创建XCode插件</a>
+        </li>
     
     
         <li class="archive-post-item">
