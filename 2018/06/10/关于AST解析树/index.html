@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>离久</title>
+    <title>关于AST解析树 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,12 +251,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >离久的小站</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">关于AST解析树</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>离久的小站</a>
 </header>
@@ -270,101 +281,109 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            关于AST解析树
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/06/10</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/10/关于AST解析树/" >
-                
-                    <span>关于AST解析树</span>
-            </a>
-            <div class="abstract-content">
-                相关资料clang文档AST Matcher Reference
-代码会被解析成 Decl 和 Stmt。
-我们可以继承 MyASTVisitor 模版，通过 VisitDecl 和 VisitStmt 两个方法，获取 Decl 和 Stmt。
-Decl之间的关系树
-Stmt之间的关系树
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>相关资料<br><a href="https://clang.llvm.org/docs/" target="_blank" rel="noopener">clang文档</a><br><a href="http://clang.llvm.org/docs/LibASTMatchersReference.html#narrowing-matchers" target="_blank" rel="noopener">AST Matcher Reference</a></p>
+<p>代码会被解析成 Decl 和 Stmt。</p>
+<p>我们可以继承 MyASTVisitor 模版，通过 VisitDecl 和 VisitStmt 两个方法，获取 Decl 和 Stmt。</p>
+<p>Decl之间的关系树<br><img src="/2018/06/10/关于AST解析树/AST.png" title="AST"></p>
+<p>Stmt之间的关系树<br><img src="/2018/06/10/关于AST解析树/AST2.png" title="AST2"></p>
 
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/04/创建XCode插件/" >
-                
-                    <span>创建XCode插件</span>
-            </a>
-            <div class="abstract-content">
-                前提
-创建一个 XCode 插件，首先先要安装 LLVM 。可以参考上一篇文章 《尝试LLVM》。
-正文
-首先修改源代码目录 /opt/llvm/llvm/tools/clang/tools 下的 CMakeLists.txt 文件。
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/06/04/创建XCode插件/" title= 创建XCode插件 >
+                    <div class="prevTitle">创建XCode插件</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
 
-在 CMakeLists.txt 的最后面添加上一行。
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
 
-在 tools 目录下添加 MyPlugin 文件夹，文件夹里面新增两个文件 CMakeLists.txt 和 MyPlugin.cpp
+    <!--PC版-->
 
-CMakeLists.txt 文件内容如下：
-1234567891011121314add_llvm_loadable_module(MyPlugin MyP...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/04</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
+
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -433,6 +452,24 @@ CMakeLists.txt 文件内容如下：
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -572,6 +609,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
