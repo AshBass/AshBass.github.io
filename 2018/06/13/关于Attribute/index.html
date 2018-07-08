@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>尝试LLVM · 离久</title>
+    <title>关于Attribute · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >离久的小站</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">尝试LLVM</a>
+                <a href="#" class="post-name">关于Attribute</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            尝试LLVM
+            关于Attribute
             <!-- 404 -->
             
         </h1>
@@ -321,7 +321,7 @@ height:50vh;
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/05/30</span>
+                <span class="post-intro-time">2018/06/13</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -350,20 +350,14 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>LLVM 简介 </p>
-<p> Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。</p>
-<p> LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。</p>
-<p> Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注出来。LLVM 核心库提供一个优化器，对流行的 CPU 做代码生成支持。lld 是 Clang / LLVM 的内置链接器，clang 必须调用链接器来产生可执行文件。</p>
-<p>如何下载 LLVM</p>
-<p>首先创建 LLVM 的源码路径及编译路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line">sudo mkdir llvm</span><br><span class="line">sudo chown `whoami` llvm    // 将 llvm 目录的所有者指定为当前用户</span><br><span class="line">cd llvm</span><br><span class="line">export LLVM_HOME=`pwd`      // 设置当前目录(/opt/llvm)为 LLVM_HOME 目录</span><br></pre></td></tr></table></figure></p>
-<p>我们以一个 opt 文件夹为仓库，里面创建一个 llvm 的源代码仓库文件夹.</p>
-<p>下载 LLVM release_60版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone -b release_60 git@github.com:llvm-mirror/llvm.git llvm</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/clang.git llvm/tools/clang</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/clang-tools-extra.git llvm/tools/clang/tools/extra</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/compiler-rt.git llvm/projects/compiler-rt</span><br></pre></td></tr></table></figure>
-<p>生成 XCode 工程（此处要用到 cmake ，请先安装 cmake ）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir llvm_build; cd llvm_build</span><br><span class="line">cmake -G Xcode ../llvm -DCMAKE_BUILD_TYPE:STRING=MinSizeRel</span><br></pre></td></tr></table></figure></p>
-<p>打开 LLVM 工程 ，选择 Automatically Create Schemes（自动创建Schemes）<br><img src="/2018/05/30/尝试LLVM/LLVM.png" title="LLVM"></p>
-<p>然后编译 Clang 和 libClang（可以随时终止编译，再次点击编译会从上次停止的地方继续进行）<br><img src="/2018/05/30/尝试LLVM/LLVM2.png" title="LLVM2"><br><img src="/2018/05/30/尝试LLVM/LLVM3.png" title="LLVM3"></p>
-<p>这样一来……<br>现在开始了你的1个小时编译之旅 ，你看看你的 Mac 是不是在咆哮 ，激不激动 ，兴不兴奋 ～<br><img src="/2018/05/30/尝试LLVM/金馆长指.png" title="金馆长指"></p>
-<p>编译后，我们可以得到<br><img src="/2018/05/30/尝试LLVM/LLVM4.png" title="LLVM4"><br><img src="/2018/05/30/尝试LLVM/LLVM5.png" title="LLVM5"></p>
+        <p>Clang Attributes 是 Clang 提供的一种源码注解，一般以 <strong>attribute</strong>(xxx) 的形式出现在代码中；为方便使用，一些常用属性也被 Cocoa 定义成宏。</p>
+<p>1.objc_subclassing_restricted<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">定义一个不可被继承的类，写在 @interface 前。</span><br></pre></td></tr></table></figure></p>
+<p>2.objc_requires_super<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">子类继承这个方法时需要调用 super，否则给出编译警告。</span><br></pre></td></tr></table></figure></p>
+<p>3.objc_boxable<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">声明的 struct 类型或是 union 等基本数据类型可以使用 @(...) 语法糖转成 NSNumber 和 NSValue。</span><br></pre></td></tr></table></figure></p>
+<p>4.constructor / destructor<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">构造器和析构器，加上这两个属性的函数会在分别在可执行文件 load 和 unload 时被调用，可以理解为在 main() 函数调用前和 return 后执行。</span><br><span class="line"></span><br><span class="line">constructor 和 +load 都是在 main 函数执行前调用，但 +load 比 constructor 更加早一点。</span><br><span class="line">因为 dyld（动态链接器，程序的最初起点）在加载 image（可以理解成 Mach-O 文件）时会先通知 objc runtime 去加载其中所有的类。</span><br><span class="line">每加载一个类时，它的 +load 随之调用，全部加载完成后，dyld 才会调用这个 image 中所有的 constructor 方法。</span><br><span class="line"></span><br><span class="line">所以 constructor 是一个干坏事的绝佳时机：</span><br><span class="line"></span><br><span class="line">所有 Class 都已经加载完成</span><br><span class="line">main 函数还未执行</span><br><span class="line">无需像 +load 还得挂载在一个 Class 中</span><br><span class="line"></span><br><span class="line">若有多个 constructor 且想控制优先级的话，可以写成 __attribute__((constructor(1)))，里面的数字越小优先级越高，1 ~ 100 为系统保留。</span><br></pre></td></tr></table></figure></p>
+<p>5.cleanup<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">声明到一个变量上，当这个变量作用域结束时，调用指定的一个函数。</span><br></pre></td></tr></table></figure></p>
+<p>6.objc_runtime_name<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用于 @interface 或 @protocol，将类或协议的名字在编译时指定成另一个。</span><br></pre></td></tr></table></figure></p>
+<p>最后附上Demo及其地址<br><a href="https://github.com/AshBass/AttributeStudy" target="_blank" rel="noopener">Demo地址</a></p>
 
     </article>
     <!-- 前后页  -->
@@ -371,16 +365,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/06/04/创建XCode插件/" title= 创建XCode插件 >
-                    <div class="nextTitle">创建XCode插件</div>
+                <a href= "/2018/06/20/关于SQLite/" title= 关于SQLite >
+                    <div class="nextTitle">关于SQLite</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/04/26/创建CocoaPods私有库/" title= 创建CocoaPods私有库 >
-                    <div class="prevTitle">创建CocoaPods私有库</div>
+                <a href= "/2018/06/10/关于AST解析树/" title= 关于AST解析树 >
+                    <div class="prevTitle">关于AST解析树</div>
                 </a>
             
         </li>

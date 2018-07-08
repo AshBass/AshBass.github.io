@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>尝试LLVM · 离久</title>
+    <title>关于SQLite · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >离久的小站</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">尝试LLVM</a>
+                <a href="#" class="post-name">关于SQLite</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            尝试LLVM
+            关于SQLite
             <!-- 404 -->
             
         </h1>
@@ -321,7 +321,7 @@ height:50vh;
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/05/30</span>
+                <span class="post-intro-time">2018/06/20</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -350,37 +350,93 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>LLVM 简介 </p>
-<p> Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。</p>
-<p> LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。</p>
-<p> Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注出来。LLVM 核心库提供一个优化器，对流行的 CPU 做代码生成支持。lld 是 Clang / LLVM 的内置链接器，clang 必须调用链接器来产生可执行文件。</p>
-<p>如何下载 LLVM</p>
-<p>首先创建 LLVM 的源码路径及编译路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line">sudo mkdir llvm</span><br><span class="line">sudo chown `whoami` llvm    // 将 llvm 目录的所有者指定为当前用户</span><br><span class="line">cd llvm</span><br><span class="line">export LLVM_HOME=`pwd`      // 设置当前目录(/opt/llvm)为 LLVM_HOME 目录</span><br></pre></td></tr></table></figure></p>
-<p>我们以一个 opt 文件夹为仓库，里面创建一个 llvm 的源代码仓库文件夹.</p>
-<p>下载 LLVM release_60版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone -b release_60 git@github.com:llvm-mirror/llvm.git llvm</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/clang.git llvm/tools/clang</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/clang-tools-extra.git llvm/tools/clang/tools/extra</span><br><span class="line">git clone -b release_60 git@github.com:llvm-mirror/compiler-rt.git llvm/projects/compiler-rt</span><br></pre></td></tr></table></figure>
-<p>生成 XCode 工程（此处要用到 cmake ，请先安装 cmake ）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir llvm_build; cd llvm_build</span><br><span class="line">cmake -G Xcode ../llvm -DCMAKE_BUILD_TYPE:STRING=MinSizeRel</span><br></pre></td></tr></table></figure></p>
-<p>打开 LLVM 工程 ，选择 Automatically Create Schemes（自动创建Schemes）<br><img src="/2018/05/30/尝试LLVM/LLVM.png" title="LLVM"></p>
-<p>然后编译 Clang 和 libClang（可以随时终止编译，再次点击编译会从上次停止的地方继续进行）<br><img src="/2018/05/30/尝试LLVM/LLVM2.png" title="LLVM2"><br><img src="/2018/05/30/尝试LLVM/LLVM3.png" title="LLVM3"></p>
-<p>这样一来……<br>现在开始了你的1个小时编译之旅 ，你看看你的 Mac 是不是在咆哮 ，激不激动 ，兴不兴奋 ～<br><img src="/2018/05/30/尝试LLVM/金馆长指.png" title="金馆长指"></p>
-<p>编译后，我们可以得到<br><img src="/2018/05/30/尝试LLVM/LLVM4.png" title="LLVM4"><br><img src="/2018/05/30/尝试LLVM/LLVM5.png" title="LLVM5"></p>
+        <p>SQLite是一款轻型的嵌入式数据库。</p>
+<p>它占用资源非常低，在嵌入式设备中，可能只需要几百K的内存就够了。</p>
+<p>它的处理速度比MySQL、PostgreSQL这两款著名的数据库都还快。</p>
+<p>SQLite语句的特点：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">不区分大小写</span><br><span class="line">每一个sql语句以;结尾为完整一句</span><br><span class="line">不支持全关联和右关联</span><br></pre></td></tr></table></figure></p>
+<h3 id="存储类"><a href="#存储类" class="headerlink" title="存储类:"></a>存储类:</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">关键字</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">NULL</td>
+<td style="text-align:center">值是一个 NULL 值</td>
+</tr>
+<tr>
+<td style="text-align:center">INTEGER</td>
+<td style="text-align:center">值是一个带符号的整数，根据值的大小存储在 1、2、3、4、6 或 8 字节中</td>
+</tr>
+<tr>
+<td style="text-align:center">REAL</td>
+<td style="text-align:center">值是一个浮点值，存储为 8 字节的 IEEE 浮点数字</td>
+</tr>
+<tr>
+<td style="text-align:center">TEXT</td>
+<td style="text-align:center">值是一个文本字符串，使用数据库编码（UTF-8、UTF-16BE 或 UTF-16LE）存储</td>
+</tr>
+<tr>
+<td style="text-align:center">BLOB</td>
+<td style="text-align:center">值是一个 blob 数据，完全根据它的输入存储</td>
+</tr>
+</tbody>
+</table>
+<h3 id="亲和类型"><a href="#亲和类型" class="headerlink" title="亲和类型:"></a>亲和类型:</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">关键字</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">TEXT</td>
+<td style="text-align:center">数值型数据在被插入之前，需要先被转换为文本格式，之后再插入到目标字段中</td>
+</tr>
+<tr>
+<td style="text-align:center">NUMERIC</td>
+<td style="text-align:center">当文本数据被插入到亲缘性为NUMERIC的字段中时，如果转换操作不会导致数据信息丢失以及完全可逆，那么SQLite就会将该文本数据转换为INTEGER或REAL类型的数据，如果转换失败，SQLite仍会以TEXT方式存储该数据。对于NULL或BLOB类型的新数据，SQLite将不做任何转换，直接以NULL或BLOB的方式存储该数据。需要额外说明的是，对于浮点格式的常量文本，如”30000.0”，如果该值可以转换为INTEGER同时又不会丢失数值信息，那么SQLite就会将其转换为INTEGER的存储方式</td>
+</tr>
+<tr>
+<td style="text-align:center">INTEGER</td>
+<td style="text-align:center">对于亲缘类型为INTEGER的字段，其规则等同于NUMERIC，唯一差别是在执行CAST表达式时</td>
+</tr>
+<tr>
+<td style="text-align:center">REAL</td>
+<td style="text-align:center">其规则基本等同于NUMERIC，唯一的差别是不会将”30000.0”这样的文本数据转换为INTEGER存储方式</td>
+</tr>
+<tr>
+<td style="text-align:center">NONE</td>
+<td style="text-align:center">不做任何的转换，直接以该数据所属的数据类型进行存储</td>
+</tr>
+</tbody>
+</table>
+<p>SQLite 没有单独的 Boolean 存储类。通常被存储为整数 0 和 1 。</p>
+<h3 id="开启／关闭-数据库"><a href="#开启／关闭-数据库" class="headerlink" title="开启／关闭 数据库"></a>开启／关闭 数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlite3_open(path, &amp;db)</span><br><span class="line">sqlite3_close(db)</span><br></pre></td></tr></table></figure>
+<h3 id="创建／删除-表格"><a href="#创建／删除-表格" class="headerlink" title="创建／删除 表格:"></a>创建／删除 表格:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS 表名(主键字段 主键类型 PRIMARY KEY AUTOINCREMENT , 字段1 字段1类型 , 字段2 字段2类型)</span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS 表名</span><br></pre></td></tr></table></figure>
+<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查:"></a>增删改查:</h3><p>增删改都是使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite3_exec</span><br></pre></td></tr></table></figure></p>
+<p>查询则使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite3_prepare_v2</span><br></pre></td></tr></table></figure></p>
+<h4 id="增-INSERT"><a href="#增-INSERT" class="headerlink" title="增 INSERT"></a>增 INSERT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 表名(字段1 , 字段2 , ......) VALUES (数值1 , 数值2 , ......)</span><br></pre></td></tr></table></figure>
+<h4 id="删-DELETE"><a href="#删-DELETE" class="headerlink" title="删 DELETE"></a>删 DELETE</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM 表名 WHERE 条件</span><br></pre></td></tr></table></figure>
+<h4 id="改-UPDATE"><a href="#改-UPDATE" class="headerlink" title="改 UPDATE"></a>改 UPDATE</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 表名 SET 要更改数值的字段名 = 新数值 where 条件</span><br></pre></td></tr></table></figure>
+<h4 id="查-SELECT"><a href="#查-SELECT" class="headerlink" title="查 SELECT"></a>查 SELECT</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT 字段名／* FROM 表名（条件）</span><br></pre></td></tr></table></figure>
+<p>最后附上Demo及其地址</p>
+<a href="https://github.com/AshBass/SQLiteStudy" target="_blank" rel="noopener">Demo地址</a>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/06/04/创建XCode插件/" title= 创建XCode插件 >
-                    <div class="nextTitle">创建XCode插件</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/04/26/创建CocoaPods私有库/" title= 创建CocoaPods私有库 >
-                    <div class="prevTitle">创建CocoaPods私有库</div>
+                <a href= "/2018/06/13/关于Attribute/" title= 关于Attribute >
+                    <div class="prevTitle">关于Attribute</div>
                 </a>
             
         </li>
@@ -482,7 +538,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#存储类"><span class="toc-number">1.</span> <span class="toc-text">存储类:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#亲和类型"><span class="toc-number">2.</span> <span class="toc-text">亲和类型:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开启／关闭-数据库"><span class="toc-number">3.</span> <span class="toc-text">开启／关闭 数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建／删除-表格"><span class="toc-number">4.</span> <span class="toc-text">创建／删除 表格:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增删改查"><span class="toc-number">5.</span> <span class="toc-text">增删改查:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#增-INSERT"><span class="toc-number">5.1.</span> <span class="toc-text">增 INSERT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删-DELETE"><span class="toc-number">5.2.</span> <span class="toc-text">删 DELETE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#改-UPDATE"><span class="toc-number">5.3.</span> <span class="toc-text">改 UPDATE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查-SELECT"><span class="toc-number">5.4.</span> <span class="toc-text">查 SELECT</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
