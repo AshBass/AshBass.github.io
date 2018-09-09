@@ -299,27 +299,27 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/机器学习笔记-1-代价函数/" >
+            <a class="abstract-title" href = "/2018/03/29/简述Runtime/" >
                 
-                    <span>机器学习笔记-1-代价函数</span>
+                    <span>简述Runtime</span>
             </a>
             <div class="abstract-content">
-                
-上面这张图是代价函数的图。我们这里先引入“代价函数”这个概念，接下来我会慢慢一步一步说。
-函数图上的点，是一些数据。我们现在举个例子。假设现在我们要计算机去预测一个房子的价格，x代表房子的平方数，y代表房子的价格。现在我们把这些数据给了计算机，计算机把这些数据分布到图上，形成了上面的那些点。
-我们上面说了，监督学习是给计算机一些我们已知解答的数据来求输入输出的关系。也就是说，我们希望给了这些数据之后，我们再给计算机一个房子的平方数x，计算机可以给出它预测的一个房价的价格y。
-但问题来了，房子的价格和房子的平方数有关系，但不一定同样大小的房子就是同样的价格，可能还有其它因素影响着房价（例...
+                简介Objective-C 是一门动态语言，它会将一些工作放在代码运行时才处理而并非编译时。也就是说，有很多类和成员变量在我们编译的时是不知道的，而在运行时，我们所编写的代码会转换成完整的确定的代码运行。
+因此，编译器是不够的，我们还需要一个运行时系统(Runtime system)来处理编译后的代码。
+Runtime 基本是用 C 和汇编写的，由此可见苹果为了动态系统的高效而做出的努力。苹果和 GNU 各自维护一个开源的 Runtime 版本，这两个版本之间都在努力保持一致。
+点击这里可以下载苹果维护的开源代码。
+id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
     
 </div>
                 
@@ -329,61 +329,26 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/28/机器学习开始/" >
+            <a class="abstract-title" href = "/2018/03/09/简述Runloop/" >
                 
-                    <span>机器学习开始</span>
+                    <span>简述RunLoop</span>
             </a>
             <div class="abstract-content">
-                最近在看机器学习的视频。由于内容有点多，怕记不住，所以用这个博客来记录下自己学习的过程。顺便在写博客的时候复习一下。
-我看的机器学习课程地址 ：https://www.coursera.org/learn/machine-learning/home/welcome
-我的笔记知识、图片都是来自于这个课程的。
-—– 以下所有内容为个人理解。可能表述并不准确。—–
-机器学习分为两种。第一种是监督学习，第二种是无监督学习。
-1.监督学习。通常监督学习分为“回归”和“分类”。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。
-回归是指我们通过给出的一些数据，预测结...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/2018开始/" >
-                
-                    <span>2018开始</span>
-            </a>
-            <div class="abstract-content">
-                本人2016年毕业。不在大厂，也不在中厂，现在在一个国企里面搬砖。是一个很普通的iOS程序员，真心不是什么大神。
-从2015年12月开始实习到现在，做了两年的iOS。这两年有成长，但没有说已经到达大神的地步。
-呆过两家公司。由于许多原因，我没有什么可以展示的app。听起来是不是难以置信……
-之前没有写博客和demo的习惯，但后来发现不写点博客和demo，有时候自己会忘记很多已经学到的东西（可能人已经老了吧…）
-打算2018年，多学学点东西。iOS方面多写点技术博客，在其它方面也涉及一下，增加自己的见识。
+                相关知识RunLoop 是一个对象，这个对象在循环中用来处理程序运行过程中出现的各种事件（比如说触摸事件、UI刷新事件、定时器事件、Selector事件），从而保持程序的持续运行；而且在没有事件处理的时候，会进入睡眠模式，从而节省CPU资源，提高程序性能。
+简单描述 RunLoop 的结构：
 
-我给我自己2018定下的目标是：    1.了解机器学习，只是个人兴趣，并不是为了...
+RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关系是保存在一个全局的 Dictionary 里。线程刚创建时并没有 RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创建是发生在第一次获取时，RunLoop 的销毁是发生在线程结束时。你只能在一个线...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/09</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
     
 </div>
                 
@@ -530,113 +495,7 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 15 </div>
+    <div class="total-archive"> Total : 7 </div>
     
     <div class="post-archive">
     
@@ -648,42 +507,22 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/5月的总结/" >5月的总结</a>
+            <span class="archive-post-date">06/13</span><a class="archive-post-title" href= "/2018/06/13/关于Attribute/" >关于Attribute</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-10-神经网络的使用/" >机器学习笔记-10-神经网络的使用</a>
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2018/06/10/关于AST解析树/" >关于AST解析树</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-9-神经网络模型/" >机器学习笔记-9-神经网络模型</a>
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2018/06/04/创建XCode插件/" >创建XCode插件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/劳动节日常杂谈/" >劳动节日常杂谈</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-8-正规化的运算/" >机器学习笔记-8-正规化的运算</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2018/04/29/机器学习笔记-7-正规化/" >机器学习笔记-7-正规化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2018/04/28/机器学习笔记-6-过度拟合/" >机器学习笔记-6-过度拟合</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2018/04/27/机器学习笔记-5-逻辑回归/" >机器学习笔记-5-逻辑回归</a>
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/尝试LLVM/" >尝试LLVM</a>
         </li>
     
     
@@ -693,32 +532,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/机器学习笔记-4-正规方程/" >机器学习笔记-4-正规函数</a>
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/简述Runtime/" >简述Runtime</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >机器学习笔记-3-关于梯度下降的计算</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/机器学习笔记-2-梯度下降/" >机器学习笔记-2-梯度下降</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/机器学习笔记-1-代价函数/" >机器学习笔记-1-代价函数</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/机器学习开始/" >机器学习开始</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/2018开始/" >2018开始</a>
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2018/03/09/简述Runloop/" >简述RunLoop</a>
         </li>
     
     </div>
@@ -726,11 +545,7 @@
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="杂谈"><span class="iconfont-archer">&#xe606;</span>杂谈</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -765,11 +580,7 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
-    
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
-        <span class="sidebar-category-name" data-categories="笔记"><span class="iconfont-archer">&#xe60a;</span>笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

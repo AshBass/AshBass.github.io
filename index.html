@@ -314,58 +314,6 @@ height:50vh;
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/20/关于SQLite/" >
-                
-                    <span>关于SQLite</span>
-            </a>
-            <div class="abstract-content">
-                SQLite是一款轻型的嵌入式数据库。
-它占用资源非常低，在嵌入式设备中，可能只需要几百K的内存就够了。
-它的处理速度比MySQL、PostgreSQL这两款著名的数据库都还快。
-SQLite语句的特点：123不区分大小写每一个sql语句以;结尾为完整一句不支持全关联和右关联
-存储类:
-
-
-关键字
-描述
-
-
-
-
-NULL
-值是一个 NULL 值
-
-
-INTEGER
-值是一个带符号的整数，根据值的大小存储在 1、2、3、4、6 或 8 字节中
-
-
-REAL
-值是一个浮点值，存储为 8 字节的 IEEE 浮点数字
-
-
-TEXT
-值是一个文本字符串，使用数据库编码（UTF-8、UTF-16BE...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/20</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
             <a class="abstract-title" href = "/2018/06/13/关于Attribute/" >
                 
                     <span>关于Attribute</span>
@@ -509,6 +457,65 @@ CMakeLists.txt 文件内容如下：
                 <!-- date  -->
                 <div class="abstract-date">
                     <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/29/简述Runtime/" >
+                
+                    <span>简述Runtime</span>
+            </a>
+            <div class="abstract-content">
+                简介Objective-C 是一门动态语言，它会将一些工作放在代码运行时才处理而并非编译时。也就是说，有很多类和成员变量在我们编译的时是不知道的，而在运行时，我们所编写的代码会转换成完整的确定的代码运行。
+因此，编译器是不够的，我们还需要一个运行时系统(Runtime system)来处理编译后的代码。
+Runtime 基本是用 C 和汇编写的，由此可见苹果为了动态系统的高效而做出的努力。苹果和 GNU 各自维护一个开源的 Runtime 版本，这两个版本之间都在努力保持一致。
+点击这里可以下载苹果维护的开源代码。
+id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/09/简述Runloop/" >
+                
+                    <span>简述RunLoop</span>
+            </a>
+            <div class="abstract-content">
+                相关知识RunLoop 是一个对象，这个对象在循环中用来处理程序运行过程中出现的各种事件（比如说触摸事件、UI刷新事件、定时器事件、Selector事件），从而保持程序的持续运行；而且在没有事件处理的时候，会进入睡眠模式，从而节省CPU资源，提高程序性能。
+简单描述 RunLoop 的结构：
+
+RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关系是保存在一个全局的 Dictionary 里。线程刚创建时并没有 RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创建是发生在第一次获取时，RunLoop 的销毁是发生在线程结束时。你只能在一个线...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/09</span>
                 </div>
                 <!-- tags  -->
                 
@@ -728,7 +735,8 @@ CMakeLists.txt 文件内容如下：
     
     
     
-    <div class="total-archive"> Total : 6 </div>
+    
+    <div class="total-archive"> Total : 7 </div>
     
     <div class="post-archive">
     
@@ -737,11 +745,6 @@ CMakeLists.txt 文件内容如下：
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/20</span><a class="archive-post-title" href= "/2018/06/20/关于SQLite/" >关于SQLite</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -766,6 +769,16 @@ CMakeLists.txt 文件内容如下：
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/简述Runtime/" >简述Runtime</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2018/03/09/简述Runloop/" >简述RunLoop</a>
         </li>
     
     </div>
