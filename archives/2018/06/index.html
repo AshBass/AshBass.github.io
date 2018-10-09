@@ -299,88 +299,23 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/13/关于Attribute/" >
+            <a class="abstract-title" href = "/2018/06/11/创建CocoaPods私有库/" >
                 
-                    <span>关于Attribute</span>
+                    <span>创建CocoaPods私有库</span>
             </a>
             <div class="abstract-content">
-                Clang Attributes 是 Clang 提供的一种源码注解，一般以 attribute(xxx) 的形式出现在代码中；为方便使用，一些常用属性也被 Cocoa 定义成宏。
-1.objc_subclassing_restricted1定义一个不可被继承的类，写在 @interface 前。
-2.objc_requires_super1子类继承这个方法时需要调用 super，否则给出编译警告。
-3.objc_boxable1声明的 struct 类型或是 union 等基本数据类型可以使用 @(...) 语法糖转成 NSNumber 和 NSValue。
-4.constructor...
+                在网上看过不少关于创建私有库的博客，但大多都是互相抄袭，而且坑非常的多。最近因公司要求，要做一个公司的Pod仓库，所以有了一点点心得。
+例子中用到git命令行，如果有小白不知道git命令行怎么使用，请先百度git的使用。
+以下我会用github的为例子进行讲解。由于github的私人仓库要付费，这里我选择public。如果你是coding、码云等，你可以选择private，毕竟是私有库嘛。
+首先我们先在自己的github上创建一个我们的Pod仓库。仓库名字为MyPod。
+
+接下来我们在终端执行：
+1pod repo add MyPod https://github.com/AshBass...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/13</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/10/关于AST解析树/" >
-                
-                    <span>关于AST解析树</span>
-            </a>
-            <div class="abstract-content">
-                相关资料clang文档AST Matcher Reference
-代码会被解析成 Decl 和 Stmt。
-我们可以继承 MyASTVisitor 模版，通过 VisitDecl 和 VisitStmt 两个方法，获取 Decl 和 Stmt。
-Decl之间的关系树
-Stmt之间的关系树
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/04/创建XCode插件/" >
-                
-                    <span>创建XCode插件</span>
-            </a>
-            <div class="abstract-content">
-                前提
-创建一个 XCode 插件，首先先要安装 LLVM 。可以参考上一篇文章 《尝试LLVM》。
-正文
-首先修改源代码目录 /opt/llvm/llvm/tools/clang/tools 下的 CMakeLists.txt 文件。
-
-在 CMakeLists.txt 的最后面添加上一行。
-
-在 tools 目录下添加 MyPlugin 文件夹，文件夹里面新增两个文件 CMakeLists.txt 和 MyPlugin.cpp
-
-CMakeLists.txt 文件内容如下：
-1234567891011121314add_llvm_loadable_module(MyPlugin MyP...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/04</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/11</span>
                 </div>
                 <!-- tags  -->
                 
@@ -533,7 +468,58 @@ CMakeLists.txt 文件内容如下：
     
     
     
-    <div class="total-archive"> Total : 7 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 10 </div>
     
     <div class="post-archive">
     
@@ -545,37 +531,52 @@ CMakeLists.txt 文件内容如下：
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/13</span><a class="archive-post-title" href= "/2018/06/13/关于Attribute/" >关于Attribute</a>
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/关于AST解析树/" >关于AST解析树</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2018/06/10/关于AST解析树/" >关于AST解析树</a>
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/创建XCode插件/" >创建XCode插件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2018/06/04/创建XCode插件/" >创建XCode插件</a>
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href= "/2018/09/04/尝试LLVM/" >尝试LLVM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/尝试LLVM/" >尝试LLVM</a>
+            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2018/08/17/关于Attribute/" >关于Attribute</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/符号化崩溃日志/" >符号化崩溃日志</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/简述Runtime/" >简述Runtime</a>
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/iOS-自动打包/" >iOS-自动打包</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2018/03/09/简述Runloop/" >简述RunLoop</a>
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/简述Runtime/" >简述Runtime</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/简述Runloop/" >简述RunLoop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2018/03/06/iOS多线程GCD/" >iOS多线程GCD</a>
         </li>
     
     </div>

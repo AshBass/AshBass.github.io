@@ -299,37 +299,7 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/13/关于Attribute/" >
-                
-                    <span>关于Attribute</span>
-            </a>
-            <div class="abstract-content">
-                Clang Attributes 是 Clang 提供的一种源码注解，一般以 attribute(xxx) 的形式出现在代码中；为方便使用，一些常用属性也被 Cocoa 定义成宏。
-1.objc_subclassing_restricted1定义一个不可被继承的类，写在 @interface 前。
-2.objc_requires_super1子类继承这个方法时需要调用 super，否则给出编译警告。
-3.objc_boxable1声明的 struct 类型或是 union 等基本数据类型可以使用 @(...) 语法糖转成 NSNumber 和 NSValue。
-4.constructor...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/13</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/10/关于AST解析树/" >
+            <a class="abstract-title" href = "/2018/09/28/关于AST解析树/" >
                 
                     <span>关于AST解析树</span>
             </a>
@@ -344,7 +314,7 @@ Stmt之间的关系树
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/10</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/28</span>
                 </div>
                 <!-- tags  -->
                 
@@ -360,7 +330,7 @@ Stmt之间的关系树
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/06/04/创建XCode插件/" >
+            <a class="abstract-title" href = "/2018/09/10/创建XCode插件/" >
                 
                     <span>创建XCode插件</span>
             </a>
@@ -380,7 +350,7 @@ CMakeLists.txt 文件内容如下：
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/04</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/10</span>
                 </div>
                 <!-- tags  -->
                 
@@ -396,7 +366,7 @@ CMakeLists.txt 文件内容如下：
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/30/尝试LLVM/" >
+            <a class="abstract-title" href = "/2018/09/04/尝试LLVM/" >
                 
                     <span>尝试LLVM</span>
             </a>
@@ -409,7 +379,7 @@ CMakeLists.txt 文件内容如下：
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/30</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/04</span>
                 </div>
                 <!-- tags  -->
                 
@@ -425,7 +395,87 @@ CMakeLists.txt 文件内容如下：
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/26/创建CocoaPods私有库/" >
+            <a class="abstract-title" href = "/2018/08/17/关于Attribute/" >
+                
+                    <span>关于Attribute</span>
+            </a>
+            <div class="abstract-content">
+                Clang Attributes 是 Clang 提供的一种源码注解，一般以 attribute(xxx) 的形式出现在代码中；为方便使用，一些常用属性也被 Cocoa 定义成宏。
+1.objc_subclassing_restricted1定义一个不可被继承的类，写在 @interface 前。
+2.objc_requires_super1子类继承这个方法时需要调用 super，否则给出编译警告。
+3.objc_boxable1声明的 struct 类型或是 union 等基本数据类型可以使用 @(...) 语法糖转成 NSNumber 和 NSValue。
+4.constructor...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/17</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/24/符号化崩溃日志/" >
+                
+                    <span>符号化崩溃日志</span>
+            </a>
+            <div class="abstract-content">
+                符号化崩溃日志一般的crash日志是没有被符号化的，我们根本看不懂，所以我们需要符号化日志。
+我们需要找到一个工具帮我们符号化，Xcode中有 symbolicatecrash 来帮我们符号化。
+我们可以在命令行输入以下命令寻找 symbolicatecrash。1find /Applications/Xcode.app -name symbolicatecrash -type f
+当然，如果如无意外、Xcode没有太大改动的话，symbolicatecrash的路径是不变的。1/Applications/Xcode.app/Contents/Developer/Platforms/Ap...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/24</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/06/iOS-自动打包/" >
+                
+                    <span>iOS-自动打包</span>
+            </a>
+            <div class="abstract-content">
+                基础操作关于 Xcode 命令xcodebuild是一个命令行的工具，可以让你的工程通过 projects workspaces 进行编译，测试，分析，打包。他可以运行在包含一个或者多个Target的工程上面，或者在 projects workspaces 包含 scheme 上面。xcodebuild 提供了几个选项，可以在 Main Page 看到这些。默认情况下，xcodebuild会保存和输出在 Xcode 的本地定义的面板里面。
+常用方法常用方法一123456789xcodebuild[-project projectname ] #项目名称[[-target targetna...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/06</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/06/11/创建CocoaPods私有库/" >
                 
                     <span>创建CocoaPods私有库</span>
             </a>
@@ -441,7 +491,7 @@ CMakeLists.txt 文件内容如下：
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/11</span>
                 </div>
                 <!-- tags  -->
                 
@@ -457,7 +507,7 @@ CMakeLists.txt 文件内容如下：
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/29/简述Runtime/" >
+            <a class="abstract-title" href = "/2018/05/13/简述Runtime/" >
                 
                     <span>简述Runtime</span>
             </a>
@@ -471,7 +521,7 @@ id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实..
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/29</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/13</span>
                 </div>
                 <!-- tags  -->
                 
@@ -487,7 +537,7 @@ id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实..
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/09/简述Runloop/" >
+            <a class="abstract-title" href = "/2018/04/10/简述Runloop/" >
                 
                     <span>简述RunLoop</span>
             </a>
@@ -500,7 +550,46 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/09</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/06/iOS多线程GCD/" >
+                
+                    <span>iOS多线程GCD</span>
+            </a>
+            <div class="abstract-content">
+                iOS多线程 —— GCD官方[开源代码](http://libdispatch.macosforge.org)
+
+前言线程 、任务 、队列
+
+线程 程序执行任务的最小调度单位
+任务 你所要做的事情 ，说白了就是你的代码
+队列 用来存放任务的数组
+
+
+串行 、并行 、并发
+
+串行 串行程序中，程序会按照顺序执行每一条指令，在整个程序运行过程中，仅存在一个运行上下文。（即一个调用栈，一个堆）
+并发 并发指的是，程序在运行中存在多个运行上下文，对应不同的调用栈。
+并行 在只有一个处理器的机器上，并发程序虽然有多个运行上下文，但某一个时刻只有一个任务在运行。在多处理器上，则可以有多个。同一时刻...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/06</span>
                 </div>
                 <!-- tags  -->
                 
@@ -653,7 +742,58 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     
     
-    <div class="total-archive"> Total : 7 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 10 </div>
     
     <div class="post-archive">
     
@@ -665,37 +805,52 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/13</span><a class="archive-post-title" href= "/2018/06/13/关于Attribute/" >关于Attribute</a>
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/关于AST解析树/" >关于AST解析树</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2018/06/10/关于AST解析树/" >关于AST解析树</a>
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/创建XCode插件/" >创建XCode插件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2018/06/04/创建XCode插件/" >创建XCode插件</a>
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href= "/2018/09/04/尝试LLVM/" >尝试LLVM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/尝试LLVM/" >尝试LLVM</a>
+            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2018/08/17/关于Attribute/" >关于Attribute</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/符号化崩溃日志/" >符号化崩溃日志</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/简述Runtime/" >简述Runtime</a>
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/iOS-自动打包/" >iOS-自动打包</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2018/03/09/简述Runloop/" >简述RunLoop</a>
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/简述Runtime/" >简述Runtime</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/简述Runloop/" >简述RunLoop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2018/03/06/iOS多线程GCD/" >iOS多线程GCD</a>
         </li>
     
     </div>

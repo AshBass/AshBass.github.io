@@ -299,23 +299,20 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/26/创建CocoaPods私有库/" >
+            <a class="abstract-title" href = "/2018/04/10/简述Runloop/" >
                 
-                    <span>创建CocoaPods私有库</span>
+                    <span>简述RunLoop</span>
             </a>
             <div class="abstract-content">
-                在网上看过不少关于创建私有库的博客，但大多都是互相抄袭，而且坑非常的多。最近因公司要求，要做一个公司的Pod仓库，所以有了一点点心得。
-例子中用到git命令行，如果有小白不知道git命令行怎么使用，请先百度git的使用。
-以下我会用github的为例子进行讲解。由于github的私人仓库要付费，这里我选择public。如果你是coding、码云等，你可以选择private，毕竟是私有库嘛。
-首先我们先在自己的github上创建一个我们的Pod仓库。仓库名字为MyPod。
+                相关知识RunLoop 是一个对象，这个对象在循环中用来处理程序运行过程中出现的各种事件（比如说触摸事件、UI刷新事件、定时器事件、Selector事件），从而保持程序的持续运行；而且在没有事件处理的时候，会进入睡眠模式，从而节省CPU资源，提高程序性能。
+简单描述 RunLoop 的结构：
 
-接下来我们在终端执行：
-1pod repo add MyPod https://github.com/AshBass...
+RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关系是保存在一个全局的 Dictionary 里。线程刚创建时并没有 RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创建是发生在第一次获取时，RunLoop 的销毁是发生在线程结束时。你只能在一个线...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
                 </div>
                 <!-- tags  -->
                 
@@ -468,7 +465,58 @@
     
     
     
-    <div class="total-archive"> Total : 7 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 10 </div>
     
     <div class="post-archive">
     
@@ -480,37 +528,52 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/13</span><a class="archive-post-title" href= "/2018/06/13/关于Attribute/" >关于Attribute</a>
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/关于AST解析树/" >关于AST解析树</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2018/06/10/关于AST解析树/" >关于AST解析树</a>
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/创建XCode插件/" >创建XCode插件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2018/06/04/创建XCode插件/" >创建XCode插件</a>
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href= "/2018/09/04/尝试LLVM/" >尝试LLVM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/尝试LLVM/" >尝试LLVM</a>
+            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2018/08/17/关于Attribute/" >关于Attribute</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/符号化崩溃日志/" >符号化崩溃日志</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/29</span><a class="archive-post-title" href= "/2018/03/29/简述Runtime/" >简述Runtime</a>
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/iOS-自动打包/" >iOS-自动打包</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2018/03/09/简述Runloop/" >简述RunLoop</a>
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/简述Runtime/" >简述Runtime</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/简述Runloop/" >简述RunLoop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2018/03/06/iOS多线程GCD/" >iOS多线程GCD</a>
         </li>
     
     </div>
