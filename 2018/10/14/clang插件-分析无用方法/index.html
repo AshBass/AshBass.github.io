@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>符号化崩溃日志 · 离久</title>
+    <title>clang插件-分析无用方法 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >离久的小站</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">符号化崩溃日志</a>
+                <a href="#" class="post-name">clang插件-分析无用方法</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            符号化崩溃日志
+            clang插件-分析无用方法
             <!-- 404 -->
             
         </h1>
@@ -313,9 +313,15 @@ height:50vh;
         
             <!-- 文章页标签  -->
             
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+            
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/07/24</span>
+                <span class="post-intro-time">2018/10/14</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -344,35 +350,30 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="符号化崩溃日志"><a href="#符号化崩溃日志" class="headerlink" title="符号化崩溃日志"></a>符号化崩溃日志</h1><p>一般的crash日志是没有被符号化的，我们根本看不懂，所以我们需要符号化日志。</p>
-<p>我们需要找到一个工具帮我们符号化，Xcode中有 symbolicatecrash 来帮我们符号化。</p>
-<p>我们可以在命令行输入以下命令寻找 symbolicatecrash。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /Applications/Xcode.app -name symbolicatecrash -type f</span><br></pre></td></tr></table></figure></p>
-<p>当然，如果如无意外、Xcode没有太大改动的话，symbolicatecrash的路径是不变的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/Library/PrivateFrameworks/DVTFoundation.framework/symbolicatecrash</span><br></pre></td></tr></table></figure></p>
-<p>我们将这个symbolicatecrash复制出来。</p>
-<p>我们把我们 app 的崩溃日志复制出来，放入和 symbolicatecrash 同一个文件夹里。（如果是苹果审核时返回的日志，你可以复制到一个 .txt 文件中，然后把后缀改成 .crash ）。</p>
-<p>然后我们需要提取我们项目的 dsyM 符号表。</p>
-<p>Xcode -&gt; Window -&gt; Organizer -&gt; 你的app -&gt; Archives -&gt; 右键你崩溃的版本打开所在文件夹</p>
-<p>之后我们就可以看到 app 的 .xcarchive 文件，右键点击显示包内容，我们可以在 dSYMs 文件夹里面找到和工程同名的 .dSYM 文件。复制到和 symbolicatecrash 、crash 日志同一个文件夹。</p>
-<p>接下来依次执行两个命令</p>
-<p>1.先是设置临时变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer</span><br></pre></td></tr></table></figure></p>
-<p>2.符号化日志（其中 MyAppName.crash 和 MyAppName.app.dSYM 都要改成你自己的名字）<br>symbol.crash 是符号化生成的文件，你也可以生成 symbol.txt 文本文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./symbolicatecrash ./MyAppName.crash ./MyAppName.app.dSYM &gt; symbol.crash</span><br></pre></td></tr></table></figure></p>
+        <p>插件源码<a href="https://github.com/AshBass/clang-unusedMethod" target="_blank" rel="noopener">clang-unusedMethod</a></p>
+<p>在开始分析之前，定义了一些数据结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef map&lt;string,ObjCMethodDecl*&gt; MethodDeclMap;</span><br><span class="line">typedef map&lt;string,bool&gt; MethodIsUsedMap;</span><br><span class="line"></span><br><span class="line">class InterfaceModel &#123;</span><br><span class="line">public:</span><br><span class="line">    MethodDeclMap methodDeclMap = MethodDeclMap();</span><br><span class="line">    MethodIsUsedMap methodIsUsedMap = MethodIsUsedMap();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef map&lt;string,InterfaceModel&gt; InterfaceMap;</span><br><span class="line">static InterfaceMap interfaceMap = InterfaceMap();</span><br></pre></td></tr></table></figure>
+<p>这里我们为每个类定义了一个 InterfaceModel 模型。主要保存着每个类的所包含的方法，以及类中每个方法是否被使用。</p>
+<p><strong>注意：我曾经试过将 MethodDeclMap、MethodIsUsedMap 两个合并成一个类似 InterfaceModel 的 MethodModel 模型。但发现编译时会报错。暂时不知道为什么。以后会研究一下。</strong></p>
+<p>由于这次我不需要分析协议的方法，所以我会把协议中的方法过滤掉。还要限制一下我们所分析到的 Decl 是否是系统的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">bool isProtocolMethod(ObjCInterfaceDecl *interfaceDecl, ObjCMethodDecl *methodDecl) &#123;</span><br><span class="line">    string selectorName = methodDecl-&gt;getSelector().getAsString();</span><br><span class="line">    for (auto *protocolDecl : interfaceDecl-&gt;all_referenced_protocols())&#123;</span><br><span class="line">        if (protocolDecl-&gt;lookupMethod(methodDecl-&gt;getSelector(), methodDecl-&gt;isInstanceMethod())) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br><span class="line">bool isSystemMethod (ObjCMethodDecl *methodDecl) &#123;</span><br><span class="line">    ObjCInterfaceDecl *interfaceDecl = methodDecl-&gt;getClassInterface();</span><br><span class="line">    while (isUserSourceDecl(interfaceDecl)) &#123;</span><br><span class="line">        interfaceDecl = interfaceDecl-&gt;getSuperClass();</span><br><span class="line">    &#125;</span><br><span class="line">    if (interfaceDecl-&gt;lookupMethod(methodDecl-&gt;getSelector(), methodDecl-&gt;isInstanceMethod())) &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br><span class="line">//判断decl来源是不是用户文件</span><br><span class="line">bool isUserSourceDecl(const Decl *decl)</span><br><span class="line">&#123;</span><br><span class="line">    string filename = getFileNameDecl(decl);</span><br><span class="line">    return isUserSourceUsefulFileWithFilename(filename);</span><br><span class="line">&#125;</span><br><span class="line">//判断stmt来源是不是用户文件</span><br><span class="line">bool isUserSourceStmt(const Stmt *stmt)</span><br><span class="line">&#123;</span><br><span class="line">    string filename = getFileNameStmt(stmt);</span><br><span class="line">    return isUserSourceUsefulFileWithFilename(filename);</span><br><span class="line">&#125;</span><br><span class="line">//有效文件（非系统文件、且非Pods文件、且是.m文件）</span><br><span class="line">bool isUserSourceUsefulFileWithFilename(const string filename) &#123;</span><br><span class="line">    bool result = (!isSystemSourceWithFilename(filename) &amp;&amp;</span><br><span class="line">                   !isPodFileWithFilename(filename));</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们解析到一个用户的 ObjCInterfaceDecl 时，会构建一个对应的 InterfaceModel 然后将它存入 map 中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ObjCInterfaceDecl *interfaceDecl = (ObjCInterfaceDecl *)decl;</span><br><span class="line">string interfaceName = interfaceDecl-&gt;getNameAsString();</span><br><span class="line">if (interfaceMap.find(interfaceName) != interfaceMap.end()) &#123;</span><br><span class="line">    InterfaceModel interfaceModel = InterfaceModel();</span><br><span class="line">    interfaceMap[interfaceName] = interfaceModel;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>解析到 ObjCMethodDecl 时，会将 decl 存入对应类的模型中。若是第一次存进去，methodIsUsedMap 对应为false。<br><strong>因为解析时，系统会解析两次。先将工程内全部头文件解析一次，然后在根据语法树进行解析。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void addMethod(ObjCInterfaceDecl *interfaceDecl, ObjCMethodDecl *methodDecl) &#123;</span><br><span class="line">    ObjCInterfaceDecl *decl = interfaceDecl;</span><br><span class="line">    while (decl != NULL) &#123;</span><br><span class="line">        if (decl-&gt;lookupMethod(methodDecl-&gt;getSelector(), methodDecl-&gt;isInstanceMethod())) &#123;</span><br><span class="line">            string interfaceName = decl-&gt;getNameAsString();</span><br><span class="line">            string selector = methodDecl-&gt;getSelector().getAsString();</span><br><span class="line">            InterfaceModel *interfaceModel = &amp;interfaceMap[interfaceName];</span><br><span class="line">            bool isExist = (interfaceModel-&gt;methodIsUsedMap.find(selector) != interfaceModel-&gt;methodIsUsedMap.end());</span><br><span class="line">            if (!isExist) &#123;</span><br><span class="line">                interfaceModel-&gt;methodDeclMap[selector] = methodDecl;</span><br><span class="line">                interfaceModel-&gt;methodIsUsedMap[selector] = false;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                interfaceModel-&gt;methodDeclMap[selector] = methodDecl;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        decl = decl-&gt;getSuperClass();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>解析 ObjCMessageExpr ，即我们执行调用 [obj method] 时。<br>和解析到 ObjCMethodDecl 差不多，只不过是将 methodIsUsedMap 对应为方法标记为 true。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">void addExpr(ObjCInterfaceDecl *interfaceDecl, ObjCMessageExpr *objcExpr) &#123;</span><br><span class="line">    ObjCMethodDecl *methodDecl = objcExpr-&gt;getMethodDecl();</span><br><span class="line">    ObjCInterfaceDecl *decl = interfaceDecl;</span><br><span class="line">    while (decl != NULL &amp;&amp; isUserSourceDecl(decl)) &#123;</span><br><span class="line">        if (decl-&gt;lookupMethod(methodDecl-&gt;getSelector(), methodDecl-&gt;isInstanceMethod())) &#123;</span><br><span class="line">            string interfaceName = decl-&gt;getNameAsString();</span><br><span class="line">            string selector = methodDecl-&gt;getSelector().getAsString();</span><br><span class="line">            InterfaceModel *interfaceModel = &amp;interfaceMap[interfaceName];</span><br><span class="line">            bool isExist = (interfaceModel-&gt;methodIsUsedMap.find(selector) != interfaceModel-&gt;methodIsUsedMap.end());</span><br><span class="line">            if (!isExist) &#123;</span><br><span class="line">                interfaceModel-&gt;methodDeclMap[selector] = methodDecl;</span><br><span class="line">                interfaceModel-&gt;methodIsUsedMap[selector] = true;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                interfaceModel-&gt;methodIsUsedMap[selector] = true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        decl = decl-&gt;getSuperClass();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后我们会将 InterfaceMap 中的每个 InterfaceModel 进行遍历。<br>对每个 InterfaceModel 中的 MethodIsUsedMap 进行遍历，若为 false ，则从 MethodDeclMap 中取出 Decl 进行警告。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void DiagnosticationResult() &#123;</span><br><span class="line">    DiagnosticsEngine &amp;Diagnostics = Instance.getDiagnostics();</span><br><span class="line">    for (InterfaceMap::iterator interfaceIter = interfaceMap.begin(); interfaceIter != interfaceMap.end(); ++interfaceIter) &#123;</span><br><span class="line">        InterfaceModel *model = &amp;interfaceIter-&gt;second;</span><br><span class="line">        for (MethodIsUsedMap::iterator methodIter = model-&gt;methodIsUsedMap.begin(); methodIter != model-&gt;methodIsUsedMap.end(); ++methodIter) &#123;</span><br><span class="line">            string selector = methodIter-&gt;first;</span><br><span class="line">            bool isUsed = methodIter-&gt;second;</span><br><span class="line">            if (!isUsed) &#123;</span><br><span class="line">                ObjCMethodDecl *methodDecl = model-&gt;methodDeclMap[selector];</span><br><span class="line">                if (methodDecl != NULL) &#123;</span><br><span class="line">                    int diagID = Diagnostics.getCustomDiagID(DiagnosticsEngine::Warning, &quot;未使用方法 SEL : %0 &quot;);</span><br><span class="line">                    Diagnostics.Report(methodDecl-&gt;getLocStart(), diagID) &lt;&lt; methodDecl-&gt;getSelector().getAsString();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>此插件的缺点：</strong><br>仅仅是对非协议方法、以及 [obj method] 形式的调用进行分析。<br>对于通知、performSelector等调用方法没有进行对应的分析。</p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/08/17/关于Attribute/" title= 关于Attribute >
-                    <div class="nextTitle">关于Attribute</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/07/06/iOS-自动打包/" title= iOS-自动打包 >
-                    <div class="prevTitle">iOS-自动打包</div>
+                <a href= "/2018/09/28/关于AST解析树/" title= 关于AST解析树 >
+                    <div class="prevTitle">关于AST解析树</div>
                 </a>
             
         </li>
@@ -474,7 +475,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#符号化崩溃日志"><span class="toc-number">1.</span> <span class="toc-text">符号化崩溃日志</span></a></li></ol>
+        
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

@@ -314,156 +314,36 @@ height:50vh;
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >
+            <a class="abstract-title" href = "/2018/03/06/iOS多线程GCD/" >
                 
-                    <span>机器学习笔记-3-关于梯度下降的计算</span>
+                    <span>iOS多线程GCD</span>
             </a>
             <div class="abstract-content">
-                上一章我们讲了关于梯度下降的一些概念。这一章主要讲一些在计算梯度下降时所要注意的一些情况。
-—– 关于特征缩放 —–
-我们还是举房价的例子。这里我们的样本中有两个参数，一个是房子的大小，一个是房子里卧室的数量。
+                iOS多线程 —— GCD官方[开源代码](http://libdispatch.macosforge.org)
 
-上图左边是用原始数据画出来的图，每一个圈代表着J(θ)的值。若忘记的同学，可以回去代价函数那一章看看。
-我们很容易看出，用原始数据画出来的图不够直观，可能会带给计算上很多障碍。于是我们可以缩放一下样本的两个参数。这样的话就可以得出上图的右边部分。
-这里你可能会问，这样缩放数据，会不会影响结果。确实，缩放数据之后，每一次计算出来的J(θ)值会不一样，但我们需要的是在梯度下降迭代过...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/04</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/01/机器学习笔记-2-梯度下降/" >
-                
-                    <span>机器学习笔记-2-梯度下降</span>
-            </a>
-            <div class="abstract-content">
-                承接上回代价函数的概念，这章我们讲它的其中一种解法 —— 梯度下降。
-科学家定义了下一次θj（j是θ的下标。例如j=1就是θ1 ）要假设的值的公式（别问我为什么是这个公式了……科学家真心太厉害了）
+前言线程 、任务 、队列
 
-在这里，α是个纯数字，表示学习速率，这个等等讲。先讲解一下这个公式的意思。
-这个公式意思就是：下一次要预测的θj的值，是当前θj的值减去J(θ0,θ1)的偏导数与纯数字α的乘积。（偏导数是什么，各位同学去百度一下就知道了）
-计算机就是用这个公式推导出下一个要假设的θj值。但要注意一点，要等所有的θj的值要用旧值计算之后，才一起导入到新的一轮计算中去。下图左边是正确示范，右边是错误示范。
+线程 程序执行任务的最小调度单位
+任务 你所要做的事情 ，说白了就是你的代码
+队列 用来存放任务的数组
 
-关...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/30/机器学习笔记-1-代价函数/" >
-                
-                    <span>机器学习笔记-1-代价函数</span>
-            </a>
-            <div class="abstract-content">
-                
-上面这张图是代价函数的图。我们这里先引入“代价函数”这个概念，接下来我会慢慢一步一步说。
-函数图上的点，是一些数据。我们现在举个例子。假设现在我们要计算机去预测一个房子的价格，x代表房子的平方数，y代表房子的价格。现在我们把这些数据给了计算机，计算机把这些数据分布到图上，形成了上面的那些点。
-我们上面说了，监督学习是给计算机一些我们已知解答的数据来求输入输出的关系。也就是说，我们希望给了这些数据之后，我们再给计算机一个房子的平方数x，计算机可以给出它预测的一个房价的价格y。
-但问题来了，房子的价格和房子的平方数有关系，但不一定同样大小的房子就是同样的价格，可能还有其它因素影响着房价（例...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/30</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/28/机器学习开始/" >
-                
-                    <span>机器学习开始</span>
-            </a>
-            <div class="abstract-content">
-                最近在看机器学习的视频。由于内容有点多，怕记不住，所以用这个博客来记录下自己学习的过程。顺便在写博客的时候复习一下。
-我看的机器学习课程地址 ：https://www.coursera.org/learn/machine-learning/home/welcome
-我的笔记知识、图片都是来自于这个课程的。
-—– 以下所有内容为个人理解。可能表述并不准确。—–
-机器学习分为两种。第一种是监督学习，第二种是无监督学习。
-1.监督学习。通常监督学习分为“回归”和“分类”。就是我们通过给计算机一些数据，并且这些数据是已知知道其结果，求输入和输出之间的关系。
-回归是指我们通过给出的一些数据，预测结...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 机器学习>机器学习</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/2018开始/" >
-                
-                    <span>2018开始</span>
-            </a>
-            <div class="abstract-content">
-                本人2016年毕业。不在大厂，也不在中厂，现在在一个国企里面搬砖。是一个很普通的iOS程序员，真心不是什么大神。
-从2015年12月开始实习到现在，做了两年的iOS。这两年有成长，但没有说已经到达大神的地步。
-呆过两家公司。由于许多原因，我没有什么可以展示的app。听起来是不是难以置信……
-之前没有写博客和demo的习惯，但后来发现不写点博客和demo，有时候自己会忘记很多已经学到的东西（可能人已经老了吧…）
-打算2018年，多学学点东西。iOS方面多写点技术博客，在其它方面也涉及一下，增加自己的见识。
 
-我给我自己2018定下的目标是：    1.了解机器学习，只是个人兴趣，并不是为了...
+串行 、并行 、并发
+
+串行 串行程序中，程序会按照顺序执行每一条指令，在整个程序运行过程中，仅存在一个运行上下文。（即一个调用栈，一个堆）
+并发 并发指的是，程序在运行中存在多个运行上下文，对应不同的调用栈。
+并行 在只有一个处理器的机器上，并发程序虽然有多个运行上下文，但某一个时刻只有一个任务在运行。在多处理器上，则可以有多个。同一时刻...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/06</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 杂谈>杂谈</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
     
 </div>
                 
@@ -742,53 +622,7 @@ height:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 15 </div>
+    <div class="total-archive"> Total : 11 </div>
     
     <div class="post-archive">
     
@@ -800,77 +634,57 @@ height:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/5月的总结/" >5月的总结</a>
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2018/10/14/clang插件-分析无用方法/" >clang插件-分析无用方法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-10-神经网络的使用/" >机器学习笔记-10-神经网络的使用</a>
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/关于AST解析树/" >关于AST解析树</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2018/05/06/机器学习笔记-9-神经网络模型/" >机器学习笔记-9-神经网络模型</a>
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/创建XCode插件/" >创建XCode插件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/劳动节日常杂谈/" >劳动节日常杂谈</a>
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href= "/2018/09/04/尝试LLVM/" >尝试LLVM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/机器学习笔记-8-正规化的运算/" >机器学习笔记-8-正规化的运算</a>
+            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2018/08/17/关于Attribute/" >关于Attribute</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2018/04/29/机器学习笔记-7-正规化/" >机器学习笔记-7-正规化</a>
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/符号化崩溃日志/" >符号化崩溃日志</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2018/04/28/机器学习笔记-6-过度拟合/" >机器学习笔记-6-过度拟合</a>
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/iOS-自动打包/" >iOS-自动打包</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2018/04/27/机器学习笔记-5-逻辑回归/" >机器学习笔记-5-逻辑回归</a>
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2018/04/26/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/简述Runtime/" >简述Runtime</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2018/04/21/机器学习笔记-4-正规方程/" >机器学习笔记-4-正规函数</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/简述Runloop/" >简述RunLoop</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2018/04/04/机器学习笔记-3-关于梯度下降的计算/" >机器学习笔记-3-关于梯度下降的计算</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/机器学习笔记-2-梯度下降/" >机器学习笔记-2-梯度下降</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2018/03/30/机器学习笔记-1-代价函数/" >机器学习笔记-1-代价函数</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/28</span><a class="archive-post-title" href= "/2018/03/28/机器学习开始/" >机器学习开始</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/2018开始/" >2018开始</a>
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2018/03/06/iOS多线程GCD/" >iOS多线程GCD</a>
         </li>
     
     </div>
@@ -878,11 +692,7 @@ height:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="杂谈"><span class="iconfont-archer">&#xe606;</span>杂谈</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -917,11 +727,7 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
-    
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
-        <span class="sidebar-category-name" data-categories="笔记"><span class="iconfont-archer">&#xe60a;</span>笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

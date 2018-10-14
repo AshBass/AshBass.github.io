@@ -299,6 +299,34 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/10/14/clang插件-分析无用方法/" >
+                
+                    <span>clang插件-分析无用方法</span>
+            </a>
+            <div class="abstract-content">
+                插件源码clang-unusedMethod
+在开始分析之前，定义了一些数据结构。
+1234567891011typedef map&lt;string,ObjCMethodDecl*&gt; MethodDeclMap;typedef map&lt;string,bool&gt; MethodIsUsedMap;class InterfaceModel &#123;public:    MethodDeclMap methodDeclMap = MethodDeclMap();    MethodIsUsedMap methodIsUsedMap = MethodIsUsedMap()...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/10/14</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/09/28/关于AST解析树/" >
                 
                     <span>关于AST解析树</span>
@@ -338,14 +366,14 @@ Stmt之间的关系树
                 前提
 创建一个 XCode 插件，首先先要安装 LLVM 。可以参考上一篇文章 《尝试LLVM》。
 正文
-首先修改源代码目录 /opt/llvm/llvm/tools/clang/tools 下的 CMakeLists.txt 文件。
+首先修改源代码目录 /tools/clang/tools 下的 CMakeLists.txt 文件。
 
 在 CMakeLists.txt 的最后面添加上一行。
 
 在 tools 目录下添加 MyPlugin 文件夹，文件夹里面新增两个文件 CMakeLists.txt 和 MyPlugin.cpp
 
 CMakeLists.txt 文件内容如下：
-1234567891011121314add_llvm_loadable_module(MyPlugin MyP...
+1234567891011121314add_llvm_loadable_module(MyPlugin MyPlugin.cppPLUGI...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -770,7 +798,16 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     
     
-    <div class="total-archive"> Total : 10 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 11 </div>
     
     <div class="post-archive">
     
@@ -779,6 +816,11 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2018/10/14/clang插件-分析无用方法/" >clang插件-分析无用方法</a>
+        </li>
     
     
         <li class="archive-post-item">
