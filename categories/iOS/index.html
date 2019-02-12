@@ -453,6 +453,35 @@ CMakeLists.txt 文件内容如下：
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/07/24/符号化崩溃日志/" >
+                
+                    <span>符号化崩溃日志</span>
+            </a>
+            <div class="abstract-content">
+                符号化崩溃日志一般的crash日志是没有被符号化的，我们根本看不懂，所以我们需要符号化日志。
+我们需要找到一个工具帮我们符号化，Xcode中有 symbolicatecrash 来帮我们符号化。
+我们可以在命令行输入以下命令寻找 symbolicatecrash。1find /Applications/Xcode.app -name symbolicatecrash -type f
+当然，如果如无意外、Xcode没有太大改动的话，symbolicatecrash的路径是不变的。1/Applications/Xcode.app/Contents/Developer/Platforms/Ap...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/24</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/07/06/iOS-自动打包/" >
                 
                     <span>iOS-自动打包</span>
@@ -568,46 +597,11 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
             </div>
         </article>
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/06/iOS多线程GCD/" >
-                
-                    <span>iOS多线程GCD</span>
-            </a>
-            <div class="abstract-content">
-                iOS多线程 —— GCD官方[开源代码](http://libdispatch.macosforge.org)
-
-前言线程 、任务 、队列
-
-线程 程序执行任务的最小调度单位
-任务 你所要做的事情 ，说白了就是你的代码
-队列 用来存放任务的数组
-
-
-串行 、并行 、并发
-
-串行 串行程序中，程序会按照顺序执行每一条指令，在整个程序运行过程中，仅存在一个运行上下文。（即一个调用栈，一个堆）
-并发 并发指的是，程序在运行中存在多个运行上下文，对应不同的调用栈。
-并行 在只有一个处理器的机器上，并发程序虽然有多个运行上下文，但某一个时刻只有一个任务在运行。在多处理器上，则可以有多个。同一时刻...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/06</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/categories/iOS/page/2/">2</a><a class="extend next" rel="next" href="/categories/iOS/page/2/">NEXT &#62;</a>
+    </nav>
     
 </main>
             <!-- profile -->
@@ -826,7 +820,30 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     
     
-    <div class="total-archive"> Total : 12 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 13 </div>
     
     <div class="post-archive">
     
@@ -835,6 +852,11 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2019/02/12/感悟/" >小小感悟</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -914,6 +936,8 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
     <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
@@ -950,6 +974,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
