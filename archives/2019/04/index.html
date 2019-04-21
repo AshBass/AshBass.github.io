@@ -299,21 +299,59 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/13/简述Runtime/" >
+            <a class="abstract-title" href = "/2019/04/21/关于Mach-O/" >
                 
-                    <span>简述Runtime</span>
+                    <span>关于线程回溯</span>
             </a>
             <div class="abstract-content">
-                简介Objective-C 是一门动态语言，它会将一些工作放在代码运行时才处理而并非编译时。也就是说，有很多类和成员变量在我们编译的时是不知道的，而在运行时，我们所编写的代码会转换成完整的确定的代码运行。
-因此，编译器是不够的，我们还需要一个运行时系统(Runtime system)来处理编译后的代码。
-Runtime 基本是用 C 和汇编写的，由此可见苹果为了动态系统的高效而做出的努力。苹果和 GNU 各自维护一个开源的 Runtime 版本，这两个版本之间都在努力保持一致。
-点击这里可以下载苹果维护的开源代码。
-id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实...
+                Mach-O 是 iOS/OSX 系统中的可执行文件
+
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/13</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2019/04/21/关于线程回溯/" >
+                
+                    <span>关于线程回溯</span>
+            </a>
+            <div class="abstract-content">
+                最近写了一个小demo
+具体思路
+通过当前进程获取所有线程
+通过单一线程获取其所在的内存的上下文
+获取指针栈帧结构体，得到指令地址、栈基地址、栈帧
+通过向前遍历获取到每一个栈帧的返回地址
+通过遍历mach-o image的地址，通过地址对比，获取到所在的image
+通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址
+通过地址对比，找到所在的符号表中的位置
+通过符号表中的位置，找到字符串表中的字符串
+
+##所用到的相关知识
+
+mach-o 文件格式
+动态链接器（dyld）相关知识（可从fishhook学到）
+计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
                 </div>
                 <!-- tags  -->
                 
