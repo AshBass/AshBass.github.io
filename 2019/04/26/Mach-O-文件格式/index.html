@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>离久</title>
+    <title>Mach-O 文件格式 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,12 +251,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >离久的小站</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Mach-O 文件格式</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>离久的小站</a>
 </header>
@@ -270,361 +281,211 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            Mach-O 文件格式
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/04/26</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/26/Mach-O-文件格式/" >
-                
-                    <span>Mach-O 文件格式</span>
-            </a>
-            <div class="abstract-content">
-                Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式
-类型12345678910111213#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */#define MH_FVMLIB   0x3     /* VM共享库文件 */#define MH_CORE     0x4     /*核心转储文件 */#define MH_PRELOAD  0x5     /* 预加载的可执行文...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/21/关于线程回溯/" >
-                
-                    <span>关于线程回溯</span>
-            </a>
-            <div class="abstract-content">
-                最近写了一个小demo
-具体思路
-通过当前进程获取所有线程
-通过单一线程获取其所在的内存的上下文
-获取指针栈帧结构体，得到指令地址、栈基地址、栈帧
-通过向前遍历获取到每一个栈帧的返回地址
-通过遍历Mach-O image的地址，通过地址对比，获取到所在的image
-通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址
-通过地址对比，找到所在的符号表中的位置
-通过符号表中的位置，找到字符串表中的字符串
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式</p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */</span><br><span class="line">#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */</span><br><span class="line">#define MH_FVMLIB   0x3     /* VM共享库文件 */</span><br><span class="line">#define MH_CORE     0x4     /*核心转储文件 */</span><br><span class="line">#define MH_PRELOAD  0x5     /* 预加载的可执行文件 */</span><br><span class="line">#define MH_DYLIB    0x6     /* 动态库 .dylib  */</span><br><span class="line">#define MH_DYLINKER 0x7     /* 动态链接器 usr/lib/dyld */</span><br><span class="line">#define MH_BUNDLE   0x8     /* 动态绑定的bundle文件 */</span><br><span class="line">#define MH_DYLIB_STUB   0x9     /* shared library stub for static */</span><br><span class="line">                    /*  linking only, no section contents */</span><br><span class="line">#define MH_DSYM     0xa     /* 存储二进制文件符号信息的文件 */</span><br><span class="line">                    /*  sections */</span><br><span class="line">#define MH_KEXT_BUNDLE  0xb     /* x86_64 kexts */</span><br></pre></td></tr></table></figure>
+<img src="/2019/04/26/Mach-O-文件格式/Mach-O_1.png" title="Mach-O_1">
+<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><p>Mach-O 包含三个主要区域</p>
+<ol>
+<li><p>Header: 文件类型, 目标架构</p>
+</li>
+<li><p>Load command: 描述文件在虚拟内存中的逻辑与布局</p>
+</li>
+<li><p>Raw segment date : Load command中定义的原始数据</p>
+</li>
+</ol>
+<img src="/2019/04/26/Mach-O-文件格式/Mach-O_2.png" title="Mach-O_2">
+<p>可以从我的<a href="https://github.com/AshBass/Mach-O-View" target="_blank" rel="noopener">仓库</a>下载 Mach-O View 来查看文件的结构</p>
+<p>使用 Mach-O View 来打开可执行文件<br><img src="/2019/04/26/Mach-O-文件格式/Mach-O_3.png" title="Mach-O_3"><br><img src="/2019/04/26/Mach-O-文件格式/Mach-O_4.png" title="Mach-O_4"></p>
+<p>由于上图的可执行文件只适配了ARM64，一般通用可以执行文件如图下<br><img src="/2019/04/26/Mach-O-文件格式/Mach-O_5.png" title="Mach-O_5"></p>
+<p>含有多个不同架构的独立二进制文件; 故体积较大</p>
+<p>执行时, 只会选择一种架构的二进制文件</p>
+<h3 id="Mach-Header"><a href="#Mach-Header" class="headerlink" title="Mach Header"></a>Mach Header</h3><img src="/2019/04/26/Mach-O-文件格式/Mach-O_6.png" title="Mach-O_6">
+<ol>
+<li><p>Magic Number 表示支持设备的CPU位数</p>
+<ul>
+<li>oxFEEDFACE : 表示32位二进制</li>
+<li>oxFEEDFACF : 表示64位二进制</li>
+</ul>
+</li>
+<li><p>cputype和 cpusubtype: CPU类型和子类型</p>
+</li>
+<li>filetype : Mach-O文件类型</li>
+<li>ncmds 和 sizeofcmds: 用于加载器的 加载命令的条数和大小</li>
+<li>flags : 动态链接器dyld的标志</li>
+</ol>
+<h3 id="SEGMENT-LC-SEGMENT-LC-SEGMENT-64"><a href="#SEGMENT-LC-SEGMENT-LC-SEGMENT-64" class="headerlink" title="SEGMENT(LC_SEGMENT / LC_SEGMENT_64)"></a>SEGMENT(LC_SEGMENT / LC_SEGMENT_64)</h3><img src="/2019/04/26/Mach-O-文件格式/Mach-O_7.png" title="Mach-O_7">
+<ol>
+<li>__PAGEZERO: 空指针陷阱段</li>
+<li>_TEXT: 程序代码段</li>
+<li>__DATA: 程序数据段</li>
+<li>__RODATA: read only程序只读数据段</li>
+<li><p>__LINKEDIT: 链接器使用段</p>
+<h4 id="Section"><a href="#Section" class="headerlink" title="Section"></a>Section</h4><ol>
+<li>Segment Name: 该Segment的名称, 用于load_segment</li>
+<li>VM Address: 该段的虚拟物理地址</li>
+<li>VM Size: 该段所需要分配的虚拟内存大小(字节)</li>
+<li>File Offset: 该段在文件中的偏移量</li>
+<li>File Size: 该段在文件中占据的字节数</li>
+<li>Maximum VM Protection: 段的页面所需要的最高内存保护<ul>
+<li>ox1: x 执行</li>
+<li>ox2: w 写</li>
+<li>0x4: r 读</li>
+</ul>
+</li>
+<li>Initial VM Protection: 段页面初始化的内存保护</li>
+<li>Number of Sections: 段中section区的数量</li>
+<li>Flags: 其他标志位</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">根据LC_SEGMENT命令 设置进程虚拟内存</span><br><span class="line"></span><br><span class="line">对于每一个段, 将其内容从Mach-O文件加载到内存中</span><br><span class="line"></span><br><span class="line">即从Mach-O文件中的偏移量为 File Offset处加载File Size字节内容到虚拟内存地址VM Address处VM Size字节空间内</span><br></pre></td></tr></table></figure>
+<h3 id="常见区section"><a href="#常见区section" class="headerlink" title="常见区section"></a>常见区section</h3><img src="/2019/04/26/Mach-O-文件格式/Mach-O_8.png" title="Mach-O_8">
+<ol>
+<li>__text: 主程序代码</li>
+<li>__stubs, __stub_helper: 用于动态链接的桩</li>
+<li>__cstring: 程序中c语言字符串</li>
+<li>__const: 常量</li>
+<li>__RODATA, __objc_methname: OC方法名称</li>
+<li>__RODATA, __objc_methntype: OC方法类型</li>
+<li>__RODATA, __objc_classname: OC类名</li>
+<li>__DATA, __objc_classlist: OC类列表</li>
+<li>__DATA, __objc_protollist: OC原型列表</li>
+<li>__DATA, __objc_imageinfo: OC镜像信息</li>
+<li>__DATA, __objc_const: OC常量</li>
+<li>__DATA, __objc_selfrefs: OC类自引用(self)</li>
+<li>__DATA, __objc_superrefs: OC类超类引用(super)</li>
+<li>__DATA, __objc_protolrefs: OC原型引用</li>
+<li>__DATA, __bss: 没有初始化和初始化为0 的全局变量</li>
+</ol>
+<h2 id="关于-LoadCommand"><a href="#关于-LoadCommand" class="headerlink" title="关于 LoadCommand"></a>关于 LoadCommand</h2><h3 id="LC-MAIN"><a href="#LC-MAIN" class="headerlink" title="LC_MAIN"></a>LC_MAIN</h3><p>设置程序主线程入口地址 和 栈大小</p>
+<img src="/2019/04/26/Mach-O-文件格式/Mach-O_9.png" title="Mach-O_9">
+<h3 id="LC-CODE-SIGNATURE"><a href="#LC-CODE-SIGNATURE" class="headerlink" title="LC_CODE_SIGNATURE"></a>LC_CODE_SIGNATURE</h3><ol>
+<li>包含Mach-O文件的代码签名</li>
+<li>没有签名 或 签名不正确, 该进程会被kill, 程序崩溃</li>
+</ol>
+<img src="/2019/04/26/Mach-O-文件格式/Mach-O_10.png" title="Mach-O_10">
+<h3 id="关于动态库"><a href="#关于动态库" class="headerlink" title="关于动态库"></a>关于动态库</h3><p>即Mach-O镜像中有很多对外部库以及符号的引用</p>
+<p>这些引用将在程序启动时, 由动态链接器 /usr/lib/dyld来执行符号绑定</p>
+<img src="/2019/04/26/Mach-O-文件格式/Mach-O_11.png" title="Mach-O_11">
+<ul>
+<li><p>加载动态链接器</p>
+<p>  LC_LOAD_DYLINKER: 内核执行该命令时, 启动dyld</p>
+  <img src="/2019/04/26/Mach-O-文件格式/Mach-O_12.png" title="Mach-O_12">
+</li>
+<li><p>符号表</p>
+<p>  LC_SYMTAB: 符号地址表</p>
+<p>  LC_DYSYMTAB: 动态符号地址表</p>
+  <img src="/2019/04/26/Mach-O-文件格式/Mach-O_13.png" title="Mach-O_13">
+</li>
+<li><p>加载动态库</p>
+<p>  LC_LOAD_WEAK_DYLIB</p>
+<p>  LC_LOAD_DYLIB</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">动态库加载流程小结：</span><br><span class="line"></span><br><span class="line">1. 首先启动dyld动态链接器; 内核根据LC_LOAD_DYLINKER启动/usr/lib/dyld</span><br><span class="line"></span><br><span class="line">2. 如果Mach-O文件中使用了外部定义的符号或函数, 则会在文本段\_\_TEXT有\_\_stubs,\_\_stub_helper区; 区内放着本地未被定义的符号; 编译器在编译源码时会创建对这些未定义符号桩区的调用</span><br><span class="line"></span><br><span class="line">3. dyld运行时, 会在符号桩区调用地址上; 添加JMP 到 真实函数地址的指令</span><br><span class="line"></span><br><span class="line">4. 此时dyld将加载Load Command中的LC_LOAD_DYLIB命令</span><br><span class="line"></span><br><span class="line">5. LC_LOAD_DYLIB(动态库), dyld将加载每一个指定的库且搜寻匹配的符号</span><br><span class="line"></span><br><span class="line">6. 当符号匹配时, 将在符号表(由dyld加载LC_SYMTAB, LC_DYSYMTAB获取)查找对应的函数/符号地址</span><br></pre></td></tr></table></figure>
+<h3 id="关于-符号表-、动态符号表-和-字符串表"><a href="#关于-符号表-、动态符号表-和-字符串表" class="headerlink" title="关于 符号表 、动态符号表 和 字符串表"></a>关于 符号表 、动态符号表 和 字符串表</h3><ul>
+<li>Symbol Table: 符号表</li>
+<li>Dynamic Symbol Table: 动态符号表</li>
+<li>String Table: 字符串表</li>
+</ul>
+<img src="/2019/04/26/Mach-O-文件格式/Mach-O_14.png" title="Mach-O_14">
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/04/21/关于线程回溯/" title= 关于线程回溯 >
+                    <div class="prevTitle">关于线程回溯</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
 
-所用到的相关知识
-Mach-O 文件格式
-动态链接器（dyld）相关知识（可从fishhook学到）
-计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算机系统...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
+<!-- City版安装代码已完成 -->
     
     
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/02/12/感悟/" >
-                
-                    <span>小小感悟</span>
-            </a>
-            <div class="abstract-content">
-                精通一个领域
-切碎知识点
-刻意练习
-获得反馈
+    <!--PC版-->
 
-切碎知识点
-庖丁解牛
-脉络连接
-
-刻意练习
-练习缺陷、不舒服、弱点的地方
-不爽、枯燥
-
-获得反馈
-主动型反馈（自己去找）
-被动式反馈（高手教导）
+    <!--PC版-->
 
 
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 阅读笔记>阅读笔记</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/01/25/Python爬虫Scrapy/" >
-                
-                    <span>Python爬虫Scrapy</span>
-            </a>
-            <div class="abstract-content">
-                最近想爬虫，所以了解了一下。
-Scrapy中文文档Splash中文文档
-Scrapy命令行基本用法scrapy-splash docker渲染jsscrapy css选择器使用scrapy提取数据之：xpath选择器
-Scrapy官方文档Docker官方文档
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/25</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/10/14/clang插件-分析无用方法/" >
-                
-                    <span>clang插件-分析无用方法</span>
-            </a>
-            <div class="abstract-content">
-                插件源码clang-unusedMethod
-在开始分析之前，定义了一些数据结构。
-1234567891011typedef map&lt;string,ObjCMethodDecl*&gt; MethodDeclMap;typedef map&lt;string,bool&gt; MethodIsUsedMap;class InterfaceModel &#123;public:    MethodDeclMap methodDeclMap = MethodDeclMap();    MethodIsUsedMap methodIsUsedMap = MethodIsUsedMap()...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/10/14</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/28/关于AST解析树/" >
-                
-                    <span>关于AST解析树</span>
-            </a>
-            <div class="abstract-content">
-                相关资料clang文档AST Matcher Reference
-代码会被解析成 Decl 和 Stmt。
-我们可以继承 MyASTVisitor 模版，通过 VisitDecl 和 VisitStmt 两个方法，获取 Decl 和 Stmt。
-Decl之间的关系树
-Stmt之间的关系树
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/10/创建XCode插件/" >
-                
-                    <span>创建XCode插件</span>
-            </a>
-            <div class="abstract-content">
-                前提
-创建一个 XCode 插件，首先先要安装 LLVM 。可以参考上一篇文章 《尝试LLVM》。
-正文
-首先修改源代码目录 /tools/clang/tools 下的 CMakeLists.txt 文件。
-
-在 CMakeLists.txt 的最后面添加上一行。
-
-在 tools 目录下添加 MyPlugin 文件夹，文件夹里面新增两个文件 CMakeLists.txt 和 MyPlugin.cpp
-
-CMakeLists.txt 文件内容如下：
-1234567891011121314add_llvm_loadable_module(MyPlugin MyPlugin.cppPLUGI...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/04/尝试LLVM/" >
-                
-                    <span>尝试LLVM</span>
-            </a>
-            <div class="abstract-content">
-                LLVM 简介 
- Low Level Virtual Machine ，简称 LLVM ，是一个模块化和可重用的编译器和工具链技术的集合。
- LLVM 能提供一种代码编写良好的中间表示 IR，这意味着它可以作为多种语言的后端，这样就能够提供语言无关的优化同时还能够方便的针对多种 CPU 的代码生成。
- Clang 是 LLVM 的子项目，是 C，C++ 和 Objective-C 编译器，目的是提供惊人的快速编译，比 GCC 快3倍，其中的 clang static analyzer 主要是进行语法分析，语义分析和生成中间代码，当然这个过程会对代码进行检查，出错的和需要警告的会标注出来...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/04</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/08/17/关于Attribute/" >
-                
-                    <span>关于Attribute</span>
-            </a>
-            <div class="abstract-content">
-                Clang Attributes 是 Clang 提供的一种源码注解，一般以 attribute(xxx) 的形式出现在代码中；为方便使用，一些常用属性也被 Cocoa 定义成宏。
-1.objc_subclassing_restricted1定义一个不可被继承的类，写在 @interface 前。
-2.objc_requires_super1子类继承这个方法时需要调用 super，否则给出编译警告。
-3.objc_boxable1声明的 struct 类型或是 union 等基本数据类型可以使用 @(...) 语法糖转成 NSNumber 和 NSValue。
-4.constructor...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/17</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/07/24/符号化崩溃日志/" >
-                
-                    <span>符号化崩溃日志</span>
-            </a>
-            <div class="abstract-content">
-                符号化崩溃日志一般的crash日志是没有被符号化的，我们根本看不懂，所以我们需要符号化日志。
-我们需要找到一个工具帮我们符号化，Xcode中有 symbolicatecrash 来帮我们符号化。
-我们可以在命令行输入以下命令寻找 symbolicatecrash。1find /Applications/Xcode.app -name symbolicatecrash -type f
-当然，如果如无意外、Xcode没有太大改动的话，symbolicatecrash的路径是不变的。1/Applications/Xcode.app/Contents/Developer/Platforms/Ap...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/24</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &#62;</a>
-    </nav>
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -693,6 +554,24 @@ CMakeLists.txt 文件内容如下：
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型"><span class="toc-number">1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本结构"><span class="toc-number">2.</span> <span class="toc-text">基本结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-Header"><span class="toc-number">2.1.</span> <span class="toc-text">Mach Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SEGMENT-LC-SEGMENT-LC-SEGMENT-64"><span class="toc-number">2.2.</span> <span class="toc-text">SEGMENT(LC_SEGMENT / LC_SEGMENT_64)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Section"><span class="toc-number">2.2.1.</span> <span class="toc-text">Section</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见区section"><span class="toc-number">2.3.</span> <span class="toc-text">常见区section</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于-LoadCommand"><span class="toc-number">3.</span> <span class="toc-text">关于 LoadCommand</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LC-MAIN"><span class="toc-number">3.1.</span> <span class="toc-text">LC_MAIN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LC-CODE-SIGNATURE"><span class="toc-number">3.2.</span> <span class="toc-text">LC_CODE_SIGNATURE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于动态库"><span class="toc-number">3.3.</span> <span class="toc-text">关于动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-符号表-、动态符号表-和-字符串表"><span class="toc-number">3.4.</span> <span class="toc-text">关于 符号表 、动态符号表 和 字符串表</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1051,6 +930,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

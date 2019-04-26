@@ -356,14 +356,13 @@ height:50vh;
 <li>通过单一线程获取其所在的内存的上下文</li>
 <li>获取指针栈帧结构体，得到指令地址、栈基地址、栈帧</li>
 <li>通过向前遍历获取到每一个栈帧的返回地址</li>
-<li>通过遍历mach-o image的地址，通过地址对比，获取到所在的image</li>
+<li>通过遍历Mach-O image的地址，通过地址对比，获取到所在的image</li>
 <li>通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址</li>
 <li>通过地址对比，找到所在的符号表中的位置</li>
 <li>通过符号表中的位置，找到字符串表中的字符串</li>
 </ol>
-<p>##所用到的相关知识</p>
-<ol>
-<li>mach-o 文件格式</li>
+<h2 id="所用到的相关知识"><a href="#所用到的相关知识" class="headerlink" title="所用到的相关知识"></a>所用到的相关知识</h2><ol>
+<li>Mach-O 文件格式</li>
 <li>动态链接器（dyld）相关知识（可从fishhook学到）</li>
 <li>计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算机系统》）</li>
 </ol>
@@ -372,6 +371,11 @@ height:50vh;
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/04/26/Mach-O-文件格式/" title= Mach-O 文件格式 >
+                    <div class="nextTitle">Mach-O 文件格式</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -480,7 +484,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#具体思路"><span class="toc-number">1.</span> <span class="toc-text">具体思路</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#具体思路"><span class="toc-number">1.</span> <span class="toc-text">具体思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#所用到的相关知识"><span class="toc-number">2.</span> <span class="toc-text">所用到的相关知识</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -676,8 +680,7 @@ top:50vh;
     
     
     
-    
-    <div class="total-archive"> Total : 14 </div>
+    <div class="total-archive"> Total : 15 </div>
     
     <div class="post-archive">
     
@@ -686,6 +689,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/Mach-O-文件格式/" >Mach-O 文件格式</a>
+        </li>
     
     
         <li class="archive-post-item">
