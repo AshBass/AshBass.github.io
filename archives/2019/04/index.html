@@ -299,13 +299,26 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/26/Mach-O-文件格式/" >
+            <a class="abstract-title" href = "/2019/04/26/关于线程回溯/" >
                 
-                    <span>Mach-O 文件格式</span>
+                    <span>关于线程回溯</span>
             </a>
             <div class="abstract-content">
-                Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式
-类型12345678910111213#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */#define MH_FVMLIB   0x3     /* VM共享库文件 */#define MH_CORE     0x4     /*核心转储文件 */#define MH_PRELOAD  0x5     /* 预加载的可执行文...
+                最近写了一个小demo
+具体思路
+通过当前进程获取所有线程
+通过单一线程获取其所在的内存的上下文
+获取指针栈帧结构体，得到指令地址、栈基地址、栈帧
+通过向前遍历获取到每一个栈帧的返回地址
+通过遍历Mach-O image的地址，通过地址对比，获取到所在的image
+通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址
+通过地址对比，找到所在的符号表中的位置
+通过符号表中的位置，找到字符串表中的字符串
+
+所用到的相关知识
+Mach-O 文件格式
+动态链接器（dyld）相关知识（可从fishhook学到）
+计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算机系统...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -326,26 +339,13 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/21/关于线程回溯/" >
+            <a class="abstract-title" href = "/2019/04/21/Mach-O-文件格式/" >
                 
-                    <span>关于线程回溯</span>
+                    <span>Mach-O 文件格式</span>
             </a>
             <div class="abstract-content">
-                最近写了一个小demo
-具体思路
-通过当前进程获取所有线程
-通过单一线程获取其所在的内存的上下文
-获取指针栈帧结构体，得到指令地址、栈基地址、栈帧
-通过向前遍历获取到每一个栈帧的返回地址
-通过遍历Mach-O image的地址，通过地址对比，获取到所在的image
-通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址
-通过地址对比，找到所在的符号表中的位置
-通过符号表中的位置，找到字符串表中的字符串
-
-所用到的相关知识
-Mach-O 文件格式
-动态链接器（dyld）相关知识（可从fishhook学到）
-计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算机系统...
+                Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式
+类型12345678910111213#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */#define MH_FVMLIB   0x3     /* VM共享库文件 */#define MH_CORE     0x4     /*核心转储文件 */#define MH_PRELOAD  0x5     /* 预加载的可执行文...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -615,18 +615,6 @@ Mach-O 文件格式
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-archive"> Total : 15 </div>
     
     <div class="post-archive">
@@ -639,12 +627,12 @@ Mach-O 文件格式
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/Mach-O-文件格式/" >Mach-O 文件格式</a>
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/关于线程回溯/" >关于线程回溯</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/关于线程回溯/" >关于线程回溯</a>
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/Mach-O-文件格式/" >Mach-O 文件格式</a>
         </li>
     
     
