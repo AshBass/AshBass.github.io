@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>离久</title>
+    <title>关于函数调用栈 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,12 +251,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >离久的小站</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">关于函数调用栈</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>离久的小站</a>
 </header>
@@ -270,63 +281,148 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            关于函数调用栈
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/04/24</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/10/简述Runloop/" >
-                
-                    <span>简述RunLoop</span>
-            </a>
-            <div class="abstract-content">
-                相关知识RunLoop 是一个对象，这个对象在循环中用来处理程序运行过程中出现的各种事件（比如说触摸事件、UI刷新事件、定时器事件、Selector事件），从而保持程序的持续运行；而且在没有事件处理的时候，会进入睡眠模式，从而节省CPU资源，提高程序性能。
-简单描述 RunLoop 的结构：
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="函数调用栈原理"><a href="#函数调用栈原理" class="headerlink" title="函数调用栈原理"></a>函数调用栈原理</h2><p>指令指针</p>
+<ul>
+<li>指令指针IP：指令寄存器存储，指向处理器下条等待执行的指令地址（代码内的偏移量），每次执行完 IP会增加</li>
+<li>堆栈栈顶指针SP：堆栈指令寄存器存储，系统栈的栈顶地址</li>
+<li>栈帧指针FP：栈帧基址指令寄存器存储，每个栈帧都有一个对应的栈帧基地址，局部变量和函数参数都可以通过FP确定，因为它们到FP的距离不会受到压栈和出栈操作影响。</li>
+</ul>
+<p>为了访问函数局部变量，必须能定位每个变量。<br>局部变量相对于堆栈指针SP的位置在进入函数时就已确定，理论上变量可用SP加偏移量来引用，但SP会在函数执行期随变量的压栈和出栈而变动。<br>尽管某些情况下编译器能跟踪栈中的变量操作以修正偏移量，但要引入可观的管理开销。<br>而且在有些机器上(如Intel处理器)，用SP加偏移量来访问一个变量需要多条指令才能实现，由此设计了栈帧指针FP，FP两侧分别记录函数参数，及局部变量。</p>
+<h3 id="函数调用栈内部布局"><a href="#函数调用栈内部布局" class="headerlink" title="函数调用栈内部布局"></a>函数调用栈内部布局</h3><p>栈帧：函数（运行中且未完成）占用的一块独立的连续内存区域。<br>函数调用通常是嵌套的，当调用函数时逻辑栈帧被压入堆栈, 当函数返回时逻辑栈帧被从堆栈中弹出。<br>栈帧存放着函数参数，局部变量及恢复前一栈帧所需要的数据等。</p>
+<p>编译器利用栈帧，使得函数参数和函数中局部变量的分配与释放对程序员透明。<br>编译器将控制权移交函数本身之前，插入特定代码将函数参数压入栈帧中，并分配足够的内存空间用于存放函数中的局部变量。<br>使用栈帧的一个好处是使得递归变为可能，因为对函数的每次递归调用，都会分配给该函数一个新的栈帧，这样就巧妙地隔离当前调用与上次调用。</p>
+<p>栈帧的边界由栈帧基地址指针EBP和堆栈指针ESP界定(指针存放在相应寄存器中)。<br>EBP指向当前栈帧底部(高地址)，在当前栈帧内位置固定；<br>ESP指向当前栈帧顶部(低地址)，当程序执行时ESP会随着数据的入栈和出栈而移动。<br>因此函数中对大部分数据的访问都基于EBP进行。</p>
+<h2 id="函数出入栈过程"><a href="#函数出入栈过程" class="headerlink" title="函数出入栈过程"></a>函数出入栈过程</h2><ul>
+<li>BP栈帧指针地址：间隔被调用函数（局部变量内存空间）和调用函数（被调函数参数，调用函数地址，指令指针）</li>
+<li>BP栈帧指针值：上一个栈帧的地址值，便于被调函数释放后，回到调用函数</li>
+<li>BP栈帧入栈时机：函数被调用，申请内存空间来存储前一个栈帧的地址值</li>
+</ul>
+<img src="/2019/04/24/函数调用栈/函数调用栈_1.png" title="函数调用栈_1">
+<p>从图中可以看出，函数调用时入栈顺序为：<br>实参N-1→主调函数返回地址→主调函数帧基指针EBP→被调函数局部变量1-N 。<br><strong>注意：内存地址降序</strong></p>
+<h3 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h3><ul>
+<li>caller(主调函数，紫色)</li>
+<li>callee(被调函数，蓝色)</li>
+</ul>
+<h3 id="入栈过程"><a href="#入栈过程" class="headerlink" title="入栈过程"></a>入栈过程</h3><ol>
+<li><p>caller未调用callee，内存分布如下：<br> EBP:caller EBP<br> ESP:caller的LocalVariables</p>
+</li>
+<li><p>caller调用callee<br> callee函数的参数入栈（由caller提供）<br> caller的函数地址(vm_add)， EIP入栈(代码偏移量offset)。<br> <strong>备注：代码位置 = vm_add + offset，即真实地址 = 虚拟地址 + 偏移量</strong></p>
+</li>
+<li><p>callee栈帧指针入栈<br> 申请栈帧指针空间<br> 存储caller的栈帧指针地址</p>
+</li>
+<li><p>申请callee局部变量空间<br> 为局部变量申请足够的内存空间<br> Local Variable#1,Local Variable#2,Local Variable#3…Local Variable#n<br> EBP:callee的EBP<br> ESP:Local Variable#n</p>
+</li>
+</ol>
+<h3 id="出栈过程"><a href="#出栈过程" class="headerlink" title="出栈过程"></a>出栈过程</h3><ol>
+<li><p>callee调用完毕<br> callee局部变量空间释放<br> EBP:callee ebp -&gt; caller ebb<br> ESP:caller ebp</p>
+</li>
+<li><p>caller函数执行复原</p>
+</li>
+<li><p>代码执行复原：ip+return address = 代码位置<br> callee函数空间释放：Argumne #1,Argumne #2,…,Argumne #1n<br> EBP:caller ebb<br> ESP:caller Load Variables</p>
+</li>
+</ol>
 
-RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关系是保存在一个全局的 Dictionary 里。线程刚创建时并没有 RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创建是发生在第一次获取时，RunLoop 的销毁是发生在线程结束时。你只能在一个线...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/04/26/关于线程回溯/" title= 关于线程回溯 >
+                    <div class="nextTitle">关于线程回溯</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/04/22/关于fishhook/" title= 关于fishhook >
+                    <div class="prevTitle">关于fishhook</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
     
-</div>
-                
-            </div>
-        </article>
+    <!--PC版-->
+
+    <!--PC版-->
+
+
     
-    <!-- paginator  -->
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -395,6 +491,24 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#函数调用栈原理"><span class="toc-number">1.</span> <span class="toc-text">函数调用栈原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数调用栈内部布局"><span class="toc-number">1.1.</span> <span class="toc-text">函数调用栈内部布局</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数出入栈过程"><span class="toc-number">2.</span> <span class="toc-text">函数出入栈过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数定义"><span class="toc-number">2.1.</span> <span class="toc-text">函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#入栈过程"><span class="toc-number">2.2.</span> <span class="toc-text">入栈过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#出栈过程"><span class="toc-number">2.3.</span> <span class="toc-text">出栈过程</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -795,6 +909,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

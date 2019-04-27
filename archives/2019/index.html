@@ -308,7 +308,7 @@
 所用到的相关知识
 Mach-O 文件格式
 动态链接器（dyld）相关知识（fishhook讲解可以学习到）
-计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算机系统》）
+函数调用栈的知识（我上一篇文章有介绍，但更推荐先看推荐黑皮书 《深入理解计算机系统》会更容易理解）
 
 具体思路
 通过当前进程获取所有线程
@@ -318,12 +318,44 @@ Mach-O 文件格式
 通过遍历Mach-O image的地址，通过地址对比，获取到所在的image
 通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址
 通过地址对比，找到所在的符号表中的位置
-通过符号表中的位置，找到字符串表...
+通过...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
                     <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2019/04/24/函数调用栈/" >
+                
+                    <span>关于函数调用栈</span>
+            </a>
+            <div class="abstract-content">
+                函数调用栈原理指令指针
+
+指令指针IP：指令寄存器存储，指向处理器下条等待执行的指令地址（代码内的偏移量），每次执行完 IP会增加
+堆栈栈顶指针SP：堆栈指令寄存器存储，系统栈的栈顶地址
+栈帧指针FP：栈帧基址指令寄存器存储，每个栈帧都有一个对应的栈帧基地址，局部变量和函数参数都可以通过FP确定，因为它们到FP的距离不会受到压栈和出栈操作影响。
+
+为了访问函数局部变量，必须能定位每个变量。局部变量相对于堆栈指针SP的位置在进入函数时就已确定，理论上变量可用SP加偏移量来引用，但SP会在函数执行期随变量的压栈和出栈而变动。尽管某些情况下编译器能跟踪栈中的变量操作以修正偏移量，但要引入可观的...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/24</span>
                 </div>
                 <!-- tags  -->
                 
@@ -753,7 +785,16 @@ Scrapy官方文档Docker官方文档
     
     
     
-    <div class="total-archive"> Total : 16 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 17 </div>
     
     <div class="post-archive">
     
@@ -766,6 +807,11 @@ Scrapy官方文档Docker官方文档
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/关于线程回溯/" >关于线程回溯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2019/04/24/函数调用栈/" >关于函数调用栈</a>
         </li>
     
     
