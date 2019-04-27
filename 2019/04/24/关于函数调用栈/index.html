@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>Mach-O 文件格式 · 离久</title>
+    <title>关于函数调用栈 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >离久的小站</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Mach-O 文件格式</a>
+                <a href="#" class="post-name">关于函数调用栈</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Mach-O 文件格式
+            关于函数调用栈
             <!-- 404 -->
             
         </h1>
@@ -321,7 +321,7 @@ height:50vh;
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2019/04/21</span>
+                <span class="post-intro-time">2019/04/24</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -350,130 +350,62 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式</p>
-<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */</span><br><span class="line">#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */</span><br><span class="line">#define MH_FVMLIB   0x3     /* VM共享库文件 */</span><br><span class="line">#define MH_CORE     0x4     /*核心转储文件 */</span><br><span class="line">#define MH_PRELOAD  0x5     /* 预加载的可执行文件 */</span><br><span class="line">#define MH_DYLIB    0x6     /* 动态库 .dylib  */</span><br><span class="line">#define MH_DYLINKER 0x7     /* 动态链接器 usr/lib/dyld */</span><br><span class="line">#define MH_BUNDLE   0x8     /* 动态绑定的bundle文件 */</span><br><span class="line">#define MH_DYLIB_STUB   0x9     /* shared library stub for static */</span><br><span class="line">                    /*  linking only, no section contents */</span><br><span class="line">#define MH_DSYM     0xa     /* 存储二进制文件符号信息的文件 */</span><br><span class="line">                    /*  sections */</span><br><span class="line">#define MH_KEXT_BUNDLE  0xb     /* x86_64 kexts */</span><br></pre></td></tr></table></figure>
-<img src="/2019/04/21/Mach-O-文件格式/Mach-O_1.png" title="Mach-O_1">
-<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><p>Mach-O 包含三个主要区域</p>
-<ol>
-<li><p>Header: 文件类型, 目标架构</p>
-</li>
-<li><p>Load command: 描述文件在虚拟内存中的逻辑与布局</p>
-</li>
-<li><p>Raw segment date : Load command中定义的原始数据</p>
-</li>
-</ol>
-<img src="/2019/04/21/Mach-O-文件格式/Mach-O_2.png" title="Mach-O_2">
-<p>可以从我的<a href="https://github.com/AshBass/Mach-O-View" target="_blank" rel="noopener">仓库</a>下载 Mach-O View 来查看文件的结构</p>
-<p>使用 Mach-O View 来打开可执行文件<br><img src="/2019/04/21/Mach-O-文件格式/Mach-O_3.png" title="Mach-O_3"><br><img src="/2019/04/21/Mach-O-文件格式/Mach-O_4.png" title="Mach-O_4"></p>
-<p>由于上图的可执行文件只适配了ARM64，一般通用可以执行文件如图下<br><img src="/2019/04/21/Mach-O-文件格式/Mach-O_5.png" title="Mach-O_5"></p>
-<p>含有多个不同架构的独立二进制文件; 故体积较大</p>
-<p>执行时, 只会选择一种架构的二进制文件</p>
-<h3 id="Mach-Header"><a href="#Mach-Header" class="headerlink" title="Mach Header"></a>Mach Header</h3><img src="/2019/04/21/Mach-O-文件格式/Mach-O_6.png" title="Mach-O_6">
-<ol>
-<li><p>Magic Number 表示支持设备的CPU位数</p>
+        <h2 id="函数调用栈原理"><a href="#函数调用栈原理" class="headerlink" title="函数调用栈原理"></a>函数调用栈原理</h2><p>指令指针</p>
 <ul>
-<li>oxFEEDFACE : 表示32位二进制</li>
-<li>oxFEEDFACF : 表示64位二进制</li>
+<li>指令指针IP：指令寄存器存储，指向处理器下条等待执行的指令地址（代码内的偏移量），每次执行完 IP会增加</li>
+<li>堆栈栈顶指针SP：堆栈指令寄存器存储，系统栈的栈顶地址</li>
+<li>栈帧指针FP：栈帧基址指令寄存器存储，每个栈帧都有一个对应的栈帧基地址，局部变量和函数参数都可以通过FP确定，因为它们到FP的距离不会受到压栈和出栈操作影响。</li>
 </ul>
-</li>
-<li><p>cputype和 cpusubtype: CPU类型和子类型</p>
-</li>
-<li>filetype : Mach-O文件类型</li>
-<li>ncmds 和 sizeofcmds: 用于加载器的 加载命令的条数和大小</li>
-<li>flags : 动态链接器dyld的标志</li>
-</ol>
-<h3 id="SEGMENT-LC-SEGMENT-LC-SEGMENT-64"><a href="#SEGMENT-LC-SEGMENT-LC-SEGMENT-64" class="headerlink" title="SEGMENT(LC_SEGMENT / LC_SEGMENT_64)"></a>SEGMENT(LC_SEGMENT / LC_SEGMENT_64)</h3><img src="/2019/04/21/Mach-O-文件格式/Mach-O_7.png" title="Mach-O_7">
-<ol>
-<li>__PAGEZERO: 空指针陷阱段</li>
-<li>_TEXT: 程序代码段</li>
-<li>__DATA: 程序数据段</li>
-<li>__RODATA: read only程序只读数据段</li>
-<li><p>__LINKEDIT: 链接器使用段</p>
-<h4 id="Section"><a href="#Section" class="headerlink" title="Section"></a>Section</h4><ol>
-<li>Segment Name: 该Segment的名称, 用于load_segment</li>
-<li>VM Address: 该段的虚拟物理地址</li>
-<li>VM Size: 该段所需要分配的虚拟内存大小(字节)</li>
-<li>File Offset: 该段在文件中的偏移量</li>
-<li>File Size: 该段在文件中占据的字节数</li>
-<li>Maximum VM Protection: 段的页面所需要的最高内存保护<ul>
-<li>ox1: x 执行</li>
-<li>ox2: w 写</li>
-<li>0x4: r 读</li>
+<p>为了访问函数局部变量，必须能定位每个变量。<br>局部变量相对于堆栈指针SP的位置在进入函数时就已确定，理论上变量可用SP加偏移量来引用，但SP会在函数执行期随变量的压栈和出栈而变动。<br>尽管某些情况下编译器能跟踪栈中的变量操作以修正偏移量，但要引入可观的管理开销。<br>而且在有些机器上(如Intel处理器)，用SP加偏移量来访问一个变量需要多条指令才能实现，由此设计了栈帧指针FP，FP两侧分别记录函数参数，及局部变量。</p>
+<h3 id="函数调用栈内部布局"><a href="#函数调用栈内部布局" class="headerlink" title="函数调用栈内部布局"></a>函数调用栈内部布局</h3><p>栈帧：函数（运行中且未完成）占用的一块独立的连续内存区域。<br>函数调用通常是嵌套的，当调用函数时逻辑栈帧被压入堆栈, 当函数返回时逻辑栈帧被从堆栈中弹出。<br>栈帧存放着函数参数，局部变量及恢复前一栈帧所需要的数据等。</p>
+<p>编译器利用栈帧，使得函数参数和函数中局部变量的分配与释放对程序员透明。<br>编译器将控制权移交函数本身之前，插入特定代码将函数参数压入栈帧中，并分配足够的内存空间用于存放函数中的局部变量。<br>使用栈帧的一个好处是使得递归变为可能，因为对函数的每次递归调用，都会分配给该函数一个新的栈帧，这样就巧妙地隔离当前调用与上次调用。</p>
+<p>栈帧的边界由栈帧基地址指针EBP和堆栈指针ESP界定(指针存放在相应寄存器中)。<br>EBP指向当前栈帧底部(高地址)，在当前栈帧内位置固定；<br>ESP指向当前栈帧顶部(低地址)，当程序执行时ESP会随着数据的入栈和出栈而移动。<br>因此函数中对大部分数据的访问都基于EBP进行。</p>
+<h2 id="函数出入栈过程"><a href="#函数出入栈过程" class="headerlink" title="函数出入栈过程"></a>函数出入栈过程</h2><ul>
+<li>BP栈帧指针地址：间隔被调用函数（局部变量内存空间）和调用函数（被调函数参数，调用函数地址，指令指针）</li>
+<li>BP栈帧指针值：上一个栈帧的地址值，便于被调函数释放后，回到调用函数</li>
+<li>BP栈帧入栈时机：函数被调用，申请内存空间来存储前一个栈帧的地址值</li>
 </ul>
-</li>
-<li>Initial VM Protection: 段页面初始化的内存保护</li>
-<li>Number of Sections: 段中section区的数量</li>
-<li>Flags: 其他标志位</li>
-</ol>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">根据LC_SEGMENT命令 设置进程虚拟内存</span><br><span class="line"></span><br><span class="line">对于每一个段, 将其内容从Mach-O文件加载到内存中</span><br><span class="line"></span><br><span class="line">即从Mach-O文件中的偏移量为 File Offset处加载File Size字节内容到虚拟内存地址VM Address处VM Size字节空间内</span><br></pre></td></tr></table></figure>
-<h3 id="常见区section"><a href="#常见区section" class="headerlink" title="常见区section"></a>常见区section</h3><img src="/2019/04/21/Mach-O-文件格式/Mach-O_8.png" title="Mach-O_8">
-<ol>
-<li>__text: 主程序代码</li>
-<li>__stubs, __stub_helper: 用于动态链接的桩</li>
-<li>__cstring: 程序中c语言字符串</li>
-<li>__const: 常量</li>
-<li>__RODATA, __objc_methname: OC方法名称</li>
-<li>__RODATA, __objc_methntype: OC方法类型</li>
-<li>__RODATA, __objc_classname: OC类名</li>
-<li>__DATA, __objc_classlist: OC类列表</li>
-<li>__DATA, __objc_protollist: OC原型列表</li>
-<li>__DATA, __objc_imageinfo: OC镜像信息</li>
-<li>__DATA, __objc_const: OC常量</li>
-<li>__DATA, __objc_selfrefs: OC类自引用(self)</li>
-<li>__DATA, __objc_superrefs: OC类超类引用(super)</li>
-<li>__DATA, __objc_protolrefs: OC原型引用</li>
-<li>__DATA, __bss: 没有初始化和初始化为0 的全局变量</li>
-</ol>
-<h2 id="关于-LoadCommand"><a href="#关于-LoadCommand" class="headerlink" title="关于 LoadCommand"></a>关于 LoadCommand</h2><h3 id="LC-MAIN"><a href="#LC-MAIN" class="headerlink" title="LC_MAIN"></a>LC_MAIN</h3><p>设置程序主线程入口地址 和 栈大小</p>
-<img src="/2019/04/21/Mach-O-文件格式/Mach-O_9.png" title="Mach-O_9">
-<h3 id="LC-CODE-SIGNATURE"><a href="#LC-CODE-SIGNATURE" class="headerlink" title="LC_CODE_SIGNATURE"></a>LC_CODE_SIGNATURE</h3><ol>
-<li>包含Mach-O文件的代码签名</li>
-<li>没有签名 或 签名不正确, 该进程会被kill, 程序崩溃</li>
-</ol>
-<img src="/2019/04/21/Mach-O-文件格式/Mach-O_10.png" title="Mach-O_10">
-<h3 id="关于动态库"><a href="#关于动态库" class="headerlink" title="关于动态库"></a>关于动态库</h3><p>即Mach-O镜像中有很多对外部库以及符号的引用</p>
-<p>这些引用将在程序启动时, 由动态链接器 /usr/lib/dyld来执行符号绑定</p>
-<img src="/2019/04/21/Mach-O-文件格式/Mach-O_11.png" title="Mach-O_11">
-<ul>
-<li><p>加载动态链接器</p>
-<p>  LC_LOAD_DYLINKER: 内核执行该命令时, 启动dyld</p>
-  <img src="/2019/04/21/Mach-O-文件格式/Mach-O_12.png" title="Mach-O_12">
-</li>
-<li><p>符号表</p>
-<p>  LC_SYMTAB: 符号地址表</p>
-<p>  LC_DYSYMTAB: 动态符号地址表</p>
-  <img src="/2019/04/21/Mach-O-文件格式/Mach-O_13.png" title="Mach-O_13">
-</li>
-<li><p>加载动态库</p>
-<p>  LC_LOAD_WEAK_DYLIB</p>
-<p>  LC_LOAD_DYLIB</p>
-</li>
+<img src="/2019/04/24/关于函数调用栈/函数调用栈_1.png" title="函数调用栈_1">
+<p>从图中可以看出，函数调用时入栈顺序为：<br>实参N-1→主调函数返回地址→主调函数帧基指针EBP→被调函数局部变量1-N 。<br><strong>注意：内存地址降序</strong></p>
+<h3 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h3><ul>
+<li>caller(主调函数，紫色)</li>
+<li>callee(被调函数，蓝色)</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">动态库加载流程小结：</span><br><span class="line"></span><br><span class="line">1. 首先启动dyld动态链接器; 内核根据LC_LOAD_DYLINKER启动/usr/lib/dyld</span><br><span class="line"></span><br><span class="line">2. 如果Mach-O文件中使用了外部定义的符号或函数, 则会在文本段\_\_TEXT有\_\_stubs,\_\_stub_helper区; 区内放着本地未被定义的符号; 编译器在编译源码时会创建对这些未定义符号桩区的调用</span><br><span class="line"></span><br><span class="line">3. dyld运行时, 会在符号桩区调用地址上; 添加JMP 到 真实函数地址的指令</span><br><span class="line"></span><br><span class="line">4. 此时dyld将加载Load Command中的LC_LOAD_DYLIB命令</span><br><span class="line"></span><br><span class="line">5. LC_LOAD_DYLIB(动态库), dyld将加载每一个指定的库且搜寻匹配的符号</span><br><span class="line"></span><br><span class="line">6. 当符号匹配时, 将在符号表(由dyld加载LC_SYMTAB, LC_DYSYMTAB获取)查找对应的函数/符号地址</span><br></pre></td></tr></table></figure>
-<h3 id="关于-符号表-、动态符号表-和-字符串表"><a href="#关于-符号表-、动态符号表-和-字符串表" class="headerlink" title="关于 符号表 、动态符号表 和 字符串表"></a>关于 符号表 、动态符号表 和 字符串表</h3><ul>
-<li>Symbol Table: 符号表</li>
-<li>Dynamic Symbol Table: 动态符号表</li>
-<li>String Table: 字符串表</li>
-</ul>
-<img src="/2019/04/21/Mach-O-文件格式/Mach-O_14.png" title="Mach-O_14">
+<h3 id="入栈过程"><a href="#入栈过程" class="headerlink" title="入栈过程"></a>入栈过程</h3><ol>
+<li><p>caller未调用callee，内存分布如下：<br> EBP:caller EBP<br> ESP:caller的LocalVariables</p>
+</li>
+<li><p>caller调用callee<br> callee函数的参数入栈（由caller提供）<br> caller的函数地址(vm_add)， EIP入栈(代码偏移量offset)。<br> <strong>备注：代码位置 = vm_add + offset，即真实地址 = 虚拟地址 + 偏移量</strong></p>
+</li>
+<li><p>callee栈帧指针入栈<br> 申请栈帧指针空间<br> 存储caller的栈帧指针地址</p>
+</li>
+<li><p>申请callee局部变量空间<br> 为局部变量申请足够的内存空间<br> Local Variable#1,Local Variable#2,Local Variable#3…Local Variable#n<br> EBP:callee的EBP<br> ESP:Local Variable#n</p>
+</li>
+</ol>
+<h3 id="出栈过程"><a href="#出栈过程" class="headerlink" title="出栈过程"></a>出栈过程</h3><ol>
+<li><p>callee调用完毕<br> callee局部变量空间释放<br> EBP:callee ebp -&gt; caller ebb<br> ESP:caller ebp</p>
+</li>
+<li><p>caller函数执行复原</p>
+</li>
+<li><p>代码执行复原：ip+return address = 代码位置<br> callee函数空间释放：Argumne #1,Argumne #2,…,Argumne #1n<br> EBP:caller ebb<br> ESP:caller Load Variables</p>
+</li>
+</ol>
+
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/04/22/关于fishhook/" title= 关于fishhook >
-                    <div class="nextTitle">关于fishhook</div>
+                <a href= "/2019/04/26/关于线程回溯/" title= 关于线程回溯 >
+                    <div class="nextTitle">关于线程回溯</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/02/12/感悟/" title= 小小感悟 >
-                    <div class="prevTitle">小小感悟</div>
+                <a href= "/2019/04/22/关于fishhook/" title= 关于fishhook >
+                    <div class="prevTitle">关于fishhook</div>
                 </a>
             
         </li>
@@ -575,7 +507,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型"><span class="toc-number">1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本结构"><span class="toc-number">2.</span> <span class="toc-text">基本结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-Header"><span class="toc-number">2.1.</span> <span class="toc-text">Mach Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SEGMENT-LC-SEGMENT-LC-SEGMENT-64"><span class="toc-number">2.2.</span> <span class="toc-text">SEGMENT(LC_SEGMENT / LC_SEGMENT_64)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Section"><span class="toc-number">2.2.1.</span> <span class="toc-text">Section</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见区section"><span class="toc-number">2.3.</span> <span class="toc-text">常见区section</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于-LoadCommand"><span class="toc-number">3.</span> <span class="toc-text">关于 LoadCommand</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LC-MAIN"><span class="toc-number">3.1.</span> <span class="toc-text">LC_MAIN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LC-CODE-SIGNATURE"><span class="toc-number">3.2.</span> <span class="toc-text">LC_CODE_SIGNATURE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于动态库"><span class="toc-number">3.3.</span> <span class="toc-text">关于动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-符号表-、动态符号表-和-字符串表"><span class="toc-number">3.4.</span> <span class="toc-text">关于 符号表 、动态符号表 和 字符串表</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#函数调用栈原理"><span class="toc-number">1.</span> <span class="toc-text">函数调用栈原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数调用栈内部布局"><span class="toc-number">1.1.</span> <span class="toc-text">函数调用栈内部布局</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数出入栈过程"><span class="toc-number">2.</span> <span class="toc-text">函数出入栈过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数定义"><span class="toc-number">2.1.</span> <span class="toc-text">函数定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#入栈过程"><span class="toc-number">2.2.</span> <span class="toc-text">入栈过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#出栈过程"><span class="toc-number">2.3.</span> <span class="toc-text">出栈过程</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
