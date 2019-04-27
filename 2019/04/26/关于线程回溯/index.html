@@ -351,6 +351,11 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <p>最近写了一个小<a href="https://github.com/AshBass/AshBacktrack" target="_blank" rel="noopener">demo</a></p>
+<h2 id="所用到的相关知识"><a href="#所用到的相关知识" class="headerlink" title="所用到的相关知识"></a>所用到的相关知识</h2><ol>
+<li><a href="https://ashbass.cn/2019/04/21/Mach-O-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" target="_blank" rel="noopener">Mach-O 文件格式</a></li>
+<li>动态链接器（dyld）相关知识（<a href="https://ashbass.cn/2019/04/22/%E5%85%B3%E4%BA%8Efishhook/" target="_blank" rel="noopener">fishhook讲解</a>可以学习到）</li>
+<li>计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算机系统》）</li>
+</ol>
 <h2 id="具体思路"><a href="#具体思路" class="headerlink" title="具体思路"></a>具体思路</h2><ol>
 <li>通过当前进程获取所有线程</li>
 <li>通过单一线程获取其所在的内存的上下文</li>
@@ -360,11 +365,6 @@ height:50vh;
 <li>通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址</li>
 <li>通过地址对比，找到所在的符号表中的位置</li>
 <li>通过符号表中的位置，找到字符串表中的字符串</li>
-</ol>
-<h2 id="所用到的相关知识"><a href="#所用到的相关知识" class="headerlink" title="所用到的相关知识"></a>所用到的相关知识</h2><ol>
-<li><a href="https://ashbass.cn/2019/04/21/Mach-O-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" target="_blank" rel="noopener">Mach-O 文件格式</a></li>
-<li>动态链接器（dyld）相关知识（可从fishhook学到）</li>
-<li>计算机操作系统（关于堆栈的知识 ，推荐黑皮书 《深入理解计算机系统》）</li>
 </ol>
 
     </article>
@@ -479,7 +479,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#具体思路"><span class="toc-number">1.</span> <span class="toc-text">具体思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#所用到的相关知识"><span class="toc-number">2.</span> <span class="toc-text">所用到的相关知识</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#所用到的相关知识"><span class="toc-number">1.</span> <span class="toc-text">所用到的相关知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体思路"><span class="toc-number">2.</span> <span class="toc-text">具体思路</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -492,6 +492,26 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -782,9 +802,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
         <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
     
@@ -821,9 +841,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
-    
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
     
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
