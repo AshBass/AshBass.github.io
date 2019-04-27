@@ -339,6 +339,36 @@ Mach-O 文件格式
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2019/04/22/关于fishhook/" >
+                
+                    <span>关于fishhook</span>
+            </a>
+            <div class="abstract-content">
+                fishhook 是 Facebook 出的一个非常简单的库，可以在模拟器和设备上的iOS上运行的Mach-O二进制文件中动态重新绑定符号。这提供了类似于DYLD_INTERPOSE在OS X上使用的功能。
+facebook fishhook github 地址我自己写中文注释的 fishhook 
+实现思路Mach-O首先需要学会 Mach-O 文件的知识，上一篇文章有描述
+程序启动的时候 Mach-O 文件会被 DYLD （动态加载器）加载进内存。加载完 Mach-O 后，DYLD接着会去加载 Mach-O 所依赖的动态库
+ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/22</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2019/04/21/Mach-O-文件格式/" >
                 
                     <span>Mach-O 文件格式</span>
@@ -630,16 +660,7 @@ Mach-O 文件格式
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 15 </div>
+    <div class="total-archive"> Total : 16 </div>
     
     <div class="post-archive">
     
@@ -652,6 +673,11 @@ Mach-O 文件格式
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/关于线程回溯/" >关于线程回溯</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2019/04/22/关于fishhook/" >关于fishhook</a>
         </li>
     
     
@@ -738,9 +764,9 @@ Mach-O 文件格式
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
     
@@ -777,9 +803,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
         <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
