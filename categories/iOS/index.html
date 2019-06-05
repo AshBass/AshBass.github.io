@@ -299,231 +299,7 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/26/关于线程回溯/" >
-                
-                    <span>关于线程回溯</span>
-            </a>
-            <div class="abstract-content">
-                最近写了一个小demo
-所用到的相关知识
-Mach-O 文件格式
-动态链接器（dyld）相关知识（fishhook讲解可以学习到）
-函数调用栈的知识（我上一篇文章有介绍，但更推荐先看推荐黑皮书 《深入理解计算机系统》会更容易理解）
-
-具体思路
-通过当前进程获取所有线程
-通过单一线程获取其所在的内存的上下文
-获取指针栈帧结构体，得到指令地址、栈基地址、栈帧
-通过向前遍历获取到每一个栈帧的返回地址
-通过遍历Mach-O image的地址，通过地址对比，获取到所在的image
-通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址
-通过地址对比，找到所在的符号表中的位置
-通过...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/24/关于函数调用栈/" >
-                
-                    <span>关于函数调用栈</span>
-            </a>
-            <div class="abstract-content">
-                函数调用栈原理指令指针
-
-指令指针IP：指令寄存器存储，指向处理器下条等待执行的指令地址（代码内的偏移量），每次执行完 IP会增加
-堆栈栈顶指针SP：堆栈指令寄存器存储，系统栈的栈顶地址
-栈帧指针FP：栈帧基址指令寄存器存储，每个栈帧都有一个对应的栈帧基地址，局部变量和函数参数都可以通过FP确定，因为它们到FP的距离不会受到压栈和出栈操作影响。
-
-为了访问函数局部变量，必须能定位每个变量。局部变量相对于堆栈指针SP的位置在进入函数时就已确定，理论上变量可用SP加偏移量来引用，但SP会在函数执行期随变量的压栈和出栈而变动。尽管某些情况下编译器能跟踪栈中的变量操作以修正偏移量，但要引入可观的...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/24</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/22/关于fishhook/" >
-                
-                    <span>关于fishhook</span>
-            </a>
-            <div class="abstract-content">
-                fishhook 是 Facebook 出的一个非常简单的库，可以在模拟器和设备上的iOS上运行的Mach-O二进制文件中动态重新绑定符号。这提供了类似于DYLD_INTERPOSE在OS X上使用的功能。
-facebook fishhook github 地址我自己写中文注释的 fishhook 
-实现思路Mach-O首先需要学会 Mach-O 文件的知识，上一篇文章有描述
-程序启动的时候 Mach-O 文件会被 DYLD （动态加载器）加载进内存。加载完 Mach-O 后，DYLD接着会去加载 Mach-O 所依赖的动态库
-ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/22</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/21/Mach-O-文件格式/" >
-                
-                    <span>Mach-O 文件格式</span>
-            </a>
-            <div class="abstract-content">
-                Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式
-类型12345678910111213#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */#define MH_FVMLIB   0x3     /* VM共享库文件 */#define MH_CORE     0x4     /*核心转储文件 */#define MH_PRELOAD  0x5     /* 预加载的可执行文...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/10/14/clang插件-分析无用方法/" >
-                
-                    <span>clang插件-分析无用方法</span>
-            </a>
-            <div class="abstract-content">
-                插件源码clang-unusedMethod
-在开始分析之前，定义了一些数据结构。
-1234567891011typedef map&lt;string,ObjCMethodDecl*&gt; MethodDeclMap;typedef map&lt;string,bool&gt; MethodIsUsedMap;class InterfaceModel &#123;public:    MethodDeclMap methodDeclMap = MethodDeclMap();    MethodIsUsedMap methodIsUsedMap = MethodIsUsedMap()...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/10/14</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/28/关于AST解析树/" >
-                
-                    <span>关于AST解析树</span>
-            </a>
-            <div class="abstract-content">
-                相关资料clang文档AST Matcher Reference
-代码会被解析成 Decl 和 Stmt。
-我们可以继承 MyASTVisitor 模版，通过 VisitDecl 和 VisitStmt 两个方法，获取 Decl 和 Stmt。
-Decl之间的关系树
-Stmt之间的关系树
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/10/创建XCode插件/" >
-                
-                    <span>创建XCode插件</span>
-            </a>
-            <div class="abstract-content">
-                前提
-创建一个 XCode 插件，首先先要安装 LLVM 。可以参考上一篇文章 《尝试LLVM》。
-正文
-首先修改源代码目录 /tools/clang/tools 下的 CMakeLists.txt 文件。
-
-在 CMakeLists.txt 的最后面添加上一行。
-
-在 tools 目录下添加 MyPlugin 文件夹，文件夹里面新增两个文件 CMakeLists.txt 和 MyPlugin.cpp
-
-CMakeLists.txt 文件内容如下：
-1234567891011121314add_llvm_loadable_module(MyPlugin MyPlugin.cppPLUGI...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/04/尝试LLVM/" >
+            <a class="abstract-title" href = "/2018/09/04/技术/尝试LLVM/" >
                 
                     <span>尝试LLVM</span>
             </a>
@@ -552,50 +328,23 @@ CMakeLists.txt 文件内容如下：
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/08/17/关于Attribute/" >
+            <a class="abstract-title" href = "/2018/06/11/技术/创建CocoaPods私有库/" >
                 
-                    <span>关于Attribute</span>
+                    <span>创建CocoaPods私有库</span>
             </a>
             <div class="abstract-content">
-                Clang Attributes 是 Clang 提供的一种源码注解，一般以 attribute(xxx) 的形式出现在代码中；为方便使用，一些常用属性也被 Cocoa 定义成宏。
-1.objc_subclassing_restricted1定义一个不可被继承的类，写在 @interface 前。
-2.objc_requires_super1子类继承这个方法时需要调用 super，否则给出编译警告。
-3.objc_boxable1声明的 struct 类型或是 union 等基本数据类型可以使用 @(...) 语法糖转成 NSNumber 和 NSValue。
-4.constructor...
+                在网上看过不少关于创建私有库的博客，但大多都是互相抄袭，而且坑非常的多。最近因公司要求，要做一个公司的Pod仓库，所以有了一点点心得。
+例子中用到git命令行，如果有小白不知道git命令行怎么使用，请先百度git的使用。
+以下我会用github的为例子进行讲解。由于github的私人仓库要付费，这里我选择public。如果你是coding、码云等，你可以选择private，毕竟是私有库嘛。
+首先我们先在自己的github上创建一个我们的Pod仓库。仓库名字为MyPod。
+
+接下来我们在终端执行：
+1pod repo add MyPod https://github.com/AshBass...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/17</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/07/24/符号化崩溃日志/" >
-                
-                    <span>符号化崩溃日志</span>
-            </a>
-            <div class="abstract-content">
-                符号化崩溃日志一般的crash日志是没有被符号化的，我们根本看不懂，所以我们需要符号化日志。
-我们需要找到一个工具帮我们符号化，Xcode中有 symbolicatecrash 来帮我们符号化。
-我们可以在命令行输入以下命令寻找 symbolicatecrash。1find /Applications/Xcode.app -name symbolicatecrash -type f
-当然，如果如无意外、Xcode没有太大改动的话，symbolicatecrash的路径是不变的。1/Applications/Xcode.app/Contents/Developer/Platforms/Ap...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/24</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/11</span>
                 </div>
                 <!-- tags  -->
                 
@@ -609,10 +358,6 @@ CMakeLists.txt 文件内容如下：
         </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/categories/iOS/page/2/">2</a><a class="extend next" rel="next" href="/categories/iOS/page/2/">NEXT &#62;</a>
-    </nav>
     
 </main>
             <!-- profile -->
@@ -914,7 +659,17 @@ CMakeLists.txt 文件内容如下：
     
     
     
-    <div class="total-archive"> Total : 17 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 19 </div>
     
     <div class="post-archive">
     
@@ -926,32 +681,42 @@ CMakeLists.txt 文件内容如下：
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/关于线程回溯/" >关于线程回溯</a>
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2019/06/04/技术/WWDC2019/" >WWDC2019</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2019/04/24/关于函数调用栈/" >关于函数调用栈</a>
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2019/05/06/技术/ARM汇编学习/" >ARM汇编学习</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2019/04/22/关于fishhook/" >关于fishhook</a>
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/技术/关于线程回溯/" >关于线程回溯</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/Mach-O-文件格式/" >Mach-O 文件格式</a>
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2019/04/24/技术/关于函数调用栈/" >关于函数调用栈</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2019/02/12/感悟/" >小小感悟</a>
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2019/04/22/技术/关于fishhook/" >关于fishhook</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/25</span><a class="archive-post-title" href= "/2019/01/25/Python爬虫Scrapy/" >Python爬虫Scrapy</a>
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/技术/Mach-O-文件格式/" >Mach-O 文件格式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2019/02/12/阅读笔记/感悟/" >小小感悟</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/25</span><a class="archive-post-title" href= "/2019/01/25/技术/Python爬虫Scrapy/" >Python爬虫Scrapy</a>
         </li>
     
     
@@ -965,63 +730,65 @@ CMakeLists.txt 文件内容如下：
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2018/10/14/clang插件-分析无用方法/" >clang插件-分析无用方法</a>
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2018/10/14/技术/clang插件-分析无用方法/" >clang插件-分析无用方法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/关于AST解析树/" >关于AST解析树</a>
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/技术/关于AST解析树/" >关于AST解析树</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/创建XCode插件/" >创建XCode插件</a>
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/技术/创建XCode插件/" >创建XCode插件</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/04</span><a class="archive-post-title" href= "/2018/09/04/尝试LLVM/" >尝试LLVM</a>
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href= "/2018/09/04/技术/尝试LLVM/" >尝试LLVM</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2018/08/17/关于Attribute/" >关于Attribute</a>
+            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2018/08/17/技术/关于Attribute/" >关于Attribute</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/符号化崩溃日志/" >符号化崩溃日志</a>
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/技术/符号化崩溃日志/" >符号化崩溃日志</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/iOS-自动打包/" >iOS-自动打包</a>
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/技术/iOS-自动打包/" >iOS-自动打包</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/技术/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/简述Runtime/" >简述Runtime</a>
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/技术/简述Runtime/" >简述Runtime</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/简述Runloop/" >简述RunLoop</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/技术/简述Runloop/" >简述RunLoop</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2018/03/06/iOS多线程GCD/" >iOS多线程GCD</a>
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2018/03/06/技术/iOS多线程GCD/" >iOS多线程GCD</a>
         </li>
     
     </div>
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
@@ -1062,9 +829,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
     
-        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
