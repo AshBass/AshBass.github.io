@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>Mach-O 文件格式 · 离久</title>
+    <title>hook ojbc_msgSend 函数统计方法时间 · 离久</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >离久的小站</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Mach-O 文件格式</a>
+                <a href="#" class="post-name">hook ojbc_msgSend 函数统计方法时间</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Mach-O 文件格式
+            hook ojbc_msgSend 函数统计方法时间
             <!-- 404 -->
             
         </h1>
@@ -321,7 +321,7 @@ height:50vh;
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2019/04/21</span>
+                <span class="post-intro-time">2019/06/01</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -350,130 +350,35 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式</p>
-<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */</span><br><span class="line">#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */</span><br><span class="line">#define MH_FVMLIB   0x3     /* VM共享库文件 */</span><br><span class="line">#define MH_CORE     0x4     /*核心转储文件 */</span><br><span class="line">#define MH_PRELOAD  0x5     /* 预加载的可执行文件 */</span><br><span class="line">#define MH_DYLIB    0x6     /* 动态库 .dylib  */</span><br><span class="line">#define MH_DYLINKER 0x7     /* 动态链接器 usr/lib/dyld */</span><br><span class="line">#define MH_BUNDLE   0x8     /* 动态绑定的bundle文件 */</span><br><span class="line">#define MH_DYLIB_STUB   0x9     /* shared library stub for static */</span><br><span class="line">                    /*  linking only, no section contents */</span><br><span class="line">#define MH_DSYM     0xa     /* 存储二进制文件符号信息的文件 */</span><br><span class="line">                    /*  sections */</span><br><span class="line">#define MH_KEXT_BUNDLE  0xb     /* x86_64 kexts */</span><br></pre></td></tr></table></figure>
-<img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_1.png" title="Mach-O_1">
-<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><p>Mach-O 包含三个主要区域</p>
-<ol>
-<li><p>Header: 文件类型, 目标架构</p>
-</li>
-<li><p>Load command: 描述文件在虚拟内存中的逻辑与布局</p>
-</li>
-<li><p>Raw segment date : Load command中定义的原始数据</p>
-</li>
-</ol>
-<img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_2.png" title="Mach-O_2">
-<p>可以从我的<a href="https://github.com/AshBass/Mach-O-View" target="_blank" rel="noopener">仓库</a>下载 Mach-O View 来查看文件的结构</p>
-<p>使用 Mach-O View 来打开可执行文件<br><img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_3.png" title="Mach-O_3"><br><img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_4.png" title="Mach-O_4"></p>
-<p>由于上图的可执行文件只适配了ARM64，一般通用可以执行文件如图下<br><img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_5.png" title="Mach-O_5"></p>
-<p>含有多个不同架构的独立二进制文件; 故体积较大</p>
-<p>执行时, 只会选择一种架构的二进制文件</p>
-<h3 id="Mach-Header"><a href="#Mach-Header" class="headerlink" title="Mach Header"></a>Mach Header</h3><img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_6.png" title="Mach-O_6">
-<ol>
-<li><p>Magic Number 表示支持设备的CPU位数</p>
+        <p>hook objc_msgSend <a href="https://github.com/AshBass/AshHookObjcMsgSend" target="_blank" rel="noopener">demo</a></p>
+<p>demo 中会使用到汇编的知识，若不了解，我上一篇<a href="https://ashbass.cn/2019/05/06/%E6%8A%80%E6%9C%AF/ARM%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">文章</a>有简略的总结</p>
+<p>hook objc_msgSend 之后统计了所有方法的调用时间。</p>
+<p>具体步骤：</p>
 <ul>
-<li>oxFEEDFACE : 表示32位二进制</li>
-<li>oxFEEDFACF : 表示64位二进制</li>
+<li>使用 fishhook hook objc_msgSend</li>
+<li>由于 objc_msgSend 是用汇编编写，所以要对 x0 ~ x7进行操作（demo只支持arm64）</li>
+<li>记录下方法调用者、方法选择器、返回地址。存储进 pthread 标志中，使其与线程一一对应。</li>
+<li>调用原来的 objc_msgSend 方法</li>
+<li>返回原来的 objc_msgSend 的返回地址</li>
 </ul>
-</li>
-<li><p>cputype和 cpusubtype: CPU类型和子类型</p>
-</li>
-<li>filetype : Mach-O文件类型</li>
-<li>ncmds 和 sizeofcmds: 用于加载器的 加载命令的条数和大小</li>
-<li>flags : 动态链接器dyld的标志</li>
-</ol>
-<h3 id="SEGMENT-LC-SEGMENT-LC-SEGMENT-64"><a href="#SEGMENT-LC-SEGMENT-LC-SEGMENT-64" class="headerlink" title="SEGMENT(LC_SEGMENT / LC_SEGMENT_64)"></a>SEGMENT(LC_SEGMENT / LC_SEGMENT_64)</h3><img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_7.png" title="Mach-O_7">
-<ol>
-<li>__PAGEZERO: 空指针陷阱段</li>
-<li>_TEXT: 程序代码段</li>
-<li>__DATA: 程序数据段</li>
-<li>__RODATA: read only程序只读数据段</li>
-<li><p>__LINKEDIT: 链接器使用段</p>
-<h4 id="Section"><a href="#Section" class="headerlink" title="Section"></a>Section</h4><ol>
-<li>Segment Name: 该Segment的名称, 用于load_segment</li>
-<li>VM Address: 该段的虚拟物理地址</li>
-<li>VM Size: 该段所需要分配的虚拟内存大小(字节)</li>
-<li>File Offset: 该段在文件中的偏移量</li>
-<li>File Size: 该段在文件中占据的字节数</li>
-<li>Maximum VM Protection: 段的页面所需要的最高内存保护<ul>
-<li>ox1: x 执行</li>
-<li>ox2: w 写</li>
-<li>0x4: r 读</li>
-</ul>
-</li>
-<li>Initial VM Protection: 段页面初始化的内存保护</li>
-<li>Number of Sections: 段中section区的数量</li>
-<li>Flags: 其他标志位</li>
-</ol>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">根据LC_SEGMENT命令 设置进程虚拟内存</span><br><span class="line"></span><br><span class="line">对于每一个段, 将其内容从Mach-O文件加载到内存中</span><br><span class="line"></span><br><span class="line">即从Mach-O文件中的偏移量为 File Offset处加载File Size字节内容到虚拟内存地址VM Address处VM Size字节空间内</span><br></pre></td></tr></table></figure>
-<h3 id="常见区section"><a href="#常见区section" class="headerlink" title="常见区section"></a>常见区section</h3><img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_8.png" title="Mach-O_8">
-<ol>
-<li>__text: 主程序代码</li>
-<li>__stubs, __stub_helper: 用于动态链接的桩</li>
-<li>__cstring: 程序中c语言字符串</li>
-<li>__const: 常量</li>
-<li>__RODATA, __objc_methname: OC方法名称</li>
-<li>__RODATA, __objc_methntype: OC方法类型</li>
-<li>__RODATA, __objc_classname: OC类名</li>
-<li>__DATA, __objc_classlist: OC类列表</li>
-<li>__DATA, __objc_protollist: OC原型列表</li>
-<li>__DATA, __objc_imageinfo: OC镜像信息</li>
-<li>__DATA, __objc_const: OC常量</li>
-<li>__DATA, __objc_selfrefs: OC类自引用(self)</li>
-<li>__DATA, __objc_superrefs: OC类超类引用(super)</li>
-<li>__DATA, __objc_protolrefs: OC原型引用</li>
-<li>__DATA, __bss: 没有初始化和初始化为0 的全局变量</li>
-</ol>
-<h2 id="关于-LoadCommand"><a href="#关于-LoadCommand" class="headerlink" title="关于 LoadCommand"></a>关于 LoadCommand</h2><h3 id="LC-MAIN"><a href="#LC-MAIN" class="headerlink" title="LC_MAIN"></a>LC_MAIN</h3><p>设置程序主线程入口地址 和 栈大小</p>
-<img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_9.png" title="Mach-O_9">
-<h3 id="LC-CODE-SIGNATURE"><a href="#LC-CODE-SIGNATURE" class="headerlink" title="LC_CODE_SIGNATURE"></a>LC_CODE_SIGNATURE</h3><ol>
-<li>包含Mach-O文件的代码签名</li>
-<li>没有签名 或 签名不正确, 该进程会被kill, 程序崩溃</li>
-</ol>
-<img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_10.png" title="Mach-O_10">
-<h3 id="关于动态库"><a href="#关于动态库" class="headerlink" title="关于动态库"></a>关于动态库</h3><p>即Mach-O镜像中有很多对外部库以及符号的引用</p>
-<p>这些引用将在程序启动时, 由动态链接器 /usr/lib/dyld来执行符号绑定</p>
-<img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_11.png" title="Mach-O_11">
-<ul>
-<li><p>加载动态链接器</p>
-<p>  LC_LOAD_DYLINKER: 内核执行该命令时, 启动dyld</p>
-  <img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_12.png" title="Mach-O_12">
-</li>
-<li><p>符号表</p>
-<p>  LC_SYMTAB: 符号地址表</p>
-<p>  LC_DYSYMTAB: 动态符号地址表</p>
-  <img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_13.png" title="Mach-O_13">
-</li>
-<li><p>加载动态库</p>
-<p>  LC_LOAD_WEAK_DYLIB</p>
-<p>  LC_LOAD_DYLIB</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">动态库加载流程小结：</span><br><span class="line"></span><br><span class="line">1. 首先启动dyld动态链接器; 内核根据LC_LOAD_DYLINKER启动/usr/lib/dyld</span><br><span class="line"></span><br><span class="line">2. 如果Mach-O文件中使用了外部定义的符号或函数, 则会在文本段\_\_TEXT有\_\_stubs,\_\_stub_helper区; 区内放着本地未被定义的符号; 编译器在编译源码时会创建对这些未定义符号桩区的调用</span><br><span class="line"></span><br><span class="line">3. dyld运行时, 会在符号桩区调用地址上; 添加JMP 到 真实函数地址的指令</span><br><span class="line"></span><br><span class="line">4. 此时dyld将加载Load Command中的LC_LOAD_DYLIB命令</span><br><span class="line"></span><br><span class="line">5. LC_LOAD_DYLIB(动态库), dyld将加载每一个指定的库且搜寻匹配的符号</span><br><span class="line"></span><br><span class="line">6. 当符号匹配时, 将在符号表(由dyld加载LC_SYMTAB, LC_DYSYMTAB获取)查找对应的函数/符号地址</span><br></pre></td></tr></table></figure>
-<h3 id="关于-符号表-、动态符号表-和-字符串表"><a href="#关于-符号表-、动态符号表-和-字符串表" class="headerlink" title="关于 符号表 、动态符号表 和 字符串表"></a>关于 符号表 、动态符号表 和 字符串表</h3><ul>
-<li>Symbol Table: 符号表</li>
-<li>Dynamic Symbol Table: 动态符号表</li>
-<li>String Table: 字符串表</li>
-</ul>
-<img src="/2019/04/21/技术/Mach-O-文件格式/Mach-O_14.png" title="Mach-O_14">
+<p>详细情况在demo已经有中文注释，关于fishhook部分也有对应的中文注释</p>
+
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/04/22/技术/关于fishhook/" title= 关于fishhook >
-                    <div class="nextTitle">关于fishhook</div>
+                <a href= "/2019/06/04/技术/WWDC2019/" title= WWDC2019 >
+                    <div class="nextTitle">WWDC2019</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/02/12/阅读笔记/感悟/" title= 小小感悟 >
-                    <div class="prevTitle">小小感悟</div>
+                <a href= "/2019/05/06/技术/ARM汇编学习/" title= ARM汇编学习 >
+                    <div class="prevTitle">ARM汇编学习</div>
                 </a>
             
         </li>
@@ -575,7 +480,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#类型"><span class="toc-number">1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本结构"><span class="toc-number">2.</span> <span class="toc-text">基本结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mach-Header"><span class="toc-number">2.1.</span> <span class="toc-text">Mach Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SEGMENT-LC-SEGMENT-LC-SEGMENT-64"><span class="toc-number">2.2.</span> <span class="toc-text">SEGMENT(LC_SEGMENT / LC_SEGMENT_64)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Section"><span class="toc-number">2.2.1.</span> <span class="toc-text">Section</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见区section"><span class="toc-number">2.3.</span> <span class="toc-text">常见区section</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于-LoadCommand"><span class="toc-number">3.</span> <span class="toc-text">关于 LoadCommand</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LC-MAIN"><span class="toc-number">3.1.</span> <span class="toc-text">LC_MAIN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LC-CODE-SIGNATURE"><span class="toc-number">3.2.</span> <span class="toc-text">LC_CODE_SIGNATURE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于动态库"><span class="toc-number">3.3.</span> <span class="toc-text">关于动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-符号表-、动态符号表-和-字符串表"><span class="toc-number">3.4.</span> <span class="toc-text">关于 符号表 、动态符号表 和 字符串表</span></a></li></ol></li></ol>
+        
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
