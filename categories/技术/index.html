@@ -299,6 +299,43 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2019/07/07/技术/hook ojbc_msgSend 函数统计方法时间/" >
+                
+                    <span>hook ojbc_msgSend 函数统计方法时间</span>
+            </a>
+            <div class="abstract-content">
+                hook objc_msgSend demo
+demo 中会使用到汇编的知识，若不了解，我上一篇文章有简略的总结
+hook objc_msgSend 之后统计了所有方法的调用时间。
+具体步骤：
+
+使用 fishhook hook objc_msgSend
+由于 objc_msgSend 是用汇编编写，所以要对 x0 ~ x7进行操作（demo只支持arm64）
+记录下方法调用者、方法选择器、返回地址。存储进 pthread 标志中，使其与线程一一对应。
+调用原来的 objc_msgSend 方法
+返回原来的 objc_msgSend 的返回地址
+
+详细情况在demo已经有中文注释，关于f...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/07</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2019/06/04/技术/WWDC2019/" >
                 
                     <span>WWDC2019</span>
@@ -572,42 +609,6 @@ Stmt之间的关系树
                 <!-- date  -->
                 <div class="abstract-date">
                     <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/28</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/10/技术/创建XCode插件/" >
-                
-                    <span>创建XCode插件</span>
-            </a>
-            <div class="abstract-content">
-                前提
-创建一个 XCode 插件，首先先要安装 LLVM 。可以参考上一篇文章 《尝试LLVM》。
-正文
-首先修改源代码目录 /tools/clang/tools 下的 CMakeLists.txt 文件。
-
-在 CMakeLists.txt 的最后面添加上一行。
-
-在 tools 目录下添加 MyPlugin 文件夹，文件夹里面新增两个文件 CMakeLists.txt 和 MyPlugin.cpp
-
-CMakeLists.txt 文件内容如下：
-1234567891011121314add_llvm_loadable_module(MyPlugin MyPlugin.cppPLUGI...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/10</span>
                 </div>
                 <!-- tags  -->
                 
@@ -922,7 +923,28 @@ CMakeLists.txt 文件内容如下：
     
     
     
-    <div class="total-archive"> Total : 19 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
     
     <div class="post-archive">
     
@@ -931,6 +953,11 @@ CMakeLists.txt 文件内容如下：
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/07</span><a class="archive-post-title" href= "/2019/07/07/技术/hook ojbc_msgSend 函数统计方法时间/" >hook ojbc_msgSend 函数统计方法时间</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1041,13 +1068,13 @@ CMakeLists.txt 文件内容如下：
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
-    
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1082,11 +1109,11 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
-    
         <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
