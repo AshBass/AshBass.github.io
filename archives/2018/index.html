@@ -541,21 +541,20 @@ CMakeLists.txt 文件内容如下：
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/13/技术/简述Runtime/" >
+            <a class="abstract-title" href = "/2018/06/08/技术/使用Bundle命令来兼容Cocoapods/" >
                 
-                    <span>简述Runtime</span>
+                    <span>使用Bundle命令来兼容Cocoapods</span>
             </a>
             <div class="abstract-content">
-                简介Objective-C 是一门动态语言，它会将一些工作放在代码运行时才处理而并非编译时。也就是说，有很多类和成员变量在我们编译的时是不知道的，而在运行时，我们所编写的代码会转换成完整的确定的代码运行。
-因此，编译器是不够的，我们还需要一个运行时系统(Runtime system)来处理编译后的代码。
-Runtime 基本是用 C 和汇编写的，由此可见苹果为了动态系统的高效而做出的努力。苹果和 GNU 各自维护一个开源的 Runtime 版本，这两个版本之间都在努力保持一致。
-点击这里可以下载苹果维护的开源代码。
-id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实...
+                使用Bundle命令来兼容Cocoapods安装 Bundler &amp;&amp; 创建 Gemfile1gem install bundler
+若需要权限则使用 sudo
+1sudo gem install bundler
+GemfileGemfile是我们创建的一个用于描述gem之间依赖的文件。gem是一堆Ruby代码的集合，它能够为我们提供调用。你的Gemfile必须放在项目的根目录下面， 这是Bundler的要求，对于任何的其他形式的包管理文件来说，这也是标准。这里值得注意的一点是Gemfile会被作为Ruby代码来执行。当在Bundler上下文环境中被执行的时能使我们访问一...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/13</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/08</span>
                 </div>
                 <!-- tags  -->
                 
@@ -571,20 +570,21 @@ id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实..
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/10/技术/简述Runloop/" >
+            <a class="abstract-title" href = "/2018/05/13/技术/简述Runtime/" >
                 
-                    <span>简述RunLoop</span>
+                    <span>简述Runtime</span>
             </a>
             <div class="abstract-content">
-                相关知识RunLoop 是一个对象，这个对象在循环中用来处理程序运行过程中出现的各种事件（比如说触摸事件、UI刷新事件、定时器事件、Selector事件），从而保持程序的持续运行；而且在没有事件处理的时候，会进入睡眠模式，从而节省CPU资源，提高程序性能。
-简单描述 RunLoop 的结构：
-
-RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关系是保存在一个全局的 Dictionary 里。线程刚创建时并没有 RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创建是发生在第一次获取时，RunLoop 的销毁是发生在线程结束时。你只能在一个线...
+                简介Objective-C 是一门动态语言，它会将一些工作放在代码运行时才处理而并非编译时。也就是说，有很多类和成员变量在我们编译的时是不知道的，而在运行时，我们所编写的代码会转换成完整的确定的代码运行。
+因此，编译器是不够的，我们还需要一个运行时系统(Runtime system)来处理编译后的代码。
+Runtime 基本是用 C 和汇编写的，由此可见苹果为了动态系统的高效而做出的努力。苹果和 GNU 各自维护一个开源的 Runtime 版本，这两个版本之间都在努力保持一致。
+点击这里可以下载苹果维护的开源代码。
+id 和 Class 的定义idid 是一个参数类型，它是指向某个类的实...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/13</span>
                 </div>
                 <!-- tags  -->
                 
@@ -937,10 +937,7 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     
     
-    
-    
-    
-    <div class="total-archive"> Total : 20 </div>
+    <div class="total-archive"> Total : 21 </div>
     
     <div class="post-archive">
     
@@ -1046,6 +1043,11 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2018/06/08/技术/使用Bundle命令来兼容Cocoapods/" >使用Bundle命令来兼容Cocoapods</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/技术/简述Runtime/" >简述Runtime</a>
         </li>
     
@@ -1064,13 +1066,13 @@ RunLoop 与 线程 的关系线程和 RunLoop 之间是一一对应的，其关�
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1105,9 +1107,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
-    
         <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
+    
+        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
