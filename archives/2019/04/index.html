@@ -299,46 +299,6 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/26/技术/关于线程回溯/" >
-                
-                    <span>关于线程回溯</span>
-            </a>
-            <div class="abstract-content">
-                最近写了一个小demo
-所用到的相关知识
-Mach-O 文件格式
-动态链接器（dyld）相关知识（fishhook讲解可以学习到）
-函数调用栈的知识（我上一篇文章有介绍，但更推荐先看推荐黑皮书 《深入理解计算机系统》会更容易理解）
-
-具体思路
-通过当前进程获取所有线程
-通过单一线程获取其所在的内存的上下文
-获取指针栈帧结构体，得到指令地址、栈基地址、栈帧
-通过向前遍历获取到每一个栈帧的返回地址
-通过遍历Mach-O image的地址，通过地址对比，获取到所在的image
-通过image获取到的链接时程序的基址 、符号表的地址 、字符串表的地址
-通过地址对比，找到所在的符号表中的位置
-通过...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
             <a class="abstract-title" href = "/2019/04/24/技术/关于函数调用栈/" >
                 
                     <span>关于函数调用栈</span>
@@ -771,15 +731,35 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
     
     
     
-    <div class="total-archive"> Total : 21 </div>
+    
+    <div class="total-archive"> Total : 22 </div>
     
     <div class="post-archive">
     
     
     
     
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/16</span><a class="archive-post-title" href= "/2020/01/16/计划/2020年的技术目标/" >2020年的技术目标</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2019/09/28/技术/趣谈网络协议-第一模块总结/" >趣谈网络协议 - 第一模块总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -794,11 +774,6 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2019/05/06/技术/ARM汇编学习/" >ARM汇编学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2019/04/26/技术/关于线程回溯/" >关于线程回溯</a>
         </li>
     
     
@@ -900,13 +875,17 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
-        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -941,11 +920,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
+    
         <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
+        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
