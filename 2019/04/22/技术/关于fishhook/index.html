@@ -352,7 +352,7 @@ height:50vh;
     <article class="article-entry">
         <p>fishhook 是 Facebook 出的一个非常简单的库，可以在模拟器和设备上的iOS上运行的Mach-O二进制文件中动态重新绑定符号。这提供了类似于DYLD_INTERPOSE在OS X上使用的功能。</p>
 <p><a href="https://github.com/facebook/fishhook" target="_blank" rel="noopener">facebook fishhook github 地址</a><br><a href="https://github.com/AshBass/fishhook_translation" target="_blank" rel="noopener">我自己写中文注释的 fishhook </a></p>
-<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="Mach-O"><a href="#Mach-O" class="headerlink" title="Mach-O"></a>Mach-O</h3><p>首先需要学会 Mach-O 文件的知识，上一篇<a href="https://ashbass.cn/2019/04/21/Mach-O-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" target="_blank" rel="noopener">文章</a>有描述</p>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="Mach-O"><a href="#Mach-O" class="headerlink" title="Mach-O"></a>Mach-O</h3><p>首先需要学会 Mach-O 文件的知识，上一篇<a href="https://ashbass.cn/2019/04/21/Mach-O-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/">文章</a>有描述</p>
 <p>程序启动的时候 Mach-O 文件会被 DYLD （动态加载器）加载进内存。加载完 Mach-O 后，DYLD接着会去加载 Mach-O 所依赖的动态库</p>
 <h3 id="ASLR"><a href="#ASLR" class="headerlink" title="ASLR"></a>ASLR</h3><p>地址空间布局随机化。它会让 Mach-O 文件加载的时候是随机地址。有了这个技术，Mach-O 文件每次加载进内存的时候地址都是不一样的。主要是为了防止逆向技术</p>
 <p>Mach-O 文件里只有我们自己写的函数，系统的动态库的函数是不在 Mach-O 文件里的。也就是说每次启动从 Mach-O 文件到系统动态库函数的偏移地址都是变化的</p>
@@ -801,6 +801,12 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
     <div class="total-archive"> Total : 22 </div>
     
     <div class="post-archive">
@@ -944,17 +950,17 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
+    
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
-    
         <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -989,11 +995,11 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
+    
         <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
-        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
     
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
