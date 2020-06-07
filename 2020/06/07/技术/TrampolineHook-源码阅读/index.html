@@ -353,7 +353,7 @@ height:50vh;
         <p><a href="https://github.com/SatanWoo/TrampolineHook" target="_blank" rel="noopener">TrampolineHook</a> 是一个中心重定向框架。可以通过一个函数替换/拦截所有你想要函数的框架。</p>
 <p>由于 TrampolineHook 进行过更新，本文先从最初的源码开始阅读分析。</p>
 <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h3><p>之前有<a href="http://ashbass.cn/2019/05/06/%E6%8A%80%E6%9C%AF/ARM%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0/">文章</a>简单总结了汇编语言。</p>
-<h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p>上一篇文章有关于虚拟内存的简述，可以看看。</p>
+<h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p>关于虚拟内存，特地做了一篇<a href="http://ashbass.cn/2020/06/01/%E6%8A%80%E6%9C%AF/%E7%AE%80%E8%BF%B0%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">简述</a></p>
 <h2 id="初版"><a href="#初版" class="headerlink" title="初版"></a>初版</h2><p>提交记录为 :commit =&gt; ‘eb2cb31243a86cd50760e8bb8f8e2145e18e4467’</p>
 <h3 id="代码例子"><a href="#代码例子" class="headerlink" title="代码例子"></a>代码例子</h3><p>TrampolineHook 中提供了一个 demo ，展示了如何使用。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/// 一个自定义函数，它会在拦截的目标方法前执行</span><br><span class="line">static void MTMainThreadChecker(id obj, SEL selector) //</span><br><span class="line">&#123;</span><br><span class="line">    if (![NSThread isMainThread]) &#123;</span><br><span class="line">        NSLog(@&quot;[MTMainThreadChecker]::Found issue on %@ with selector %@&quot;, obj, NSStringFromSelector(selector));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 使用 TrampolineHook</span><br><span class="line">static bool MTAddSwizzler(Class cls, SEL selector)</span><br><span class="line">&#123;</span><br><span class="line">    Method origMethod = class_getInstanceMethod(cls, selector);</span><br><span class="line">    </span><br><span class="line">    IMP originIMP = method_getImplementation(origMethod);</span><br><span class="line">    </span><br><span class="line">    static THInterceptor *interceptor = nil;</span><br><span class="line">    if (!interceptor) &#123;</span><br><span class="line">        /// THInterceptor 通过一个拦截方法初始化</span><br><span class="line">        interceptor = [THInterceptor sharedInterceptorWithFunction:(IMP)MTMainThreadChecker];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /// 构造一个新的 IMP</span><br><span class="line">    THInterceptorResult *result = [interceptor interceptFunction:originIMP];</span><br><span class="line">    /// 替换掉目标方法的 IMP</span><br><span class="line">    method_setImplementation(origMethod, result.replacedAddress);</span><br><span class="line">    </span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -393,6 +393,8 @@ THDynamicPageEntryGroup jumpInstructions[THNumberOfDataPerPage];
 <p>通过 _th_entry 执行偏移地址执行原函数方法。</p>
 <p>具体流程如下图</p>
 <img src="/2020/06/07/技术/TrampolineHook-源码阅读/memory-2.png" title="memory-2">
+<h2 id="再版"><a href="#再版" class="headerlink" title="再版"></a>再版</h2><p>针对可变参数函数方法，解决了栈污染问题，将寄存器的值存放在堆上。</p>
+
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
@@ -505,7 +507,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#预备知识"><span class="toc-number">1.</span> <span class="toc-text">预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#汇编语言"><span class="toc-number">1.1.</span> <span class="toc-text">汇编语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟内存"><span class="toc-number">1.2.</span> <span class="toc-text">虚拟内存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初版"><span class="toc-number">2.</span> <span class="toc-text">初版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码例子"><span class="toc-number">2.1.</span> <span class="toc-text">代码例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码解析"><span class="toc-number">2.2.</span> <span class="toc-text">源码解析</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#预备知识"><span class="toc-number">1.</span> <span class="toc-text">预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#汇编语言"><span class="toc-number">1.1.</span> <span class="toc-text">汇编语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟内存"><span class="toc-number">1.2.</span> <span class="toc-text">虚拟内存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初版"><span class="toc-number">2.</span> <span class="toc-text">初版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码例子"><span class="toc-number">2.1.</span> <span class="toc-text">代码例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码解析"><span class="toc-number">2.2.</span> <span class="toc-text">源码解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再版"><span class="toc-number">3.</span> <span class="toc-text">再版</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -518,22 +520,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1001,9 +987,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
@@ -1011,9 +997,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
-        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
-    
         <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
+    
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1052,9 +1038,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
-    
         <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
+    
+        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
