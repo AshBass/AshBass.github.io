@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>简述虚拟内存 · 离久</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180311 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180311 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/cat.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >离久的小站</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">简述虚拟内存</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>离久的小站</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            简述虚拟内存
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 操作系统>操作系统</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/06/01</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="虚拟内存实现的简单介绍"><a href="#虚拟内存实现的简单介绍" class="headerlink" title="虚拟内存实现的简单介绍"></a>虚拟内存实现的简单介绍</h2><h3 id="虚拟内存是什么-？"><a href="#虚拟内存是什么-？" class="headerlink" title="虚拟内存是什么 ？"></a>虚拟内存是什么 ？</h3><p>操作系统通过虚拟内存的映射机制，使得每个进程拥有看起来连续且完全隔离和独立的内存空间。</p>
+<p>操作系统对虚拟内存的分配和管理是以页为单位。</p>
+<p>当将一个可执行文件或者动态库加载到内存中执行时，操作系统会将文件中的代码段部分和数据段部分的内容通过内存映射文件的形式映射到对应的虚拟内存区域中。</p>
+<h3 id="虚拟内存的权限"><a href="#虚拟内存的权限" class="headerlink" title="虚拟内存的权限"></a>虚拟内存的权限</h3><p>代码段在不同的操作系统中权限不一样。</p>
+<p>在 iOS 中，可执行代码所在的虚拟内存区域的权限只能是可执行的。</p>
+<p>这也就是说我们不可以在具有可读写权限的内存区域中（比如堆内存或者栈内存空间）动态的构造出指令来供 cpu 执行。</p>
+<p>iOS 系统中不支持将某段内存的保护机制先设置为读写以便填充好数据后再设置为可执行的保护机制来实现动态的指令构造(也就是所谓的 JIT 技术)。</p>
+<p>操作系统提供了虚拟内存的 remap 机制来解决这个问题。</p>
+<h3 id="remap"><a href="#remap" class="headerlink" title="remap"></a>remap</h3><p>所谓虚拟内存的 remap 机制就是可以将新分配的虚拟内存页重新映射到已经分配好的虚拟内存页中。</p>
+<p>新分配的虚拟内存页可以和已经存在的虚拟内存页中的内容保持一致，并且可以继承原始虚拟内存页面的保护权限。</p>
+<p>虚拟内存的 remap 机制使得进程之间或者进程内中的虚拟内存共享相同的物理内存。</p>
+<img src="/2019/06/01/技术/简述虚拟内存/vmemory-1.png" title="vmemory-1">
+<ol>
+<li><p>虚拟内存分配其本质就是在页表中建立一个从虚拟内存页到物理内存页的映射关系。而 remap 就是将不同的虚拟页号映射到同一个物理页号而已。就如例子中进程1的第1页和第4页都是映射在同一个6号物理页中。</p>
+</li>
+<li><p>不同进程之间的不同虚拟页号可以映射到相同的物理页号。这样的一个应用是解决动态库的共享加载问题。上面的例子中进程1的第5页和进程2的第7页共享相同的物理内存第9页。</p>
+</li>
+<li><p>操作系统还会维持一个全局物理页空闲信息表，用来记录当前未被分配的物理内存。这样一旦有进程需要分配虚拟内存空间时就从这个表中查找空闲的区域进行快速分配。</p>
+</li>
+</ol>
+<h3 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h3><h4 id="完整例子"><a href="#完整例子" class="headerlink" title="完整例子"></a>完整例子</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/// 因为新分配的虚拟内存是以页为单位的，所以要被映射的内存也要页对齐，所以这里的函数起始地址是以页为单位对齐的。</span><br><span class="line">int __attribute__ ((aligned (PAGE_MAX_SIZE))) testfn(int a, int b)</span><br><span class="line">&#123;</span><br><span class="line">    int c = a + b;</span><br><span class="line">    return c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    /// 获取一页虚拟内存的大小</span><br><span class="line">    vm_size_t page_size = 0;</span><br><span class="line">    host_page_size(mach_host_self(), &amp;page_size);  </span><br><span class="line">    vm_address_t addr = 0;</span><br><span class="line"></span><br><span class="line">    /// vm_allocate 在当前进程内的空闲区域中分配出一页虚拟内存出来 ,addr指向虚拟内存的开始位置。</span><br><span class="line">    kern_return_t ret = vm_allocate(mach_task_self(), &amp;addr, page_size, VM_FLAGS_ANYWHERE);</span><br><span class="line">    if (ret == KERN_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">        /// addr被分配出来后，我们可以对这块内存进行读写操作，但不可作为执行</span><br><span class="line">        memcpy((void*)addr, &quot;Hello World!\n&quot;, 14); /// 文本长度为14</span><br><span class="line">        </span><br><span class="line">        /// 执行上述代码后，这时候内存 addr 的内容除了最开始有 &quot;Hello World!\n&quot; 其他区域是一篇空白，而且并不是可执行的代码区域。</span><br><span class="line">        printf((const char*)addr);</span><br><span class="line">        </span><br><span class="line">        /// 执行完 vm_remap 重映射后 addr 的内存将被重新映射到 testfn 函数所在的内存页中。</span><br><span class="line">        /// 这时候 addr 所指的内容和函数 testfn 的代码保持一致。</span><br><span class="line">        /// &quot;Hello World!\n&quot; 被覆盖了</span><br><span class="line">        vm_prot_t cur, max;</span><br><span class="line">        ret = vm_remap(mach_task_self(), &amp;addr, page_size, 0, VM_FLAGS_FIXED | VM_FLAGS_OVERWRITE, mach_task_self(), (vm_address_t)testfn, false, &amp;cur, &amp;max, VM_INHERIT_SHARE);</span><br><span class="line">        </span><br><span class="line">        if (ret == KERN_SUCCESS)</span><br><span class="line">        &#123;</span><br><span class="line">            /// 执行testfn函数</span><br><span class="line">            int c1 = testfn(10, 20);    </span><br><span class="line">            /// addr重新映射后将和testfn函数具有相同内容，所以这里可以将addr当做是testfn函数一样被调用。</span><br><span class="line">            int c2 = ((int (*)(int,int))addr)(10,20); </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        /// 释放虚拟内存</span><br><span class="line">        vm_deallocate(mach_task_self(), addr, page_size);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码其实是需要对 testfn 的函数体所有约束的，这个约束就是testfn中不能出现一些常量以及全局变量以及不能再出现函数调用。</p>
+<p>原因是这些操作在编译为机器指令后访问这些数据都是通过相对偏移来实现的，因此如果addr映射成功后因为函数实现的基地址有变化，如果通过addr进行访问时，那么指令中的相对偏移值将是一个错误的结果，从而造成函数调用时的崩溃发生。</p>
+<h4 id="vm-allocate-与-malloc"><a href="#vm-allocate-与-malloc" class="headerlink" title="vm_allocate 与 malloc"></a>vm_allocate 与 malloc</h4><p>vm_allocate可以用来实现虚拟内存的分配，malloc也可以用来实现堆内存的分配，这两者之间有什么关系呢？</p>
+<p>vm_allocate是更加底层的内存管理API，而且分配的内存的尺寸都是以页的倍数作为边界的。</p>
+<p>malloc是高级内存管理API，一个进程的堆内存区域在实现中其实是先通过 vm_allocate 分配出来一大片内存区域(包括栈内存也如此)。然后再在这块大的内存区域上进行分割管理以及空闲复用等等高级操作来实现一些零碎和范围内存分配操作。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/06/04/技术/WWDC2019/" title= WWDC2019 >
+                    <div class="nextTitle">WWDC2019</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/06/01/技术/hook ojbc_msgSend 函数统计方法时间/" title= hook ojbc_msgSend 函数统计方法时间 >
+                    <div class="prevTitle">hook ojbc_msgSend 函数统计方法时间</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:AshBass@163.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/AshBass" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <!-- <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div> -->
+    <div class="copyright">
+        <span>Hosted by <a href="https://pages.coding.me" >Coding Pages</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <!-- <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span> -->
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟内存实现的简单介绍"><span class="toc-number">1.</span> <span class="toc-text">虚拟内存实现的简单介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟内存是什么-？"><span class="toc-number">1.1.</span> <span class="toc-text">虚拟内存是什么 ？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟内存的权限"><span class="toc-number">1.2.</span> <span class="toc-text">虚拟内存的权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#remap"><span class="toc-number">1.3.</span> <span class="toc-text">remap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关代码"><span class="toc-number">1.4.</span> <span class="toc-text">相关代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#完整例子"><span class="toc-number">1.4.1.</span> <span class="toc-text">完整例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vm-allocate-与-malloc"><span class="toc-number">1.4.2.</span> <span class="toc-text">vm_allocate 与 malloc</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 25 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2020/06/07/技术/TrampolineHook-源码阅读/" >TrampolineHook 源码阅读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2020/05/30/技术/Aspects-Stinger-源码阅读/" >Aspects/Stinger 源码阅读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/16</span><a class="archive-post-title" href= "/2020/01/16/计划/2019年总结和2020年的目标/" >2019年总结和2020年的目标</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2019/09/28/技术/趣谈网络协议-第一模块总结/" >趣谈网络协议 - 第一模块总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2019/06/04/技术/WWDC2019/" >WWDC2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2019/06/01/技术/简述虚拟内存/" >简述虚拟内存</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2019/06/01/技术/hook ojbc_msgSend 函数统计方法时间/" >hook ojbc_msgSend 函数统计方法时间</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2019/05/06/技术/ARM汇编学习/" >ARM汇编学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2019/04/24/技术/关于函数调用栈/" >关于函数调用栈</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2019/04/22/技术/关于fishhook/" >关于fishhook</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/技术/Mach-O-文件格式/" >Mach-O 文件格式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2019/02/12/阅读笔记/感悟/" >小小感悟</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/25</span><a class="archive-post-title" href= "/2019/01/25/技术/Python爬虫Scrapy/" >Python爬虫Scrapy</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2018/10/14/技术/clang插件-分析无用方法/" >clang插件-分析无用方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/技术/关于AST解析树/" >关于AST解析树</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2018/09/10/技术/创建XCode插件/" >创建XCode插件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span><a class="archive-post-title" href= "/2018/09/04/技术/尝试LLVM/" >尝试LLVM</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2018/08/17/技术/关于Attribute/" >关于Attribute</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2018/07/24/技术/符号化崩溃日志/" >符号化崩溃日志</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2018/07/06/技术/iOS-自动打包/" >iOS-自动打包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2018/06/11/技术/创建CocoaPods私有库/" >创建CocoaPods私有库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/08</span><a class="archive-post-title" href= "/2018/06/08/技术/使用Bundle命令来兼容Cocoapods/" >使用Bundle命令来兼容Cocoapods</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2018/05/13/技术/简述Runtime/" >简述Runtime</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/技术/简述Runloop/" >简述RunLoop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2018/03/06/技术/iOS多线程GCD/" >iOS多线程GCD</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
+    
+        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
+    
+        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: '离久'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

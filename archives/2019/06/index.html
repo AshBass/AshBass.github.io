@@ -338,6 +338,38 @@ Combine苹果新出...
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2019/06/01/技术/简述虚拟内存/" >
+                
+                    <span>简述虚拟内存</span>
+            </a>
+            <div class="abstract-content">
+                虚拟内存实现的简单介绍虚拟内存是什么 ？操作系统通过虚拟内存的映射机制，使得每个进程拥有看起来连续且完全隔离和独立的内存空间。
+操作系统对虚拟内存的分配和管理是以页为单位。
+当将一个可执行文件或者动态库加载到内存中执行时，操作系统会将文件中的代码段部分和数据段部分的内容通过内存映射文件的形式映射到对应的虚拟内存区域中。
+虚拟内存的权限代码段在不同的操作系统中权限不一样。
+在 iOS 中，可执行代码所在的虚拟内存区域的权限只能是可执行的。
+这也就是说我们不可以在具有可读写权限的内存区域中（比如堆内存或者栈内存空间）动态的构造出指令来供 cpu 执行。
+iOS 系统中不支持将某段内存的保护机...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/01</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 操作系统>操作系统</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2019/06/01/技术/hook ojbc_msgSend 函数统计方法时间/" >
                 
                     <span>hook ojbc_msgSend 函数统计方法时间</span>
@@ -748,7 +780,33 @@ hook objc_msgSend 之后统计了所有方法的调用时间。
     
     
     
-    <div class="total-archive"> Total : 23 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 25 </div>
     
     <div class="post-archive">
     
@@ -760,7 +818,12 @@ hook objc_msgSend 之后统计了所有方法的调用时间。
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2020/06/07/技术/Aspects-Stinger-源码阅读/" >Aspects/Stinger 源码阅读</a>
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2020/06/07/技术/TrampolineHook-源码阅读/" >TrampolineHook 源码阅读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2020/05/30/技术/Aspects-Stinger-源码阅读/" >Aspects/Stinger 源码阅读</a>
         </li>
     
     
@@ -785,6 +848,11 @@ hook objc_msgSend 之后统计了所有方法的调用时间。
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2019/06/04/技术/WWDC2019/" >WWDC2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2019/06/01/技术/简述虚拟内存/" >简述虚拟内存</a>
         </li>
     
     
@@ -896,17 +964,19 @@ hook objc_msgSend 之后统计了所有方法的调用时间。
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
     
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
-        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
-    
-        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -941,13 +1011,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
-    
-        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
         <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
     
+        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
+    
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

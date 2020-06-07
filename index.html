@@ -314,7 +314,39 @@ height:50vh;
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2020/06/07/技术/Aspects-Stinger-源码阅读/" >
+            <a class="abstract-title" href = "/2020/06/07/技术/TrampolineHook-源码阅读/" >
+                
+                    <span>TrampolineHook 源码阅读</span>
+            </a>
+            <div class="abstract-content">
+                TrampolineHook 是一个中心重定向框架。可以通过一个函数替换/拦截所有你想要函数的框架。
+由于 TrampolineHook 进行过更新，本文先从最初的源码开始阅读分析。
+预备知识汇编语言之前有文章简单总结了汇编语言。
+虚拟内存上一篇文章有关于虚拟内存的简述，可以看看。
+初版提交记录为 :commit =&gt; ‘eb2cb31243a86cd50760e8bb8f8e2145e18e4467’
+代码例子TrampolineHook 中提供了一个 demo ，展示了如何使用。
+12345678910111213141516171819202122232425262728//...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/07</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2020/05/30/技术/Aspects-Stinger-源码阅读/" >
                 
                     <span>Aspects/Stinger 源码阅读</span>
             </a>
@@ -328,7 +360,7 @@ Aspects 和 Stinger 的存在意义在 iOS 中，我们 hook 一个方法时，�
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/07</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/30</span>
                 </div>
                 <!-- tags  -->
                 
@@ -466,6 +498,38 @@ Combine苹果新出...
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2019/06/01/技术/简述虚拟内存/" >
+                
+                    <span>简述虚拟内存</span>
+            </a>
+            <div class="abstract-content">
+                虚拟内存实现的简单介绍虚拟内存是什么 ？操作系统通过虚拟内存的映射机制，使得每个进程拥有看起来连续且完全隔离和独立的内存空间。
+操作系统对虚拟内存的分配和管理是以页为单位。
+当将一个可执行文件或者动态库加载到内存中执行时，操作系统会将文件中的代码段部分和数据段部分的内容通过内存映射文件的形式映射到对应的虚拟内存区域中。
+虚拟内存的权限代码段在不同的操作系统中权限不一样。
+在 iOS 中，可执行代码所在的虚拟内存区域的权限只能是可执行的。
+这也就是说我们不可以在具有可读写权限的内存区域中（比如堆内存或者栈内存空间）动态的构造出指令来供 cpu 执行。
+iOS 系统中不支持将某段内存的保护机...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/06/01</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 操作系统>操作系统</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2019/06/01/技术/hook ojbc_msgSend 函数统计方法时间/" >
                 
                     <span>hook ojbc_msgSend 函数统计方法时间</span>
@@ -587,76 +651,6 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/04/21/技术/Mach-O-文件格式/" >
-                
-                    <span>Mach-O 文件格式</span>
-            </a>
-            <div class="abstract-content">
-                Mach-O是一种文件的格式; 是iOS/Mac OS上存储程序以及库的标准格式
-类型12345678910111213#define MH_OBJECT   0x1     /* 目标文件 例如：.o 、.a 、.framework（静态库） */#define MH_EXECUTE  0x2     /* 可执行文件 例如：.app 、.out */#define MH_FVMLIB   0x3     /* VM共享库文件 */#define MH_CORE     0x4     /*核心转储文件 */#define MH_PRELOAD  0x5     /* 预加载的可执行文...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/02/12/阅读笔记/感悟/" >
-                
-                    <span>小小感悟</span>
-            </a>
-            <div class="abstract-content">
-                精通一个领域
-切碎知识点
-刻意练习
-获得反馈
-
-切碎知识点
-庖丁解牛
-脉络连接
-
-刻意练习
-练习缺陷、不舒服、弱点的地方
-不爽、枯燥
-
-获得反馈
-主动型反馈（自己去找）
-被动式反馈（高手教导）
-
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 阅读笔记>阅读笔记</a>
     
 </div>
                 
@@ -1111,7 +1105,33 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
     
     
     
-    <div class="total-archive"> Total : 23 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 25 </div>
     
     <div class="post-archive">
     
@@ -1123,7 +1143,12 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2020/06/07/技术/Aspects-Stinger-源码阅读/" >Aspects/Stinger 源码阅读</a>
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2020/06/07/技术/TrampolineHook-源码阅读/" >TrampolineHook 源码阅读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2020/05/30/技术/Aspects-Stinger-源码阅读/" >Aspects/Stinger 源码阅读</a>
         </li>
     
     
@@ -1148,6 +1173,11 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/04</span><a class="archive-post-title" href= "/2019/06/04/技术/WWDC2019/" >WWDC2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2019/06/01/技术/简述虚拟内存/" >简述虚拟内存</a>
         </li>
     
     
@@ -1259,17 +1289,19 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
     
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
-        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
-    
-        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1304,13 +1336,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
-    
-        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
-    
         <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
     
+        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
+    
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
