@@ -367,7 +367,7 @@ height:50vh;
 <p>差异就是 Stinger 并没有利用 Objective-C 中的 @selector(forwardInvocation:) 做消息转发。</p>
 <p>而是利用了 libffi 这个库去完成了消息的转发，在速度上有提升。</p>
 <p>下面就是对 libffi 关于对方法 hook 的操作简述。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/** 1. 获取 Method 的信息 **/</span><br><span class="line">/// 获取目标方法 Method</span><br><span class="line">Method method = class_getInstanceMethod(class, selector);</span><br><span class="line">/// 获取方法的 typeEncoding</span><br><span class="line">const char *methodTypeEncoding = method_getTypeEncoding(method);</span><br><span class="line">/// 构造签名</span><br><span class="line">NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:methodTypeEncoding];</span><br><span class="line">/// 知道参数个数</span><br><span class="line">NSUInteger argumentsNum = signature.numberOfArguments;</span><br><span class="line"></span><br><span class="line">/** 2. 通过目标方法信息构造 ffi_type **/</span><br><span class="line">/// 通过参数个数，构造一个 ffi_type ，代表方法模版的参数类型</span><br><span class="line">ffi_type **argTypes = malloc(sizeof(ffi_type *) * (argumentsNum));</span><br><span class="line">/// 方法前两个是 self 和 selector ，所以固定是指针类型</span><br><span class="line">argTypes[0] = &amp;ffi_type_pointer;</span><br><span class="line">argTypes[1] = &amp;ffi_type_pointer;</span><br><span class="line">/// 其余的根据 typeEncoding 类型设置</span><br><span class="line">for (int i = 2; i &lt; argumentsNum; i ++) &#123;</span><br><span class="line">    const char *argType = [signature getArgumentTypeAtIndex:i];</span><br><span class="line">    /// 例如 c 则返回 &amp;ffi_type_schar，i 则返回 &amp;ffi_type_sint ，@ 则返回 &amp;ffi_type_pointer</span><br><span class="line">    argTypes[i] = [self ffi_typeForTypeEncoding:argType];</span><br><span class="line">&#125;</span><br><span class="line">/// 通过返回类型，构造一个 ffi_type ，代表方法模版的返回值类型</span><br><span class="line">ffi_type *returnType = [self ffi_typeForTypeEncoding:signature.methodReturnType];</span><br><span class="line"></span><br><span class="line">/** 3. 构造方法模版 **/</span><br><span class="line">ffi_cif *cif = malloc(sizeof(ffi_cif));</span><br><span class="line">ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)argumentsNum, returnType, argTypes);</span><br><span class="line"></span><br><span class="line">/** 4. 通过模版构造一个新的方法实现 IMP  **/</span><br><span class="line">void *newIMP;</span><br><span class="line">ffi_closure *closure = ffi_closure_alloc(sizeof(ffi_closure), &amp;newIMP);</span><br><span class="line">/// _st_ffi_function 和 Aspects 中的 __ASPECTS_ARE_BEING_CALLED__ 一样，作为中心转发方法</span><br><span class="line">ffi_prep_closure_loc(closure, cif, _st_ffi_function, (__bridge void *)self, newIMP);</span><br><span class="line"></span><br><span class="line">/// 替换掉原来的方法</span><br><span class="line">if (!class_addMethod(cls, sel, newIMP, methodTypeEncoding)) &#123;</span><br><span class="line">    class_replaceMethod(cls, sel, newIMP, methodTypeEncoding);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/** 1. 获取 Method 的信息 **/</span><br><span class="line">/// 获取目标方法 Method</span><br><span class="line">Method method = class_getInstanceMethod(class, selector);</span><br><span class="line">/// 获取方法的 typeEncoding</span><br><span class="line">const char *methodTypeEncoding = method_getTypeEncoding(method);</span><br><span class="line">/// 构造签名</span><br><span class="line">NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:methodTypeEncoding];</span><br><span class="line">/// 知道参数个数</span><br><span class="line">NSUInteger argumentsNum = signature.numberOfArguments;</span><br><span class="line"></span><br><span class="line">/** 2. 通过目标方法信息构造 ffi_type **/</span><br><span class="line">/// 通过参数个数，构造一个 ffi_type ，代表方法模版的参数类型</span><br><span class="line">ffi_type **argTypes = malloc(sizeof(ffi_type *) * (argumentsNum));</span><br><span class="line">/// 方法前两个是 self 和 selector ，所以固定是指针类型</span><br><span class="line">argTypes[0] = &amp;ffi_type_pointer;</span><br><span class="line">argTypes[1] = &amp;ffi_type_pointer;</span><br><span class="line">/// 其余的根据 typeEncoding 类型设置</span><br><span class="line">for (int i = 2; i &lt; argumentsNum; i ++) &#123;</span><br><span class="line">    const char *argType = [signature getArgumentTypeAtIndex:i];</span><br><span class="line">    /// 例如 c 则返回 &amp;ffi_type_schar，i 则返回 &amp;ffi_type_sint ，@ 则返回 &amp;ffi_type_pointer</span><br><span class="line">    argTypes[i] = [self ffi_typeForTypeEncoding:argType];</span><br><span class="line">&#125;</span><br><span class="line">/// 通过返回类型，构造一个 ffi_type ，代表方法模版的返回值类型</span><br><span class="line">ffi_type *returnType = [self ffi_typeForTypeEncoding:signature.methodReturnType];</span><br><span class="line"></span><br><span class="line">/** 3. 构造方法模版 **/</span><br><span class="line">ffi_cif *cif = malloc(sizeof(ffi_cif));</span><br><span class="line">ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)argumentsNum, returnType, argTypes);</span><br><span class="line"></span><br><span class="line">/** 4. 通过模版构造一个新的方法实现 IMP  **/</span><br><span class="line">void *newIMP;</span><br><span class="line">ffi_closure *closure = ffi_closure_alloc(sizeof(ffi_closure), &amp;newIMP);</span><br><span class="line">/// _st_ffi_function 和 Aspects 中的 __ASPECTS_ARE_BEING_CALLED__ 一样，作为中心转发方法</span><br><span class="line">ffi_prep_closure_loc(closure, cif, _st_ffi_function, (__bridge void *)self, newIMP);</span><br><span class="line"></span><br><span class="line">/// 替换掉原来的方法</span><br><span class="line">if (!class_addMethod(class, selector, newIMP, methodTypeEncoding)) &#123;</span><br><span class="line">    class_replaceMethod(class, selector, newIMP, methodTypeEncoding);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>此时，执行原来的方法时会通过 libffi 执行到 _st_ffi_function，实现 hook 。</p>
 
     </article>
@@ -495,6 +495,22 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -924,15 +940,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
-        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
-    
         <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
+    
+        <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -971,9 +987,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
-    
         <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
+    
+        <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
