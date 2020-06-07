@@ -394,6 +394,9 @@ THDynamicPageEntryGroup jumpInstructions[THNumberOfDataPerPage];
 <p>具体流程如下图</p>
 <img src="/2020/06/07/技术/TrampolineHook-源码阅读/memory-2.png" title="memory-2">
 <h2 id="再版"><a href="#再版" class="headerlink" title="再版"></a>再版</h2><p>针对可变参数函数方法，解决了栈污染问题，将寄存器的值存放在堆上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">__attribute__((__naked__))</span><br><span class="line">void THPageVariadicContextPre(void)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">// 先保存，避免调用 malloc 破坏寄存器</span><br><span class="line">saveRegs();</span><br><span class="line"></span><br><span class="line">// 分配堆上内存 extra 16 byte + sizeof(THPageVariadicContext)</span><br><span class="line">__asm volatile (&quot;mov x0, #0xF0&quot;);</span><br><span class="line">__asm volatile (&quot;bl _malloc&quot;);</span><br><span class="line"></span><br><span class="line">// 返回的分配内存地址保存起来 callee-saved</span><br><span class="line">__asm volatile (&quot;str x19, [x0]&quot;);</span><br><span class="line">__asm volatile (&quot;mov x19, x0&quot;);</span><br><span class="line"></span><br><span class="line">// 恢复堆栈，避免影响变参所处在的堆栈</span><br><span class="line">restoreRegs();</span><br><span class="line"></span><br><span class="line">// 用堆上空间保存数据</span><br><span class="line">__asm volatile (&quot;stp x0, x1,  [x19, #(16 + 0 * 16)]&quot;);</span><br><span class="line">__asm volatile (&quot;stp x2, x3,  [x19, #(16 + 1 * 16)]&quot;);</span><br><span class="line">__asm volatile (&quot;stp x4, x5,  [x19, #(16 + 2 * 16)]&quot;);</span><br><span class="line">__asm volatile (&quot;stp x6, x7,  [x19, #(16 + 3 * 16)]&quot;);</span><br><span class="line">__asm volatile (&quot;stp x8, x13, [x19, #(16 + 4 * 16)]&quot;);</span><br><span class="line"></span><br><span class="line">__asm volatile (&quot;stp q0, q1,  [x19, #(16 + 5 * 16 + 0 * 32)]&quot;);</span><br><span class="line">__asm volatile (&quot;stp q2, q3,  [x19, #(16 + 5 * 16 + 1 * 32)]&quot;);</span><br><span class="line">__asm volatile (&quot;stp q4, q5,  [x19, #(16 + 5 * 16 + 2 * 32)]&quot;);</span><br><span class="line">__asm volatile (&quot;stp q6, q7,  [x19, #(16 + 5 * 16 + 3 * 32)]&quot;);</span><br><span class="line"></span><br><span class="line">__asm volatile (&quot;stp lr, x10, [x19, #(16 + 5 * 16 + 4 * 32)]&quot;);</span><br><span class="line"></span><br><span class="line">__asm volatile (&quot;ret&quot;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">__attribute__((__naked__))</span><br><span class="line">void THPageVariadicContextPost(void)</span><br><span class="line">&#123;</span><br><span class="line">    // x19 肯定是正确的地址，使用x19恢复对应的数据</span><br><span class="line">    __asm volatile (&quot;ldp lr, x10, [x19, #(16 + 5 * 16 + 4 * 32)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp q6, q7,  [x19, #(16 + 5 * 16 + 3 * 32)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp q4, q5,  [x19, #(16 + 5 * 16 + 2 * 32)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp q2, q3,  [x19, #(16 + 5 * 16 + 1 * 32)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp q0, q1,  [x19, #(16 + 5 * 16 + 0 * 32)]&quot;);</span><br><span class="line"></span><br><span class="line">    __asm volatile (&quot;ldp x8, x13, [x19, #(16 + 4 * 16)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp x6, x7,  [x19, #(16 + 3 * 16)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp x4, x5,  [x19, #(16 + 2 * 16)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp x2, x3,  [x19, #(16 + 1 * 16)]&quot;);</span><br><span class="line">    __asm volatile (&quot;ldp x0, x1,  [x19, #(16 + 0 * 16)]&quot;);</span><br><span class="line"></span><br><span class="line">    // 保存一下，避免 free 的影响。</span><br><span class="line">    saveRegs();</span><br><span class="line"></span><br><span class="line">    // 恢复原先的 x19, 调用free</span><br><span class="line">    __asm volatile (&quot;mov x0, x19&quot;);</span><br><span class="line">    __asm volatile (&quot;ldr x19, [x19]&quot;);</span><br><span class="line">    __asm volatile (&quot;bl _free&quot;);</span><br><span class="line"></span><br><span class="line">    // 恢复堆栈</span><br><span class="line">    restoreRegs();</span><br><span class="line"></span><br><span class="line">    __asm volatile (&quot;mov lr, x13&quot;);</span><br><span class="line">    __asm volatile (&quot;br x10&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里用了<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((__naked__))</span><br></pre></td></tr></table></figure>，这个作用是为了让我们的函数不会额外的生成函数 prologue/epilogue 中的压栈消栈操作。</p>
 
     </article>
     <!-- 前后页  -->
@@ -520,6 +523,22 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -987,9 +1006,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
         <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
@@ -997,9 +1016,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
-        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
-    
         <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1038,9 +1057,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
-    
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
