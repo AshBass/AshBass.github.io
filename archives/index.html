@@ -299,6 +299,36 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2020/06/07/技术/Aspects-Stinger-源码阅读/" >
+                
+                    <span>Aspects/Stinger 源码阅读</span>
+            </a>
+            <div class="abstract-content">
+                前言本文需要对 Objective-C 的类的继承关系，runtime使用需要一定理解。
+Aspects 和 Stinger 的存在意义在 iOS 中，我们 hook 一个方法时，可以使用系统提供的 runtime 进行方法交换。
+然而方法交换，会修改原来一个类原本的结构，并且造成多个实例遭到 hook 。
+打个比方，比如我们需要对 UIViewController 的方法进行 hook ，runtime 代码如下
+123456789101112- (void)hookMethod &#123;    /// 获取 目标 Method 和 hook Method    Method or...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/07</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iOS>iOS</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2020/01/16/计划/2019年总结和2020年的目标/" >
                 
                     <span>2019年总结和2020年的目标</span>
@@ -612,36 +642,6 @@ ASLR地址空间布局随机化。它会让 Mach-O 文件加载的...
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = 阅读笔记>阅读笔记</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/01/25/技术/Python爬虫Scrapy/" >
-                
-                    <span>Python爬虫Scrapy</span>
-            </a>
-            <div class="abstract-content">
-                最近想爬虫，所以了解了一下。
-Scrapy中文文档Splash中文文档
-Scrapy命令行基本用法scrapy-splash docker渲染jsscrapy css选择器使用scrapy提取数据之：xpath选择器
-Scrapy官方文档Docker官方文档
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/25</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
     
 </div>
                 
@@ -1012,16 +1012,7 @@ Scrapy官方文档Docker官方文档
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <div class="total-archive"> Total : 22 </div>
+    <div class="total-archive"> Total : 23 </div>
     
     <div class="post-archive">
     
@@ -1030,6 +1021,11 @@ Scrapy官方文档Docker官方文档
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/07</span><a class="archive-post-title" href= "/2020/06/07/技术/Aspects-Stinger-源码阅读/" >Aspects/Stinger 源码阅读</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1170,11 +1166,11 @@ Scrapy官方文档Docker官方文档
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
-        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
-    
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
+    
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1213,9 +1209,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
-        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
-    
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
