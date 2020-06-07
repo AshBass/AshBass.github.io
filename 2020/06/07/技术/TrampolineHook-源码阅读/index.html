@@ -361,35 +361,16 @@ height:50vh;
 <h3 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h3><p>新的 IMP 是在 THDynamicPageAllocator 中构建的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (IMP)allocateDynamicPageForFunction:(IMP)functionAdress</span><br><span class="line">&#123;</span><br><span class="line">    if (!functionAdress) return NULL;</span><br><span class="line">    </span><br><span class="line">    /// THDynamicPage 是一个结构体</span><br><span class="line">    /// fetchCandidiateDynamicPage 方法动态构造页，下面会有说</span><br><span class="line">    THDynamicPage *dynamicPage = [self fetchCandidiateDynamicPage];</span><br><span class="line">    </span><br><span class="line">    int slot = dynamicPage-&gt;dataPage.nextAvailableIndex;</span><br><span class="line">    dynamicPage-&gt;dataPage.dynamicData[slot].originIMP = (IMP)functionAdress;</span><br><span class="line">    dynamicPage-&gt;dataPage.nextAvailableIndex++;</span><br><span class="line">    </span><br><span class="line">    /// 这里返回了结构体中的一个索引</span><br><span class="line">    return (IMP)&amp;dynamicPage-&gt;codePage.jumpInstructions[slot];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>fetchCandidiateDynamicPage 会调用 THCreateDynamicePage() 返回一个结构体。<br>THCreateDynamicePage() 方法中申请内存和映射的代码，将汇编映射到虚拟内存中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">static THDynamicPage *THCreateDynamicePage()</span><br><span class="line">&#123;</span><br><span class="line">    /// _th_dynamic_page 是汇编中的方法</span><br><span class="line">    vm_address_t fixedPage = (vm_address_t)&amp;th_dynamic_page;</span><br><span class="line">    </span><br><span class="line">    vm_address_t newDynamicPage = 0;</span><br><span class="line">    kern_return_t kernResult = KERN_SUCCESS;</span><br><span class="line"></span><br><span class="line">    /// 申请2页内存，低位一页对应dataPage，高位一页对应codePage</span><br><span class="line">    kernResult = vm_allocate(current_task(), &amp;newDynamicPage, PAGE_SIZE * 2, VM_FLAGS_ANYWHERE);</span><br><span class="line">    </span><br><span class="line">    /// 清空代码段的内存</span><br><span class="line">    vm_address_t newCodePageAddress = newDynamicPage + PAGE_SIZE;</span><br><span class="line">    kernResult = vm_deallocate(current_task(), newCodePageAddress, PAGE_SIZE);</span><br><span class="line">    </span><br><span class="line">    /// remap虚拟内存映射 newCodePageAddress 的内容被重新映射到 th_dynamic_page 代码段所在的内存页里面。   </span><br><span class="line">    /// 然后 newCodePageAddress 具有了执行权限，但没了读写权限</span><br><span class="line">    vm_prot_t currentProtection, maxProtection;</span><br><span class="line">    kernResult = vm_remap(current_task(), &amp;newCodePageAddress, PAGE_SIZE, 0, 0, current_task(), fixedPage, FALSE, &amp;currentProtection, &amp;maxProtection, VM_INHERIT_SHARE);  </span><br><span class="line">    </span><br><span class="line">    return (void *)newDynamicPage;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">我们来看看汇编和结构体的结构</span><br><span class="line"></span><br><span class="line">汇编</span><br></pre></td></tr></table></figure>
-<p>.text<br>.align 14<br>.globl _th_dynamic_page  ;用global让一个标签对链接器可见，可以供其他链接对象模块使用</p>
-<p>interceptor:  定义拦截器的地址存放处<br>.quad 0</p>
-<p>.align 14<br>_th_dynamic_page: ;定义动态代码的开始，在代码段可以搜索到 th_dynamic_page</p>
-<p>_th_entry: ;声明一个方法，执行以下指令。通过偏移地址执行原函数方法。</p>
-<p>nop ;用来32位对齐，因为下面有用的代码有27条，加上这5条空指令，刚好32条，每条指令在arm64上是4字节，一共是128字节<br>nop<br>nop<br>nop<br>nop</p>
-<p>sub x12, lr,   #0x8 ;这里减去0x8之后，得到是bl上面一条指令的地址<br>sub x12, x12,  #0x4000  ;减去一页的地址，可以拿到存放原函数的地址，存到x12<br>mov lr,  x13  ;将之前的lr存回去</p>
-<p>ldr x10, [x12]  ;取出原函数实际地址 到x10</p>
-<p>stp q0,  q1,   [sp, #-32]!  ;保存原函数的调用寄存器<br>stp q2,  q3,   [sp, #-32]!<br>stp q4,  q5,   [sp, #-32]!<br>stp q6,  q7,   [sp, #-32]!</p>
-<p>stp lr,  x10,  [sp, #-16]!<br>stp x0,  x1,   [sp, #-16]!<br>stp x2,  x3,   [sp, #-16]!<br>stp x4,  x5,   [sp, #-16]!<br>stp x6,  x7,   [sp, #-16]!<br>str x8,        [sp, #-16]!</p>
-<p>ldr x8,  interceptor ;加载拦截方法<br>blr x8  ;调用拦截方法，且会返回</p>
-<p>ldr x8,        [sp], #16  ;加载原函数的调用寄存器<br>ldp x6,  x7,   [sp], #16<br>ldp x4,  x5,   [sp], #16<br>ldp x2,  x3,   [sp], #16<br>ldp x0,  x1,   [sp], #16<br>ldp lr,  x10,  [sp], #16</p>
-<p>ldp q6,  q7,   [sp], #32<br>ldp q4,  q5,   [sp], #32<br>ldp q2,  q3,   [sp], #32<br>ldp q0,  q1,   [sp], #32</p>
-<p>br  x10  ;调用原函数，并且不用返回</p>
-<p>.rept 2032 ;构造一堆命令，用来将原来的Method指向这里<br>mov x13, lr<br>bl _th_entry;<br>.endr<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">声明的结构体</span><br></pre></td></tr></table></figure></p>
-<p>// 0x4000是一页的大小，共16K</p>
-<p>//其实一组就是2条指令，对应上面重复的那一坨代码的一组 sizeof(THDynamicPageEntryGroup) 是8字节<br>typedef int32_t THDynamicPageEntryGroup[2]; </p>
-<p>static const int32_t THDynamicPageInstructionCount = 32; //ARM64指令一般是4字节<br>static const int32_t THPageSize = 0x4000;//算出来的值是2032<br>static const size_t THNumberOfDataPerPage = (0x4000 - THDynamicPageInstructionCount * sizeof(int32_t)) / sizeof(THDynamicPageEntryGroup);<br>typedef struct {<br>    union {<br>        struct {<br>            IMP redirectFunction;  //8字节，存放的是拦截器函数<br>            int32_t nextAvailableIndex;  //存放的是下一个空余的引索<br>        }; // 16字节大小，因为要考虑8字节对齐</p>
-<pre><code>    int32_t placeholder[THDynamicPageInstructionCount]; // 128字节，占位，没有实际意义
-}; //128字节
-
-THDynamicData dynamicData[THNumberOfDataPerPage]; //剩余的2032字节，用来存放原始的IMP
-</code></pre><p>} THDataPage; //第一页内存</p>
-<p>typedef struct {<br>    int32_t fixedInstructions[THDynamicPageInstructionCount]; //存放前面128字节的代码</p>
-<pre><code>// 存放后面那堆的重复代码 mov x13, lr;  bl _th_entry; 每组是8字节。   // 替换后的IMP执行这里的某一组开头
-THDynamicPageEntryGroup jumpInstructions[THNumberOfDataPerPage]; 
-</code></pre><p>} THCodePage; //第2页内存</p>
-<p>typedef struct {<br>    THDataPage dataPage;<br>    THCodePage codePage;<br>} THDynamicPage; //精心设计的2页虚拟内存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我们用图对比这两个结构</span><br><span class="line"></span><br><span class="line">&#123;% asset_img memory-1.png memory-1 %&#125;</span><br><span class="line"></span><br><span class="line">可以看出，allocateDynamicPageForFunction 返回的索引，其实是汇编中的两条指令</span><br></pre></td></tr></table></figure></p>
-<p>mov x13, lr<br>bl _th_entry;<br><code>`</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static THDynamicPage *THCreateDynamicePage()</span><br><span class="line">&#123;</span><br><span class="line">    /// _th_dynamic_page 是汇编中的方法</span><br><span class="line">    vm_address_t fixedPage = (vm_address_t)&amp;th_dynamic_page;</span><br><span class="line">    </span><br><span class="line">    vm_address_t newDynamicPage = 0;</span><br><span class="line">    kern_return_t kernResult = KERN_SUCCESS;</span><br><span class="line"></span><br><span class="line">    /// 申请2页内存，低位一页对应dataPage，高位一页对应codePage</span><br><span class="line">    kernResult = vm_allocate(current_task(), &amp;newDynamicPage, PAGE_SIZE * 2, VM_FLAGS_ANYWHERE);</span><br><span class="line">    </span><br><span class="line">    /// 清空代码段的内存</span><br><span class="line">    vm_address_t newCodePageAddress = newDynamicPage + PAGE_SIZE;</span><br><span class="line">    kernResult = vm_deallocate(current_task(), newCodePageAddress, PAGE_SIZE);</span><br><span class="line">    </span><br><span class="line">    /// remap虚拟内存映射 newCodePageAddress 的内容被重新映射到 th_dynamic_page 代码段所在的内存页里面。   </span><br><span class="line">    /// 然后 newCodePageAddress 具有了执行权限，但没了读写权限</span><br><span class="line">    vm_prot_t currentProtection, maxProtection;</span><br><span class="line">    kernResult = vm_remap(current_task(), &amp;newCodePageAddress, PAGE_SIZE, 0, 0, current_task(), fixedPage, FALSE, &amp;currentProtection, &amp;maxProtection, VM_INHERIT_SHARE);  </span><br><span class="line">    </span><br><span class="line">    return (void *)newDynamicPage;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们来看看汇编和结构体的结构</p>
+<p>汇编</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">.text</span><br><span class="line">.align 14</span><br><span class="line">.globl _th_dynamic_page  ;用global让一个标签对链接器可见，可以供其他链接对象模块使用</span><br><span class="line"></span><br><span class="line">interceptor:  定义拦截器的地址存放处</span><br><span class="line">.quad 0</span><br><span class="line"></span><br><span class="line">.align 14</span><br><span class="line">_th_dynamic_page: ;定义动态代码的开始，在代码段可以搜索到 th_dynamic_page</span><br><span class="line"></span><br><span class="line">_th_entry: ;声明一个方法，执行以下指令。通过偏移地址执行原函数方法。</span><br><span class="line"></span><br><span class="line">nop ;用来32位对齐，因为下面有用的代码有27条，加上这5条空指令，刚好32条，每条指令在arm64上是4字节，一共是128字节</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line">nop</span><br><span class="line"></span><br><span class="line">sub x12, lr,   #0x8 ;这里减去0x8之后，得到是bl上面一条指令的地址</span><br><span class="line">sub x12, x12,  #0x4000  ;减去一页的地址，可以拿到存放原函数的地址，存到x12</span><br><span class="line">mov lr,  x13  ;将之前的lr存回去</span><br><span class="line"></span><br><span class="line">ldr x10, [x12]  ;取出原函数实际地址 到x10</span><br><span class="line"></span><br><span class="line">stp q0,  q1,   [sp, #-32]!  ;保存原函数的调用寄存器</span><br><span class="line">stp q2,  q3,   [sp, #-32]!</span><br><span class="line">stp q4,  q5,   [sp, #-32]!</span><br><span class="line">stp q6,  q7,   [sp, #-32]!</span><br><span class="line"></span><br><span class="line">stp lr,  x10,  [sp, #-16]!</span><br><span class="line">stp x0,  x1,   [sp, #-16]!</span><br><span class="line">stp x2,  x3,   [sp, #-16]!</span><br><span class="line">stp x4,  x5,   [sp, #-16]!</span><br><span class="line">stp x6,  x7,   [sp, #-16]!</span><br><span class="line">str x8,        [sp, #-16]!</span><br><span class="line"></span><br><span class="line">ldr x8,  interceptor ;加载拦截方法</span><br><span class="line">blr x8  ;调用拦截方法，且会返回</span><br><span class="line"></span><br><span class="line">ldr x8,        [sp], #16  ;加载原函数的调用寄存器</span><br><span class="line">ldp x6,  x7,   [sp], #16</span><br><span class="line">ldp x4,  x5,   [sp], #16</span><br><span class="line">ldp x2,  x3,   [sp], #16</span><br><span class="line">ldp x0,  x1,   [sp], #16</span><br><span class="line">ldp lr,  x10,  [sp], #16</span><br><span class="line"></span><br><span class="line">ldp q6,  q7,   [sp], #32</span><br><span class="line">ldp q4,  q5,   [sp], #32</span><br><span class="line">ldp q2,  q3,   [sp], #32</span><br><span class="line">ldp q0,  q1,   [sp], #32</span><br><span class="line"></span><br><span class="line">br  x10  ;调用原函数，并且不用返回</span><br><span class="line"></span><br><span class="line">.rept 2032 ;构造一堆命令，用来将原来的Method指向这里</span><br><span class="line">mov x13, lr</span><br><span class="line">bl _th_entry;</span><br><span class="line">.endr</span><br></pre></td></tr></table></figure>
+<p>声明的结构体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 0x4000是一页的大小，共16K</span><br><span class="line"></span><br><span class="line">//其实一组就是2条指令，对应上面重复的那一坨代码的一组 sizeof(THDynamicPageEntryGroup) 是8字节</span><br><span class="line">typedef int32_t THDynamicPageEntryGroup[2]; </span><br><span class="line"></span><br><span class="line">static const int32_t THDynamicPageInstructionCount = 32; //ARM64指令一般是4字节</span><br><span class="line">static const int32_t THPageSize = 0x4000;//算出来的值是2032</span><br><span class="line">static const size_t THNumberOfDataPerPage = (0x4000 - THDynamicPageInstructionCount * sizeof(int32_t)) / sizeof(THDynamicPageEntryGroup); </span><br><span class="line">typedef struct &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        struct &#123;</span><br><span class="line">            IMP redirectFunction;  //8字节，存放的是拦截器函数</span><br><span class="line">            int32_t nextAvailableIndex;  //存放的是下一个空余的引索</span><br><span class="line">        &#125;; // 16字节大小，因为要考虑8字节对齐</span><br><span class="line">        </span><br><span class="line">        int32_t placeholder[THDynamicPageInstructionCount]; // 128字节，占位，没有实际意义</span><br><span class="line">    &#125;; //128字节</span><br><span class="line">    </span><br><span class="line">    THDynamicData dynamicData[THNumberOfDataPerPage]; //剩余的2032字节，用来存放原始的IMP</span><br><span class="line">&#125; THDataPage; //第一页内存</span><br><span class="line"></span><br><span class="line">typedef struct &#123;</span><br><span class="line">    int32_t fixedInstructions[THDynamicPageInstructionCount]; //存放前面128字节的代码</span><br><span class="line">    </span><br><span class="line">    // 存放后面那堆的重复代码 mov x13, lr;  bl _th_entry; 每组是8字节。   // 替换后的IMP执行这里的某一组开头</span><br><span class="line">    THDynamicPageEntryGroup jumpInstructions[THNumberOfDataPerPage]; </span><br><span class="line">&#125; THCodePage; //第2页内存</span><br><span class="line"></span><br><span class="line">typedef struct &#123;</span><br><span class="line">    THDataPage dataPage;</span><br><span class="line">    THCodePage codePage;</span><br><span class="line">&#125; THDynamicPage; //精心设计的2页虚拟内存</span><br></pre></td></tr></table></figure>
+<p>我们用图对比这两个结构</p>
+<img src="/2020/06/07/技术/TrampolineHook-源码阅读/memory-1.png" title="memory-1">
+<p>可以看出，allocateDynamicPageForFunction 返回的索引，其实是汇编中的两条指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov x13, lr</span><br><span class="line">bl _th_entry;</span><br></pre></td></tr></table></figure>
 <p>通过 _th_entry 执行偏移地址执行原函数方法。</p>
 <p>具体流程如下图</p>
 <img src="/2020/06/07/技术/TrampolineHook-源码阅读/memory-2.png" title="memory-2">
@@ -523,24 +504,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1006,19 +969,19 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
-    
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
-    
-        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
-    
-        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
     
         <span class="sidebar-tag-name" data-tags="阅读笔记"><span class="iconfont-archer">&#xe606;</span>阅读笔记</span>
     
-        <span class="sidebar-tag-name" data-tags="目标"><span class="iconfont-archer">&#xe606;</span>目标</span>
+        <span class="sidebar-tag-name" data-tags="汇编"><span class="iconfont-archer">&#xe606;</span>汇编</span>
+    
+        <span class="sidebar-tag-name" data-tags="iOS"><span class="iconfont-archer">&#xe606;</span>iOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="操作系统"><span class="iconfont-archer">&#xe606;</span>操作系统</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1053,13 +1016,13 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
-    
-        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
+        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
     
         <span class="sidebar-category-name" data-categories="阅读笔记"><span class="iconfont-archer">&#xe60a;</span>阅读笔记</span>
     
-        <span class="sidebar-category-name" data-categories="计划"><span class="iconfont-archer">&#xe60a;</span>计划</span>
+        <span class="sidebar-category-name" data-categories="技术"><span class="iconfont-archer">&#xe60a;</span>技术</span>
+    
+        <span class="sidebar-category-name" data-categories="iOS"><span class="iconfont-archer">&#xe60a;</span>iOS</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
